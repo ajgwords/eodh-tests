@@ -1,3 +1,4 @@
+cwlVersion: v1.0
 class: CommandLineTool # set the class type
 
 requirements:
@@ -38,4 +39,3 @@ outputs:
             glob: '*_clipped.tif'
         type: File
 
-cwlVersion: v1.2
