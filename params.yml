@@ -2,5 +2,6 @@
 #bbox: "546626, 105501, 565954, 95132"
 #geotiff: {"class": "File", "path": "../../sat.tif" } # path needs name of file
 #epsg: "EPSG:27700"
+
 # Needed for remote_info_test.cwl
-infoimg: /vsicurl/https://dap.ceda.ac.uk/neodc/sentinel_ard/data/sentinel_2/2023/11/19/S2B_20231119_latn509lone0006_T30UYB_ORB094_20231119115015_utm30n_osgb_vmsk_sharp_rad_srefdem_stdsref_thumbnail.jpg
+infoimg: {"class": "File", "path": "https://dap.ceda.ac.uk/neodc/sentinel_ard/data/sentinel_2/2023/11/19/S2B_20231119_latn509lone0006_T30UYB_ORB094_20231119115015_utm30n_osgb_vmsk_sharp_rad_srefdem_stdsref_thumbnail.jpg" }

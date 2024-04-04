@@ -3,7 +3,7 @@
 #   data/sentinel_2/2023/11/19/S2B_20231119_latn509lone0006_T30UYB_ORB094_
 #   20231119115015_utm30n_osgb_vmsk_sharp_rad_srefdem_stdsref_thumbnail.jpg
 
-# Works??
+# Works locally
 
 cwlVersion: v1.2
 class: CommandLineTool 
@@ -25,7 +25,7 @@ baseCommand: gdalinfo
 
 inputs:
     infoimg: 
-        type: string
+        type: File
         inputBinding:
             position: 1
 
