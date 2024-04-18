@@ -1,0 +1,3 @@
+clipimg:
+  class: File 
+  path: "../sat_clipped2.tif" # path needs name of file

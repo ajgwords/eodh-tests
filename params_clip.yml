@@ -1,0 +1,4 @@
+# Needed for clip_test.cwl
+bbox: "546626, 105501, 565954, 95132"
+geotiff: {"class": "File", "path": "../../sat.tif" } # path needs name of file
+epsg: "EPSG:27700"
