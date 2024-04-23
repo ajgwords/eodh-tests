@@ -1,5 +1,8 @@
 class: CommandLineTool
 
+cwlVersion: v1.0
+doc:  This runs GDAL Translate to clip an image to bbox corner coordinates.
+
 requirements: 
   InlineJavascriptRequirement: {}
   DockerRequirement: 
@@ -37,4 +40,3 @@ outputs:
       glob: '*_clipped.tif'
     type: File
 
-cwlVersion: v1.0

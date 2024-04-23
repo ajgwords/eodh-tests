@@ -1,6 +1,6 @@
 class: Workflow
-label: Sentinel-2 RGB creation
-doc:  This workflow creates an RGB composite
+label: Sentinel-2 clipping and stacking
+doc:  This workflow creates a stacked image
 id: main
 
 requirements:

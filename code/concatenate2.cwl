@@ -1,5 +1,8 @@
 class: CommandLineTool
 
+cwlVersion: v1.0
+doc: This runs GDAL Merge to stack images together.
+
 requirements:
   InlineJavascriptRequirement: {}
   DockerRequirement: 
@@ -29,4 +32,4 @@ outputs:
 #stderr: stderr
 #stdout: stdout
 
-cwlVersion: v1.0
+
