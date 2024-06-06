@@ -14,7 +14,7 @@ $graph:
         
     inputs:
       infoimg: 
-        type: File
+        type: string
 
     outputs: []
 
@@ -36,7 +36,7 @@ $graph:
 
     inputs:
         infoimg: 
-            type: File
+            type: string
             inputBinding:
                 position: 1
 
