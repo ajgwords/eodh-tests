@@ -14,7 +14,7 @@ schemas:
 $graph:
   # Workflow entrypoint
   - class: Workflow
-    id: gdalinfo_workflow
+    id: gdalinfo_workflow_2
     label: run gdalinfo
     doc: run gdalinfo on given file
         
