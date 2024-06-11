@@ -1,0 +1,7 @@
+bbox: "449174,309984,466461,296580"
+geotiff: 
+- { "class": "File", "path": "https://dap.ceda.ac.uk/neodc/sentinel_ard/data/sentinel_2/2023/11/20/S2A_20231120_latn527lonw0007_T30UXD_ORB037_20231120132420_utm30n_osgb_vmsk_sharp_rad_srefdem_stdsref.tif" }
+- { "class": "File", "path": "https://dap.ceda.ac.uk/neodc/sentinel_ard/data/sentinel_2/2023/11/17/S2A_20231117_latn527lonw0007_T30UXD_ORB137_20231117131218_utm30n_osgb_vmsk_sharp_rad_srefdem_stdsref.tif" }
+- { "class": "File", "path": "https://dap.ceda.ac.uk/neodc/sentinel_ard/data/sentinel_2/2023/11/15/S2B_20231115_latn527lonw0007_T30UXD_ORB037_20231115121328_utm30n_osgb_vmsk_sharp_rad_srefdem_stdsref.tif" }
+#- { "class": "File", "path": "B02.tif" }
+epsg: "EPSG:27700"

@@ -14,7 +14,7 @@ $graph:
         
     inputs:
       infoimg: 
-        type: string
+        type: File
 
     outputs: []
 
@@ -36,7 +36,7 @@ $graph:
 
     inputs:
         infoimg: 
-            type: string
+            type: File
             inputBinding:
                 position: 1
 
@@ -45,4 +45,4 @@ $graph:
 
 
     # run with the command
-    # cwltool --podman path/to/remote_info_test.cwl path/to/params_info.yml
+    # cwltool --podman remote_info_test_TJ.cwl#gdalinfo params_info.ym
