@@ -16,7 +16,7 @@ execute:
   
 format:
   html:
-    theme: cosmo
+    theme: lumen
     css: styles.css
     toc: true
 
