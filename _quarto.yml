@@ -10,7 +10,7 @@ website:
       - href: about.qmd
         text: Details
       - href: test.ipynb
-        text: Test
+        text: Test2
 
 execute:
   freeze: auto
