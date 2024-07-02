@@ -9,7 +9,7 @@ website:
         text: Home
       - href: about.qmd
         text: Details
-      - href: test.ipynb
+      - href: test.html
         text: Test2
 
 execute:
