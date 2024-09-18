@@ -1,0 +1,22 @@
+project:
+  type: website
+
+website:
+  title: "webtesting"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+      - href: about.qmd
+        text: Details
+      - href: test.qmd
+        text: Test2
+
+execute:
+  freeze: auto
+  
+format:
+  html:
+    theme: lumen
+    css: styles.css
+    toc: true
