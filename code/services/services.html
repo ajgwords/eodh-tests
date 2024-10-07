@@ -157,7 +157,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<div id="cell-0" class="cell" data-execution_count="5">
+<div id="cell-0" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> owslib.wmts <span class="im">import</span> WebMapTileService</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>s_url <span class="op">=</span> <span class="st">"https://test.eodatahub.org.uk/vs/cache/ows/wmts?"</span></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -174,16 +174,16 @@ None
 []</code></pre>
 </div>
 </div>
-<div id="cell-1" class="cell" data-execution_count="6">
+<div id="cell-1" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> <span class="bu">len</span>(wmts.contents.keys()) <span class="op">&gt;</span> <span class="dv">0</span>:</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="bu">sorted</span>(<span class="bu">list</span>(wmts.contents)))<span class="co">#[0])</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"No data"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>['S2L1C__CLOUD', 'S2L1C__CLOUD_PROB', 'S2L1C__FALSE_COLOR', 'S2L1C__NDVI', 'S2L1C__TRUE_COLOR']</code></pre>
+<pre><code>['LST_COLLECTION__LST_VISUALIZATION', 'S2L1C__CLOUD', 'S2L1C__CLOUD_PROB', 'S2L1C__FALSE_COLOR', 'S2L1C__NDVI', 'S2L1C__TRUE_COLOR']</code></pre>
 </div>
 </div>
-<div id="cell-2" class="cell" data-execution_count="10">
+<div id="cell-2" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> folium</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Create a map centered at a specific latitude and longitude</span></span>
@@ -220,7 +220,7 @@ None
 <span id="cb5-34"><a href="#cb5-34" aria-hidden="true" tabindex="-1"></a><span class="co">#m.save('wmts_map.html')</span></span>
 <span id="cb5-35"><a href="#cb5-35" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-36"><a href="#cb5-36" aria-hidden="true" tabindex="-1"></a><span class="co">#https://a.s2maps-tiles.eu/wmts/?service=WMTS&amp;request=GetCapabilities</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="10">
+<div class="cell-output cell-output-display" data-execution_count="3">
 <div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><span style="color:#565656">Make this Notebook Trusted to load map: File -&gt; Trust Notebook</span><iframe srcdoc="<!DOCTYPE html>
 <html>
 <head>
@@ -248,7 +248,7 @@ None
             <meta name=&quot;viewport&quot; content=&quot;width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; />
             <style>
-                #map_19c27f4194ca86ce4ec36643889ba71b {
+                #map_509fef7aa692e74af4dbb3d012848915 {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -262,14 +262,14 @@ None
 <body>
     
     
-            <div class=&quot;folium-map&quot; id=&quot;map_19c27f4194ca86ce4ec36643889ba71b&quot; ></div>
+            <div class=&quot;folium-map&quot; id=&quot;map_509fef7aa692e74af4dbb3d012848915&quot; ></div>
         
 </body>
 <script>
     
     
-            var map_19c27f4194ca86ce4ec36643889ba71b = L.map(
-                &quot;map_19c27f4194ca86ce4ec36643889ba71b&quot;,
+            var map_509fef7aa692e74af4dbb3d012848915 = L.map(
+                &quot;map_509fef7aa692e74af4dbb3d012848915&quot;,
                 {
                     center: [52.0, 0.0],
                     crs: L.CRS.EPSG3857,
@@ -283,37 +283,37 @@ None
 
         
     
-            var tile_layer_e5d9e068faf2b079918415cdb36c97cc = L.tileLayer(
+            var tile_layer_5f70c0d2895cea9c0eb23885108e6c6b = L.tileLayer(
                 &quot;https://tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
                 {&quot;attribution&quot;: &quot;\u0026copy; \u003ca href=\&quot;https://www.openstreetmap.org/copyright\&quot;\u003eOpenStreetMap\u003c/a\u003e contributors&quot;, &quot;detectRetina&quot;: false, &quot;maxNativeZoom&quot;: 19, &quot;maxZoom&quot;: 19, &quot;minZoom&quot;: 0, &quot;noWrap&quot;: false, &quot;opacity&quot;: 1, &quot;subdomains&quot;: &quot;abc&quot;, &quot;tms&quot;: false}
             );
         
     
-            tile_layer_e5d9e068faf2b079918415cdb36c97cc.addTo(map_19c27f4194ca86ce4ec36643889ba71b);
+            tile_layer_5f70c0d2895cea9c0eb23885108e6c6b.addTo(map_509fef7aa692e74af4dbb3d012848915);
         
     
-            var tile_layer_12b1a2e3a9970285c651efa5ed654f19 = L.tileLayer(
+            var tile_layer_ba0b86369d174ebbdb51bdcc6f98b55f = L.tileLayer(
                 &quot;https://test.eodatahub.org.uk/vs/cache/ows/wmts?&quot;,
                 {&quot;attribution&quot;: &quot;\u0026copy; \u003ca href=\&quot;https://test.eodatahub.org.uk\&quot;\u003eEO Data Hub\u003c/a\u003e&quot;, &quot;detectRetina&quot;: false, &quot;fmt&quot;: &quot;image/png&quot;, &quot;layer&quot;: &quot;S2L1C__TRUE_COLOR&quot;, &quot;maxNativeZoom&quot;: 18, &quot;maxZoom&quot;: 18, &quot;minZoom&quot;: 0, &quot;noWrap&quot;: false, &quot;opacity&quot;: 1, &quot;service&quot;: &quot;WMTS&quot;, &quot;subdomains&quot;: &quot;abc&quot;, &quot;tilematrixset&quot;: &quot;WGS84&quot;, &quot;tms&quot;: false}
             );
         
     
-            tile_layer_12b1a2e3a9970285c651efa5ed654f19.addTo(map_19c27f4194ca86ce4ec36643889ba71b);
+            tile_layer_ba0b86369d174ebbdb51bdcc6f98b55f.addTo(map_509fef7aa692e74af4dbb3d012848915);
         
     
-            var layer_control_77609df9c6077f88616a13acad0d7448_layers = {
+            var layer_control_35fbf5a722d6882bc1abcff971d96a35_layers = {
                 base_layers : {
-                    &quot;openstreetmap&quot; : tile_layer_e5d9e068faf2b079918415cdb36c97cc,
+                    &quot;openstreetmap&quot; : tile_layer_5f70c0d2895cea9c0eb23885108e6c6b,
                 },
                 overlays :  {
-                    &quot;WMTS Layer&quot; : tile_layer_12b1a2e3a9970285c651efa5ed654f19,
+                    &quot;WMTS Layer&quot; : tile_layer_ba0b86369d174ebbdb51bdcc6f98b55f,
                 },
             };
-            let layer_control_77609df9c6077f88616a13acad0d7448 = L.control.layers(
-                layer_control_77609df9c6077f88616a13acad0d7448_layers.base_layers,
-                layer_control_77609df9c6077f88616a13acad0d7448_layers.overlays,
+            let layer_control_35fbf5a722d6882bc1abcff971d96a35 = L.control.layers(
+                layer_control_35fbf5a722d6882bc1abcff971d96a35_layers.base_layers,
+                layer_control_35fbf5a722d6882bc1abcff971d96a35_layers.overlays,
                 {&quot;autoZIndex&quot;: true, &quot;collapsed&quot;: true, &quot;position&quot;: &quot;topright&quot;}
-            ).addTo(map_19c27f4194ca86ce4ec36643889ba71b);
+            ).addTo(map_509fef7aa692e74af4dbb3d012848915);
 
         
 </script>
