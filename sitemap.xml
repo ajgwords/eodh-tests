@@ -2,34 +2,38 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://ajgwords.github.io/eodh-tests/hello.html</loc>
-    <lastmod>2024-10-25T13:50:25.580Z</lastmod>
+    <lastmod>2024-10-25T16:17:58.809Z</lastmod>
   </url>
   <url>
     <loc>https://ajgwords.github.io/eodh-tests/notes/CWL.html</loc>
-    <lastmod>2024-10-25T13:50:25.580Z</lastmod>
+    <lastmod>2024-10-25T16:17:58.809Z</lastmod>
   </url>
   <url>
     <loc>https://ajgwords.github.io/eodh-tests/code/services/services.html</loc>
-    <lastmod>2024-10-25T13:50:25.524Z</lastmod>
+    <lastmod>2024-10-25T16:17:58.745Z</lastmod>
   </url>
   <url>
     <loc>https://ajgwords.github.io/eodh-tests/cubes/cubes_old.html</loc>
-    <lastmod>2024-10-25T13:50:25.572Z</lastmod>
+    <lastmod>2024-10-25T16:17:58.801Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ajgwords.github.io/eodh-tests/cubes/ceda_and_odc_stac.html</loc>
+    <lastmod>2024-10-25T16:17:58.777Z</lastmod>
   </url>
   <url>
     <loc>https://ajgwords.github.io/eodh-tests/cubes/cubes_test.html</loc>
-    <lastmod>2024-10-25T13:50:25.572Z</lastmod>
+    <lastmod>2024-10-25T16:17:58.801Z</lastmod>
   </url>
   <url>
     <loc>https://ajgwords.github.io/eodh-tests/cubes/cubes.html</loc>
-    <lastmod>2024-10-25T13:50:25.560Z</lastmod>
+    <lastmod>2024-10-25T16:17:58.789Z</lastmod>
   </url>
   <url>
     <loc>https://ajgwords.github.io/eodh-tests/about.html</loc>
-    <lastmod>2024-10-25T13:50:25.524Z</lastmod>
+    <lastmod>2024-10-25T16:17:58.745Z</lastmod>
   </url>
   <url>
     <loc>https://ajgwords.github.io/eodh-tests/index.html</loc>
-    <lastmod>2024-10-25T13:50:25.580Z</lastmod>
+    <lastmod>2024-10-25T16:17:58.809Z</lastmod>
   </url>
 </urlset>
