@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>cubes_test – webtesting</title>
+<title>S1 SAR – webtesting</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -145,243 +145,182 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#s2-ard" id="toc-s2-ard" class="nav-link active" data-scroll-target="#s2-ard">S2 ARD</a></li>
+  <li><a href="#tests" id="toc-tests" class="nav-link" data-scroll-target="#tests">TESTS</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+<main class="content" id="quarto-document-content">
 
-
-
-
-<div id="cell-0" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Imports</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dask.distributed</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dask.diagnostics</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> folium</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shapely.geometry</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyproj</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> display</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pystac_client <span class="im">import</span> Client</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># the data cube bit</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> odc.stac <span class="im">import</span> configure_rio, stac_load </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">S1 SAR</h1>
 </div>
-<div id="cell-1" class="cell" data-execution_count="32">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co">#common variables</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>lon, lat <span class="op">=</span> <span class="op">-</span><span class="fl">1.3144</span>, <span class="fl">51.5755</span> <span class="co"># Atlas building at RAL</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>EURL <span class="op">=</span> <span class="st">"https://earth-search.aws.element84.com/v1"</span></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>CURL <span class="op">=</span> <span class="st">"https://api.stac.ceda.ac.uk/"</span></span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>ecoll <span class="op">=</span> <span class="st">"sentinel-2-l2a"</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>ccoll <span class="op">=</span> <span class="st">"sentinel2_ard"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div id="cell-1" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyeodh</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> shapely </span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> folium</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-2" class="cell" data-execution_count="46">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set up a bounding box to limit te search</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>km2deg <span class="op">=</span> <span class="fl">1.0</span> <span class="op">/</span> <span class="dv">111</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>x, y <span class="op">=</span> (lon, lat)  <span class="co"># Center point of a query</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>r <span class="op">=</span> <span class="dv">25</span> <span class="op">*</span> km2deg</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>bbox <span class="op">=</span> (x <span class="op">-</span> r, y <span class="op">-</span> r, x <span class="op">+</span> r, y <span class="op">+</span> r)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co"># SEARCH</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>catalog <span class="op">=</span> Client.<span class="bu">open</span>(CURL)</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>query <span class="op">=</span> catalog.search(</span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>    collections<span class="op">=</span>[ccoll], datetime<span class="op">=</span><span class="st">"2023-06-15"</span>, limit<span class="op">=</span><span class="dv">100</span>, bbox<span class="op">=</span>bbox</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>items <span class="op">=</span> <span class="bu">list</span>(query.items())</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Found: </span><span class="sc">{</span><span class="bu">len</span>(items)<span class="sc">:d}</span><span class="ss"> datasets"</span>)</span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert STAC items into a GeoJSON FeatureCollection</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>stac_json <span class="op">=</span> query.item_collection_as_dict()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-2" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>thet_pnt <span class="op">=</span> shapely.Point(<span class="fl">0.6715892933273722</span>, <span class="fl">52.414471075812315</span>) <span class="co"># a site near Thetford</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-3" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Connect to the Hub</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> pyeodh.Client().get_catalog_service()</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Print a list of the collections held in the Resource Catalogue (their id and description).</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># As the Resource Catalogue fills and development continues, the number of collections and the richness of their descriptions will increase</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> collect <span class="kw">in</span> client.get_collections():</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span>collect<span class="sc">.</span><span class="bu">id</span><span class="sc">}</span><span class="ss">: </span><span class="sc">{</span>collect<span class="sc">.</span>description<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Found: 4 datasets</code></pre>
+<pre><code>cmip6: CMIP6
+cmip6: CMIP6
+cordex: CORDEX
+cordex: CORDEX
+ukcp: UKCP
+ukcp: UKCP
+airbus_sar_data: The German TerraSAR-X / TanDEM-X satellite formation and the Spanish PAZ satellite (managed by Hisdesat Servicios Estratégicos S.A.) are being operated in the same orbit tube and feature identical ground swaths and imaging modes - allowing Airbus and Hisdesat to establish a unique commercial Radar Constellation. The satellites carry a high frequency X-band Synthetic Aperture Radar (SAR) sensor in order to acquire datasets ranging from very high-resolution imagery to wide area coverage.
+defra-airbus: A collection of Airbus data for the DEFRA use case.
+defra-planet: A collection of Planet data for the DEFRA use case.
+eocis-sst-cdrv3: EOCIS Sea-Surface Temperatures V3</code></pre>
 </div>
 </div>
-<div id="cell-3" class="cell">
-<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># def xarr_from_aoi_point(point: Point, time_range: str = "2023-01-01/2024-01-01", max_cloud_cover: int = 10, max_nodata_percent: int = .5) -&gt; xr.DataArray:</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co">#     collection_id = "sentinel-2-c1-l2a"</span></span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co">#     catalog = pystac_client.Client.open(</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co">#     "https://earth-search.aws.element84.com/v1",</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="co">#     )</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="co">#     def perform_search(tile: str = None):</span></span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co">#         query_params = {"eo:cloud_cover": {"lt": max_cloud_cover}, "s2:nodata_pixel_percentage": {"lt":max_nodata_percent}}</span></span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="co">#         if tile:</span></span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">#             query_params['grid:code'] = {'eq': tile}</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="co">#         search = catalog.search(collections=[collection_id], </span></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co">#                                 intersects=point, </span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co">#                                 datetime=time_range, </span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co">#                                 query=query_params, </span></span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co">#                                 max_items=3,</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="co">#                                 sortby="properties.datetime")</span></span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="co">#         return search.item_collection()</span></span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="co">#     items = perform_search()</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="bu">len</span>(<span class="bu">set</span>([item.properties[<span class="st">'grid:code'</span>] <span class="cf">for</span> item <span class="kw">in</span> items])) <span class="op">!=</span> <span class="dv">1</span>:</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        tile_code <span class="op">=</span> <span class="bu">next</span>((item.properties.get(<span class="st">'grid:code'</span>) <span class="cf">for</span> item <span class="kw">in</span> items <span class="cf">if</span> <span class="st">'grid:code'</span> <span class="kw">in</span> item.properties), <span class="va">None</span>)</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>        items <span class="op">=</span> perform_search(tile<span class="op">=</span>tile_code)</span>
-<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    xarr <span class="op">=</span> stac_load(</span>
-<span id="cb5-25"><a href="#cb5-25" aria-hidden="true" tabindex="-1"></a>        items,</span>
-<span id="cb5-26"><a href="#cb5-26" aria-hidden="true" tabindex="-1"></a>        bands<span class="op">=</span>(<span class="st">"visual.1"</span>, <span class="st">"visual.2"</span>, <span class="st">"visual.3"</span>),</span>
-<span id="cb5-27"><a href="#cb5-27" aria-hidden="true" tabindex="-1"></a>        chunks<span class="op">=</span>{},  <span class="co"># &lt;-- use Dask</span></span>
-<span id="cb5-28"><a href="#cb5-28" aria-hidden="true" tabindex="-1"></a>        crs <span class="op">=</span> items[<span class="dv">0</span>].properties[<span class="st">'proj:epsg'</span>]</span>
-<span id="cb5-29"><a href="#cb5-29" aria-hidden="true" tabindex="-1"></a>    )</span>
-<span id="cb5-30"><a href="#cb5-30" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> items</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="cell-4" class="cell" data-execution_count="47">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> query.item_collection()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="cell-5" class="cell" data-execution_count="48">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> a.items[<span class="dv">1</span>]</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> b.to_dict()</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>c</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="48">
-<pre><code>{'type': 'Feature',
- 'stac_version': '1.0.0',
- 'id': 'neodc.sentinel_ard.data.sentinel_2.2023.06.15.S2B_20230615_latn518lonw0008_T30UXC_ORB137_20230615131239_utm30n_osgb',
- 'properties': {'file_count': 8,
-  'start_datetime': '2023-06-15T11:06:29Z',
-  'end_datetime': '2023-06-15T11:06:29Z',
-  'NSSDC Identifier': '2015-000A',
-  'created': '2024-02-07T12:20:32.968742Z',
-  'Instrument Family Name': 'Multi-Spectral Instrument',
-  'Platform Number': '2B',
-  'Datatake Type': 'INS-NOBS',
-  'esa_file_name': 'S2B_MSIL1C_20230615T110629_N0509_R137_T30UXC_20230615T131239',
-  'Ground Tracking Direction': 'ascending',
-  'datetime': '2023-06-15T11:06:29Z',
-  'instance_id': 'neodc.sentinel_ard.data.sentinel_2.2023.06.15.S2B_20230615_latn518lonw0008_T30UXC_ORB137_20230615131239_utm30n_osgb',
-  'size': 2096421365,
-  'Product Type': 'S2MSI1C',
-  'Instrument Family Name Abbreviation': 'MSI',
-  'Start Orbit Number': '032767',
-  'eo:cloud_cover': '49.1430917614739',
-  'Start Relative Orbit Number': '137',
-  'updated': '2024-02-07T12:20:32.968742Z',
-  'Instrument Mode': None,
-  'EPSG': '27700'},
- 'geometry': {'coordinates': [[[-1.5321045, 52.34135509726958],
-    [0.077757925309447, 52.31036691499413],
-    [0.011254122594852, 51.32452335478603],
-    [-1.5638733, 51.354439390266904],
-    [-1.5321045, 52.34135509726958]]],
-  'type': 'Polygon'},
- 'links': [{'rel': 'self',
-   'href': 'https://api.stac.ceda.ac.uk/collections/sentinel2_ard/items/neodc.sentinel_ard.data.sentinel_2.2023.06.15.S2B_20230615_latn518lonw0008_T30UXC_ORB137_20230615131239_utm30n_osgb',
-   'type': 'application/geo+json'},
-  {'rel': 'parent',
-   'href': 'https://api.stac.ceda.ac.uk/collections/sentinel2_ard',
-   'type': 'application/json'},
-  {'rel': 'collection',
-   'href': 'https://api.stac.ceda.ac.uk/collections/sentinel2_ard',
-   'type': 'application/json'},
-  {'rel': 'root',
-   'href': 'https://api.stac.ceda.ac.uk/',
-   'type': 'application/json',
-   'title': 'stac-fastapi-elasticsearch'}],
- 'assets': {'cloud': {'href': 'https://dap.ceda.ac.uk/neodc/sentinel_ard/data/sentinel_2/2023/06/15/S2B_20230615_latn518lonw0008_T30UXC_ORB137_20230615131239_utm30n_osgb_clouds.tif',
-   'size': 2707124,
-   'location': 'on_disk',
-   'roles': ['data']},
-  'cloud_probability': {'href': 'https://dap.ceda.ac.uk/neodc/sentinel_ard/data/sentinel_2/2023/06/15/S2B_20230615_latn518lonw0008_T30UXC_ORB137_20230615131239_utm30n_osgb_clouds_prob.tif',
-   'size': 87446113,
-   'location': 'on_disk',
-   'roles': ['data']},
-  'metadata': {'href': 'https://dap.ceda.ac.uk/neodc/sentinel_ard/data/sentinel_2/2023/06/15/S2B_20230615_latn518lonw0008_T30UXC_ORB137_20230615131239_utm30n_osgb_vmsk_sharp_rad_srefdem_stdsref_meta.xml',
-   'size': 18461,
-   'location': 'on_disk',
-   'roles': ['metadata']},
-  'thumbnail': {'href': 'https://dap.ceda.ac.uk/neodc/sentinel_ard/data/sentinel_2/2023/06/15/S2B_20230615_latn518lonw0008_T30UXC_ORB137_20230615131239_utm30n_osgb_vmsk_sharp_rad_srefdem_stdsref_thumbnail.jpg',
-   'size': 115116,
-   'location': 'on_disk',
-   'roles': ['thumbnail']},
-  'topographic_shadow': {'href': 'https://dap.ceda.ac.uk/neodc/sentinel_ard/data/sentinel_2/2023/06/15/S2B_20230615_latn518lonw0008_T30UXC_ORB137_20230615131239_utm30n_osgb_toposhad.tif',
-   'size': 214796,
-   'location': 'on_disk',
-   'roles': ['data']},
-  'cog': {'href': 'https://dap.ceda.ac.uk/neodc/sentinel_ard/data/sentinel_2/2023/06/15/S2B_20230615_latn518lonw0008_T30UXC_ORB137_20230615131239_utm30n_osgb_vmsk_sharp_rad_srefdem_stdsref.tif',
-   'size': 2003836449,
-   'eo:bands': [{'full_width_half_max': 0.07,
-     'central_wavelength': 492.1,
-     'name': 'B02',
-     'description': 'Blue',
-     'common_name': 'blue'},
-    {'full_width_half_max': 0.04,
-     'central_wavelength': 559,
-     'name': 'B03',
-     'description': 'Green',
-     'common_name': 'green'},
-    {'full_width_half_max': 0.03,
-     'central_wavelength': 665,
-     'name': 'B04',
-     'description': 'Red',
-     'common_name': 'red'},
-    {'full_width_half_max': 0.02,
-     'central_wavelength': 703.8,
-     'name': 'B05',
-     'description': 'Visible and Near Infrared',
-     'common_name': 'rededge'},
-    {'full_width_half_max': 0.02,
-     'central_wavelength': 739.1,
-     'name': 'B06',
-     'description': 'Visible and Near Infrared',
-     'common_name': 'rededge'},
-    {'full_width_half_max': 0.02,
-     'central_wavelength': 779.7,
-     'name': 'B07',
-     'description': 'Visible and Near Infrared',
-     'common_name': 'rededge'},
-    {'full_width_half_max': 0.11,
-     'central_wavelength': 833,
-     'name': 'B08',
-     'description': 'Visible and Near Infrared',
-     'common_name': 'nir'},
-    {'full_width_half_max': 0.02,
-     'central_wavelength': 864,
-     'name': 'B08a',
-     'description': 'Visible and Near Infrared',
-     'common_name': 'nir08'},
-    {'full_width_half_max': 0.09,
-     'central_wavelength': 1610.4,
-     'name': 'B11',
-     'description': 'Short Wave Infrared',
-     'common_name': 'swir16'},
-    {'full_width_half_max': 0.19,
-     'central_wavelength': 2185.7,
-     'name': 'B12',
-     'description': 'Short Wave Infrared',
-     'common_name': 'swir22'}],
-   'location': 'on_disk',
-   'roles': ['data']},
-  'valid_pixels': {'href': 'https://dap.ceda.ac.uk/neodc/sentinel_ard/data/sentinel_2/2023/06/15/S2B_20230615_latn518lonw0008_T30UXC_ORB137_20230615131239_utm30n_osgb_valid.tif',
-   'size': 308675,
-   'location': 'on_disk',
-   'roles': ['data']},
-  'saturated_pixels': {'href': 'https://dap.ceda.ac.uk/neodc/sentinel_ard/data/sentinel_2/2023/06/15/S2B_20230615_latn518lonw0008_T30UXC_ORB137_20230615131239_utm30n_osgb_sat.tif',
-   'size': 1774631,
-   'location': 'on_disk',
-   'roles': ['data']}},
- 'bbox': [-1.5638733, 51.32452335478603, 0.077757925309447, 52.34135509726958],
- 'stac_extensions': ['https://stac-extensions.github.io/eo/v1.1.0/schema.json'],
- 'collection': 'sentinel2_ard'}</code></pre>
-</div>
-</div>
-<div id="cell-6" class="cell" data-execution_count="37">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-5" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To find specific imagery for the site we need to add the intersects parameter. We set this to be our AOI point.</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We can also filter the search by cloud cover, in this case limiting our search to images with less than 50% cloud in them</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>items <span class="op">=</span> client.search(</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    collections<span class="op">=</span>[<span class="st">'sentinel1'</span>],</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    catalog_paths<span class="op">=</span>[<span class="st">"supported-datasets/ceda-stac-fastapi"</span>],</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    intersects<span class="op">=</span>thet_pnt,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    query<span class="op">=</span>[</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'start_datetime&gt;=2024-04-01'</span>,</span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">'end_datetime&lt;=2024-06-30'</span>, </span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>    limit<span class="op">=</span><span class="dv">1000</span>,</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="co"># We can then count the number of items returned by the search </span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Number of items found: '</span>, items.total_count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>&lt;pystac.item_collection.ItemCollection object at 0x7c9e1b5f53a0&gt;</code></pre>
+<pre><code>Number of items found:  15</code></pre>
 </div>
 </div>
+<div id="cell-6" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Now we can get the link to each of the different assets</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> key, value <span class="kw">in</span> items[<span class="dv">1</span>].assets.items():</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(key, value.href)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>S1A_IW_SLC__1SDV_20230529T181921_20230529T181945_048752_05DCF3_CAA0.manifest https://dap.ceda.ac.uk/neodc/sentinel1a/data/IW/L1_SLC/IPF_v3/2023/05/29/S1A_IW_SLC__1SDV_20230529T181921_20230529T181945_048752_05DCF3_CAA0.manifest
+S1A_IW_SLC__1SDV_20230529T181921_20230529T181945_048752_05DCF3_CAA0.metadata_only.zip https://dap.ceda.ac.uk/neodc/sentinel1a/data/IW/L1_SLC/IPF_v3/2023/05/29/S1A_IW_SLC__1SDV_20230529T181921_20230529T181945_048752_05DCF3_CAA0.metadata_only.zip
+S1A_IW_SLC__1SDV_20230529T181921_20230529T181945_048752_05DCF3_CAA0.png https://dap.ceda.ac.uk/neodc/sentinel1a/data/IW/L1_SLC/IPF_v3/2023/05/29/S1A_IW_SLC__1SDV_20230529T181921_20230529T181945_048752_05DCF3_CAA0.png
+S1A_IW_SLC__1SDV_20230529T181921_20230529T181945_048752_05DCF3_CAA0.zip https://dap.ceda.ac.uk/neodc/sentinel1a/data/IW/L1_SLC/IPF_v3/2023/05/29/S1A_IW_SLC__1SDV_20230529T181921_20230529T181945_048752_05DCF3_CAA0.zip
+S1A_IW_SLC__1SDV_20230529T181921_20230529T181945_048752_05DCF3_CAA0_checksum https://dap.ceda.ac.uk/neodc/sentinel1a/data/IW/L1_SLC/IPF_v3/2023/05/29/S1A_IW_SLC__1SDV_20230529T181921_20230529T181945_048752_05DCF3_CAA0_checksum</code></pre>
+</div>
+</div>
+<section id="s2-ard" class="level1">
+<h1>S2 ARD</h1>
+<div id="cell-8" class="cell" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># To find specific imagery for the site we need to add the intersects parameter. We set this to be our AOI point.</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># We can also filter the search by cloud cover, in this case limiting our search to images with less than 50% cloud in them</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>items <span class="op">=</span> client.search(</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    collections<span class="op">=</span>[<span class="st">'sentinel2_ard'</span>],</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    catalog_paths<span class="op">=</span>[<span class="st">"supported-datasets/ceda-stac-fastapi"</span>],</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    intersects<span class="op">=</span>thet_pnt,</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    query<span class="op">=</span>[</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>        <span class="st">'start_datetime&gt;=2023-04-01'</span>,</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        <span class="st">'end_datetime&lt;=2023-06-30'</span>,</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    limit<span class="op">=</span><span class="dv">1000</span>,</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co"># We can then count the number of items returned by the search </span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">'Number of items found: '</span>, items.total_count)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Number of items found:  44</code></pre>
+</div>
+</div>
+<div id="cell-9" class="cell" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> items:</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(item.properties)<span class="co">#item.id, item.properties, item.assets)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{'start_datetime': '2023-06-25T11:06:19+00:00', 'end_datetime': '2023-06-25T11:06:19+00:00', 'datetime': '2023-06-25T11:06:19+00:00'}
+{'start_datetime': '2023-06-25T11:06:19+00:00', 'end_datetime': '2023-06-25T11:06:19+00:00', 'datetime': '2023-06-25T11:06:19+00:00'}
+{'start_datetime': '2023-06-22T10:56:29+00:00', 'end_datetime': '2023-06-22T10:56:29+00:00', 'datetime': '2023-06-22T10:56:29+00:00'}
+{'start_datetime': '2023-06-22T10:56:29+00:00', 'end_datetime': '2023-06-22T10:56:29+00:00', 'datetime': '2023-06-22T10:56:29+00:00'}
+{'start_datetime': '2023-06-15T11:06:29+00:00', 'end_datetime': '2023-06-15T11:06:29+00:00', 'datetime': '2023-06-15T11:06:29+00:00'}
+{'start_datetime': '2023-06-15T11:06:29+00:00', 'end_datetime': '2023-06-15T11:06:29+00:00', 'datetime': '2023-06-15T11:06:29+00:00'}
+{'start_datetime': '2023-06-12T10:56:29+00:00', 'end_datetime': '2023-06-12T10:56:29+00:00', 'datetime': '2023-06-12T10:56:29+00:00'}
+{'start_datetime': '2023-06-12T10:56:29+00:00', 'end_datetime': '2023-06-12T10:56:29+00:00', 'datetime': '2023-06-12T10:56:29+00:00'}
+{'start_datetime': '2023-06-10T11:06:21+00:00', 'end_datetime': '2023-06-10T11:06:21+00:00', 'datetime': '2023-06-10T11:06:21+00:00'}
+{'start_datetime': '2023-06-10T11:06:21+00:00', 'end_datetime': '2023-06-10T11:06:21+00:00', 'datetime': '2023-06-10T11:06:21+00:00'}
+{'start_datetime': '2023-06-07T10:56:21+00:00', 'end_datetime': '2023-06-07T10:56:21+00:00', 'datetime': '2023-06-07T10:56:21+00:00'}
+{'start_datetime': '2023-06-07T10:56:21+00:00', 'end_datetime': '2023-06-07T10:56:21+00:00', 'datetime': '2023-06-07T10:56:21+00:00'}
+{'start_datetime': '2023-06-02T10:56:29+00:00', 'end_datetime': '2023-06-02T10:56:29+00:00', 'datetime': '2023-06-02T10:56:29+00:00'}
+{'start_datetime': '2023-06-02T10:56:29+00:00', 'end_datetime': '2023-06-02T10:56:29+00:00', 'datetime': '2023-06-02T10:56:29+00:00'}
+{'start_datetime': '2023-05-26T11:06:29+00:00', 'end_datetime': '2023-05-26T11:06:29+00:00', 'datetime': '2023-05-26T11:06:29+00:00'}
+{'start_datetime': '2023-05-26T11:06:29+00:00', 'end_datetime': '2023-05-26T11:06:29+00:00', 'datetime': '2023-05-26T11:06:29+00:00'}
+{'start_datetime': '2023-05-23T10:56:29+00:00', 'end_datetime': '2023-05-23T10:56:29+00:00', 'datetime': '2023-05-23T10:56:29+00:00'}
+{'start_datetime': '2023-05-23T10:56:29+00:00', 'end_datetime': '2023-05-23T10:56:29+00:00', 'datetime': '2023-05-23T10:56:29+00:00'}
+{'start_datetime': '2023-05-21T11:06:21+00:00', 'end_datetime': '2023-05-21T11:06:21+00:00', 'datetime': '2023-05-21T11:06:21+00:00'}
+{'start_datetime': '2023-05-21T11:06:21+00:00', 'end_datetime': '2023-05-21T11:06:21+00:00', 'datetime': '2023-05-21T11:06:21+00:00'}
+{'start_datetime': '2023-05-18T10:56:21+00:00', 'end_datetime': '2023-05-18T10:56:21+00:00', 'datetime': '2023-05-18T10:56:21+00:00'}
+{'start_datetime': '2023-05-18T10:56:21+00:00', 'end_datetime': '2023-05-18T10:56:21+00:00', 'datetime': '2023-05-18T10:56:21+00:00'}
+{'start_datetime': '2023-05-16T11:06:19+00:00', 'end_datetime': '2023-05-16T11:06:19+00:00', 'datetime': '2023-05-16T11:06:19+00:00'}
+{'start_datetime': '2023-05-16T11:06:19+00:00', 'end_datetime': '2023-05-16T11:06:19+00:00', 'datetime': '2023-05-16T11:06:19+00:00'}
+{'start_datetime': '2023-05-11T11:06:21+00:00', 'end_datetime': '2023-05-11T11:06:21+00:00', 'datetime': '2023-05-11T11:06:21+00:00'}
+{'start_datetime': '2023-05-11T11:06:21+00:00', 'end_datetime': '2023-05-11T11:06:21+00:00', 'datetime': '2023-05-11T11:06:21+00:00'}
+{'start_datetime': '2023-05-03T10:56:19+00:00', 'end_datetime': '2023-05-03T10:56:19+00:00', 'datetime': '2023-05-03T10:56:19+00:00'}
+{'start_datetime': '2023-05-03T10:56:19+00:00', 'end_datetime': '2023-05-03T10:56:19+00:00', 'datetime': '2023-05-03T10:56:19+00:00'}
+{'start_datetime': '2023-05-01T11:06:21+00:00', 'end_datetime': '2023-05-01T11:06:21+00:00', 'datetime': '2023-05-01T11:06:21+00:00'}
+{'start_datetime': '2023-05-01T11:06:21+00:00', 'end_datetime': '2023-05-01T11:06:21+00:00', 'datetime': '2023-05-01T11:06:21+00:00'}
+{'start_datetime': '2023-04-23T10:56:19+00:00', 'end_datetime': '2023-04-23T10:56:19+00:00', 'datetime': '2023-04-23T10:56:19+00:00'}
+{'start_datetime': '2023-04-23T10:56:19+00:00', 'end_datetime': '2023-04-23T10:56:19+00:00', 'datetime': '2023-04-23T10:56:19+00:00'}
+{'start_datetime': '2023-04-21T11:06:21+00:00', 'end_datetime': '2023-04-21T11:06:21+00:00', 'datetime': '2023-04-21T11:06:21+00:00'}
+{'start_datetime': '2023-04-21T11:06:21+00:00', 'end_datetime': '2023-04-21T11:06:21+00:00', 'datetime': '2023-04-21T11:06:21+00:00'}
+{'start_datetime': '2023-04-18T10:56:21+00:00', 'end_datetime': '2023-04-18T10:56:21+00:00', 'datetime': '2023-04-18T10:56:21+00:00'}
+{'start_datetime': '2023-04-18T10:56:21+00:00', 'end_datetime': '2023-04-18T10:56:21+00:00', 'datetime': '2023-04-18T10:56:21+00:00'}
+{'start_datetime': '2023-04-13T10:56:19+00:00', 'end_datetime': '2023-04-13T10:56:19+00:00', 'datetime': '2023-04-13T10:56:19+00:00'}
+{'start_datetime': '2023-04-13T10:56:19+00:00', 'end_datetime': '2023-04-13T10:56:19+00:00', 'datetime': '2023-04-13T10:56:19+00:00'}
+{'start_datetime': '2023-04-11T11:06:21+00:00', 'end_datetime': '2023-04-11T11:06:21+00:00', 'datetime': '2023-04-11T11:06:21+00:00'}
+{'start_datetime': '2023-04-11T11:06:21+00:00', 'end_datetime': '2023-04-11T11:06:21+00:00', 'datetime': '2023-04-11T11:06:21+00:00'}
+{'start_datetime': '2023-04-03T10:56:29+00:00', 'end_datetime': '2023-04-03T10:56:29+00:00', 'datetime': '2023-04-03T10:56:29+00:00'}
+{'start_datetime': '2023-04-03T10:56:29+00:00', 'end_datetime': '2023-04-03T10:56:29+00:00', 'datetime': '2023-04-03T10:56:29+00:00'}
+{'start_datetime': '2023-04-03T10:56:29+00:00', 'end_datetime': '2023-04-03T10:56:29+00:00', 'datetime': '2023-04-03T10:56:29+00:00'}
+{'start_datetime': '2023-04-03T10:56:29+00:00', 'end_datetime': '2023-04-03T10:56:29+00:00', 'datetime': '2023-04-03T10:56:29+00:00'}</code></pre>
+</div>
+</div>
+</section>
+<section id="tests" class="level1">
+<h1>TESTS</h1>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
