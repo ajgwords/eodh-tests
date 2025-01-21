@@ -1,0 +1,1206 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>ades_s2 – webtesting</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-08b45f57ad681ffc1d83d6fe5486bc05.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">webtesting</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">Details</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../test.qmd"> 
+<span class="menu-text">Test2</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
+        
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
+
+
+
+
+<p>This notebook is used for deployment and execution of the S2 cloud free best pixel workflow.</p>
+<p>Credentials: create a <code>.env</code> file in the root of this repository with the following content:</p>
+<pre><code>ADES_USER="username"
+ADES_TOKEN="token"</code></pre>
+<div id="cell-1" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> dotenv</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pyeodh</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>dotenv.load_dotenv()</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="co"># pyeodh.set_log_level(10)</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>client <span class="op">=</span> pyeodh.Client(</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    username<span class="op">=</span>os.getenv(<span class="st">"ADES_USER"</span>),</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>    token<span class="op">=</span>os.getenv(<span class="st">"ADES_TOKEN"</span>),</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>ades <span class="op">=</span> client.get_ades()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Run the following cell if deploying the workflow.</p>
+<div id="cell-3" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cwl_yaml <span class="op">=</span> <span class="vs">r"""cwlVersion: v1.0</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="vs">$graph:</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="vs">- class: CommandLineTool</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="vs">  id: 's2_make_stac'</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="vs">  inputs:</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 'files'</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="vs">    doc: FILES</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="vs">    type:</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="vs">      type: array</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="vs">      items: File</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 'geometry'</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="vs">    inputBinding:</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="vs">      prefix: --geometry</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="vs">    type:</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="vs">    - 'null'</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="vs">    - string</span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="vs">  requirements:</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="vs">  - class: DockerRequirement</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="vs">    dockerPull: ghcr.io/eo-datahub/user-workflows/s2_make_stac@sha256:1c5f2166ca78c561caf2db45f7974649d3ad4423f774eda4b5d73d5c96d955ed</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="vs">  - class: InlineJavascriptRequirement</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="vs">  doc: "None\n"</span></span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true" tabindex="-1"></a><span class="vs">  baseCommand:</span></span>
+<span id="cb3-23"><a href="#cb3-23" aria-hidden="true" tabindex="-1"></a><span class="vs">  - python</span></span>
+<span id="cb3-24"><a href="#cb3-24" aria-hidden="true" tabindex="-1"></a><span class="vs">  - /app/app.py</span></span>
+<span id="cb3-25"><a href="#cb3-25" aria-hidden="true" tabindex="-1"></a><span class="vs">  outputs:</span></span>
+<span id="cb3-26"><a href="#cb3-26" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 'stac_catalog'</span></span>
+<span id="cb3-27"><a href="#cb3-27" aria-hidden="true" tabindex="-1"></a><span class="vs">    outputBinding:</span></span>
+<span id="cb3-28"><a href="#cb3-28" aria-hidden="true" tabindex="-1"></a><span class="vs">      glob: .</span></span>
+<span id="cb3-29"><a href="#cb3-29" aria-hidden="true" tabindex="-1"></a><span class="vs">    type: Directory</span></span>
+<span id="cb3-30"><a href="#cb3-30" aria-hidden="true" tabindex="-1"></a><span class="vs">- class: CommandLineTool</span></span>
+<span id="cb3-31"><a href="#cb3-31" aria-hidden="true" tabindex="-1"></a><span class="vs">  id: 's2_mosaic'</span></span>
+<span id="cb3-32"><a href="#cb3-32" aria-hidden="true" tabindex="-1"></a><span class="vs">  inputs:</span></span>
+<span id="cb3-33"><a href="#cb3-33" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 'all_images'</span></span>
+<span id="cb3-34"><a href="#cb3-34" aria-hidden="true" tabindex="-1"></a><span class="vs">    doc: ALL_IMAGES</span></span>
+<span id="cb3-35"><a href="#cb3-35" aria-hidden="true" tabindex="-1"></a><span class="vs">    type:</span></span>
+<span id="cb3-36"><a href="#cb3-36" aria-hidden="true" tabindex="-1"></a><span class="vs">      type: array</span></span>
+<span id="cb3-37"><a href="#cb3-37" aria-hidden="true" tabindex="-1"></a><span class="vs">      items: File</span></span>
+<span id="cb3-38"><a href="#cb3-38" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 'intersects'</span></span>
+<span id="cb3-39"><a href="#cb3-39" aria-hidden="true" tabindex="-1"></a><span class="vs">    inputBinding:</span></span>
+<span id="cb3-40"><a href="#cb3-40" aria-hidden="true" tabindex="-1"></a><span class="vs">      prefix: --intersects</span></span>
+<span id="cb3-41"><a href="#cb3-41" aria-hidden="true" tabindex="-1"></a><span class="vs">    type:</span></span>
+<span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="vs">    - 'null'</span></span>
+<span id="cb3-43"><a href="#cb3-43" aria-hidden="true" tabindex="-1"></a><span class="vs">    - string</span></span>
+<span id="cb3-44"><a href="#cb3-44" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 'month_json'</span></span>
+<span id="cb3-45"><a href="#cb3-45" aria-hidden="true" tabindex="-1"></a><span class="vs">    inputBinding:</span></span>
+<span id="cb3-46"><a href="#cb3-46" aria-hidden="true" tabindex="-1"></a><span class="vs">      prefix: --month-json</span></span>
+<span id="cb3-47"><a href="#cb3-47" aria-hidden="true" tabindex="-1"></a><span class="vs">    type: File</span></span>
+<span id="cb3-48"><a href="#cb3-48" aria-hidden="true" tabindex="-1"></a><span class="vs">  outputs:</span></span>
+<span id="cb3-49"><a href="#cb3-49" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 'best_pixel'</span></span>
+<span id="cb3-50"><a href="#cb3-50" aria-hidden="true" tabindex="-1"></a><span class="vs">    outputBinding:</span></span>
+<span id="cb3-51"><a href="#cb3-51" aria-hidden="true" tabindex="-1"></a><span class="vs">      glob: '*.tif'</span></span>
+<span id="cb3-52"><a href="#cb3-52" aria-hidden="true" tabindex="-1"></a><span class="vs">    type: File</span></span>
+<span id="cb3-53"><a href="#cb3-53" aria-hidden="true" tabindex="-1"></a><span class="vs">  requirements:</span></span>
+<span id="cb3-54"><a href="#cb3-54" aria-hidden="true" tabindex="-1"></a><span class="vs">  - class: DockerRequirement</span></span>
+<span id="cb3-55"><a href="#cb3-55" aria-hidden="true" tabindex="-1"></a><span class="vs">    dockerPull: ghcr.io/eo-datahub/user-workflows/s2_mosaic@sha256:d66c855007e6838e493d5f4273ff7867dfe17868f84a66e69728b997e0d3031d</span></span>
+<span id="cb3-56"><a href="#cb3-56" aria-hidden="true" tabindex="-1"></a><span class="vs">  - class: InlineJavascriptRequirement</span></span>
+<span id="cb3-57"><a href="#cb3-57" aria-hidden="true" tabindex="-1"></a><span class="vs">  doc: "None\n"</span></span>
+<span id="cb3-58"><a href="#cb3-58" aria-hidden="true" tabindex="-1"></a><span class="vs">  baseCommand:</span></span>
+<span id="cb3-59"><a href="#cb3-59" aria-hidden="true" tabindex="-1"></a><span class="vs">  - /usr/local/bin/_entrypoint.sh</span></span>
+<span id="cb3-60"><a href="#cb3-60" aria-hidden="true" tabindex="-1"></a><span class="vs">  - python</span></span>
+<span id="cb3-61"><a href="#cb3-61" aria-hidden="true" tabindex="-1"></a><span class="vs">  - /app/app.py</span></span>
+<span id="cb3-62"><a href="#cb3-62" aria-hidden="true" tabindex="-1"></a><span class="vs">- class: CommandLineTool</span></span>
+<span id="cb3-63"><a href="#cb3-63" aria-hidden="true" tabindex="-1"></a><span class="vs">  id: 's2_rm_cloud'</span></span>
+<span id="cb3-64"><a href="#cb3-64" aria-hidden="true" tabindex="-1"></a><span class="vs">  inputs:</span></span>
+<span id="cb3-65"><a href="#cb3-65" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 'item_url'</span></span>
+<span id="cb3-66"><a href="#cb3-66" aria-hidden="true" tabindex="-1"></a><span class="vs">    inputBinding:</span></span>
+<span id="cb3-67"><a href="#cb3-67" aria-hidden="true" tabindex="-1"></a><span class="vs">      prefix: --item-url</span></span>
+<span id="cb3-68"><a href="#cb3-68" aria-hidden="true" tabindex="-1"></a><span class="vs">    type:</span></span>
+<span id="cb3-69"><a href="#cb3-69" aria-hidden="true" tabindex="-1"></a><span class="vs">    - 'null'</span></span>
+<span id="cb3-70"><a href="#cb3-70" aria-hidden="true" tabindex="-1"></a><span class="vs">    - string</span></span>
+<span id="cb3-71"><a href="#cb3-71" aria-hidden="true" tabindex="-1"></a><span class="vs">  outputs:</span></span>
+<span id="cb3-72"><a href="#cb3-72" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 'cloud_masked'</span></span>
+<span id="cb3-73"><a href="#cb3-73" aria-hidden="true" tabindex="-1"></a><span class="vs">    outputBinding:</span></span>
+<span id="cb3-74"><a href="#cb3-74" aria-hidden="true" tabindex="-1"></a><span class="vs">      glob: '*.tif'</span></span>
+<span id="cb3-75"><a href="#cb3-75" aria-hidden="true" tabindex="-1"></a><span class="vs">    type: File</span></span>
+<span id="cb3-76"><a href="#cb3-76" aria-hidden="true" tabindex="-1"></a><span class="vs">  requirements:</span></span>
+<span id="cb3-77"><a href="#cb3-77" aria-hidden="true" tabindex="-1"></a><span class="vs">  - class: DockerRequirement</span></span>
+<span id="cb3-78"><a href="#cb3-78" aria-hidden="true" tabindex="-1"></a><span class="vs">    dockerPull: ghcr.io/eo-datahub/user-workflows/s2_rm_cloud@sha256:c4d602948cd0433142ac26a822f72ab23ad7195ab840d9c2acba673346e6f3d1</span></span>
+<span id="cb3-79"><a href="#cb3-79" aria-hidden="true" tabindex="-1"></a><span class="vs">  - class: InlineJavascriptRequirement</span></span>
+<span id="cb3-80"><a href="#cb3-80" aria-hidden="true" tabindex="-1"></a><span class="vs">  doc: "None\n"</span></span>
+<span id="cb3-81"><a href="#cb3-81" aria-hidden="true" tabindex="-1"></a><span class="vs">  baseCommand:</span></span>
+<span id="cb3-82"><a href="#cb3-82" aria-hidden="true" tabindex="-1"></a><span class="vs">  - /usr/local/bin/_entrypoint.sh</span></span>
+<span id="cb3-83"><a href="#cb3-83" aria-hidden="true" tabindex="-1"></a><span class="vs">  - python</span></span>
+<span id="cb3-84"><a href="#cb3-84" aria-hidden="true" tabindex="-1"></a><span class="vs">  - /app/app.py</span></span>
+<span id="cb3-85"><a href="#cb3-85" aria-hidden="true" tabindex="-1"></a><span class="vs">- class: CommandLineTool</span></span>
+<span id="cb3-86"><a href="#cb3-86" aria-hidden="true" tabindex="-1"></a><span class="vs">  id: 's2_search'</span></span>
+<span id="cb3-87"><a href="#cb3-87" aria-hidden="true" tabindex="-1"></a><span class="vs">  inputs:</span></span>
+<span id="cb3-88"><a href="#cb3-88" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 'catalog'</span></span>
+<span id="cb3-89"><a href="#cb3-89" aria-hidden="true" tabindex="-1"></a><span class="vs">    inputBinding:</span></span>
+<span id="cb3-90"><a href="#cb3-90" aria-hidden="true" tabindex="-1"></a><span class="vs">      prefix: --catalog</span></span>
+<span id="cb3-91"><a href="#cb3-91" aria-hidden="true" tabindex="-1"></a><span class="vs">    type:</span></span>
+<span id="cb3-92"><a href="#cb3-92" aria-hidden="true" tabindex="-1"></a><span class="vs">    - 'null'</span></span>
+<span id="cb3-93"><a href="#cb3-93" aria-hidden="true" tabindex="-1"></a><span class="vs">    - string</span></span>
+<span id="cb3-94"><a href="#cb3-94" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 'collection'</span></span>
+<span id="cb3-95"><a href="#cb3-95" aria-hidden="true" tabindex="-1"></a><span class="vs">    inputBinding:</span></span>
+<span id="cb3-96"><a href="#cb3-96" aria-hidden="true" tabindex="-1"></a><span class="vs">      prefix: --collection</span></span>
+<span id="cb3-97"><a href="#cb3-97" aria-hidden="true" tabindex="-1"></a><span class="vs">    type:</span></span>
+<span id="cb3-98"><a href="#cb3-98" aria-hidden="true" tabindex="-1"></a><span class="vs">    - 'null'</span></span>
+<span id="cb3-99"><a href="#cb3-99" aria-hidden="true" tabindex="-1"></a><span class="vs">    - string</span></span>
+<span id="cb3-100"><a href="#cb3-100" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 'end_datetime'</span></span>
+<span id="cb3-101"><a href="#cb3-101" aria-hidden="true" tabindex="-1"></a><span class="vs">    inputBinding:</span></span>
+<span id="cb3-102"><a href="#cb3-102" aria-hidden="true" tabindex="-1"></a><span class="vs">      prefix: --end-datetime</span></span>
+<span id="cb3-103"><a href="#cb3-103" aria-hidden="true" tabindex="-1"></a><span class="vs">    type:</span></span>
+<span id="cb3-104"><a href="#cb3-104" aria-hidden="true" tabindex="-1"></a><span class="vs">    - 'null'</span></span>
+<span id="cb3-105"><a href="#cb3-105" aria-hidden="true" tabindex="-1"></a><span class="vs">    - string</span></span>
+<span id="cb3-106"><a href="#cb3-106" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 'intersects'</span></span>
+<span id="cb3-107"><a href="#cb3-107" aria-hidden="true" tabindex="-1"></a><span class="vs">    inputBinding:</span></span>
+<span id="cb3-108"><a href="#cb3-108" aria-hidden="true" tabindex="-1"></a><span class="vs">      prefix: --intersects</span></span>
+<span id="cb3-109"><a href="#cb3-109" aria-hidden="true" tabindex="-1"></a><span class="vs">    type:</span></span>
+<span id="cb3-110"><a href="#cb3-110" aria-hidden="true" tabindex="-1"></a><span class="vs">    - 'null'</span></span>
+<span id="cb3-111"><a href="#cb3-111" aria-hidden="true" tabindex="-1"></a><span class="vs">    - string</span></span>
+<span id="cb3-112"><a href="#cb3-112" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 'start_datetime'</span></span>
+<span id="cb3-113"><a href="#cb3-113" aria-hidden="true" tabindex="-1"></a><span class="vs">    inputBinding:</span></span>
+<span id="cb3-114"><a href="#cb3-114" aria-hidden="true" tabindex="-1"></a><span class="vs">      prefix: --start-datetime</span></span>
+<span id="cb3-115"><a href="#cb3-115" aria-hidden="true" tabindex="-1"></a><span class="vs">    type:</span></span>
+<span id="cb3-116"><a href="#cb3-116" aria-hidden="true" tabindex="-1"></a><span class="vs">    - 'null'</span></span>
+<span id="cb3-117"><a href="#cb3-117" aria-hidden="true" tabindex="-1"></a><span class="vs">    - string</span></span>
+<span id="cb3-118"><a href="#cb3-118" aria-hidden="true" tabindex="-1"></a><span class="vs">  outputs:</span></span>
+<span id="cb3-119"><a href="#cb3-119" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 'months'</span></span>
+<span id="cb3-120"><a href="#cb3-120" aria-hidden="true" tabindex="-1"></a><span class="vs">    outputBinding:</span></span>
+<span id="cb3-121"><a href="#cb3-121" aria-hidden="true" tabindex="-1"></a><span class="vs">      glob: month_*.json</span></span>
+<span id="cb3-122"><a href="#cb3-122" aria-hidden="true" tabindex="-1"></a><span class="vs">    type:</span></span>
+<span id="cb3-123"><a href="#cb3-123" aria-hidden="true" tabindex="-1"></a><span class="vs">      items: File</span></span>
+<span id="cb3-124"><a href="#cb3-124" aria-hidden="true" tabindex="-1"></a><span class="vs">      type: array</span></span>
+<span id="cb3-125"><a href="#cb3-125" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 'urls'</span></span>
+<span id="cb3-126"><a href="#cb3-126" aria-hidden="true" tabindex="-1"></a><span class="vs">    outputBinding:</span></span>
+<span id="cb3-127"><a href="#cb3-127" aria-hidden="true" tabindex="-1"></a><span class="vs">      glob: urls.txt</span></span>
+<span id="cb3-128"><a href="#cb3-128" aria-hidden="true" tabindex="-1"></a><span class="vs">      loadContents: true</span></span>
+<span id="cb3-129"><a href="#cb3-129" aria-hidden="true" tabindex="-1"></a><span class="vs">      outputEval: $(self[0].contents.split('\n'))</span></span>
+<span id="cb3-130"><a href="#cb3-130" aria-hidden="true" tabindex="-1"></a><span class="vs">    type:</span></span>
+<span id="cb3-131"><a href="#cb3-131" aria-hidden="true" tabindex="-1"></a><span class="vs">      items: string</span></span>
+<span id="cb3-132"><a href="#cb3-132" aria-hidden="true" tabindex="-1"></a><span class="vs">      type: array</span></span>
+<span id="cb3-133"><a href="#cb3-133" aria-hidden="true" tabindex="-1"></a><span class="vs">  requirements:</span></span>
+<span id="cb3-134"><a href="#cb3-134" aria-hidden="true" tabindex="-1"></a><span class="vs">  - class: DockerRequirement</span></span>
+<span id="cb3-135"><a href="#cb3-135" aria-hidden="true" tabindex="-1"></a><span class="vs">    dockerPull: ghcr.io/eo-datahub/user-workflows/s2_search@sha256:1a56d9f39b4281a1662de450cd36414c32bc28ff3b544cbf54a84f92e7c59133</span></span>
+<span id="cb3-136"><a href="#cb3-136" aria-hidden="true" tabindex="-1"></a><span class="vs">  - class: InlineJavascriptRequirement</span></span>
+<span id="cb3-137"><a href="#cb3-137" aria-hidden="true" tabindex="-1"></a><span class="vs">  doc: "None\n"</span></span>
+<span id="cb3-138"><a href="#cb3-138" aria-hidden="true" tabindex="-1"></a><span class="vs">  baseCommand:</span></span>
+<span id="cb3-139"><a href="#cb3-139" aria-hidden="true" tabindex="-1"></a><span class="vs">  - python</span></span>
+<span id="cb3-140"><a href="#cb3-140" aria-hidden="true" tabindex="-1"></a><span class="vs">  - /app/app.py</span></span>
+<span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a><span class="vs">- class: Workflow</span></span>
+<span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a><span class="vs">  id: 'cloud-free-best-pixel-h'</span></span>
+<span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a><span class="vs">  inputs:</span></span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a><span class="vs">    id: 'catalog'</span></span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a><span class="vs">    label: Catalog path</span></span>
+<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a><span class="vs">    doc: Full catalog path</span></span>
+<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a><span class="vs">    default: supported-datasets/ceda-stac-catalogue</span></span>
+<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a><span class="vs">    type: string</span></span>
+<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a><span class="vs">    id: 'collection'</span></span>
+<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a><span class="vs">    label: collection id</span></span>
+<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a><span class="vs">    doc: collection id</span></span>
+<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a><span class="vs">    default: sentinel2_ard</span></span>
+<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a><span class="vs">    type: string</span></span>
+<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a><span class="vs">    id: 'intersects'</span></span>
+<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a><span class="vs">    label: Intersects</span></span>
+<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a><span class="vs">    doc: "a GeoJSON-like json string, which provides a \"type\" member describing</span></span>
+<span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a><span class="vs">      the type of the geometry and \"coordinates\"  member providing a list of coordinates.</span></span>
+<span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a><span class="vs">      Will search for images intersecting this geometry.\n"</span></span>
+<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a><span class="vs">    default: "{\n  \"type\": \"Polygon\",\n  \"coordinates\": [\n    [\n      [0.08905898091569497,</span></span>
+<span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a><span class="vs">      52.69722175598818],\n      [0.08905898091569497, 52.15527412683906],\n     \</span></span>
+<span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a><span class="vs">      \ [0.9565339502005088, 52.15527412683906],\n      [0.9565339502005088, 52.69722175598818],\n\</span></span>
+<span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a><span class="vs">      \      [0.08905898091569497, 52.69722175598818]\n    ]\n  ]\n}\n"</span></span>
+<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a><span class="vs">    type: string</span></span>
+<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a><span class="vs">    id: 'start_datetime'</span></span>
+<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a><span class="vs">    label: Start datetime</span></span>
+<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a><span class="vs">    doc: Start datetime</span></span>
+<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a><span class="vs">    default: '2023-04-01'</span></span>
+<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a><span class="vs">    type: string</span></span>
+<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a><span class="vs">    id: 'end_datetime'</span></span>
+<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a><span class="vs">    label: End datetime</span></span>
+<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a><span class="vs">    doc: End datetime</span></span>
+<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a><span class="vs">    default: '2023-06-30'</span></span>
+<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a><span class="vs">    type: string</span></span>
+<span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a><span class="vs">  outputs:</span></span>
+<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a><span class="vs">    id: 'stac_output'</span></span>
+<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a><span class="vs">    outputSource:</span></span>
+<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a><span class="vs">      's2_make_stac/stac_catalog'</span></span>
+<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a><span class="vs">    type: Directory</span></span>
+<span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a><span class="vs">  requirements:</span></span>
+<span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a><span class="vs">    class: ResourceRequirement</span></span>
+<span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a><span class="vs">    coresMin: 3</span></span>
+<span id="cb3-182"><a href="#cb3-182" aria-hidden="true" tabindex="-1"></a><span class="vs">    ramMin: 15000</span></span>
+<span id="cb3-183"><a href="#cb3-183" aria-hidden="true" tabindex="-1"></a><span class="vs">    class: ScatterFeatureRequirement</span></span>
+<span id="cb3-184"><a href="#cb3-184" aria-hidden="true" tabindex="-1"></a><span class="vs">  label: Cloud free best pixel</span></span>
+<span id="cb3-185"><a href="#cb3-185" aria-hidden="true" tabindex="-1"></a><span class="vs">  doc: Generate cloud free best pixel mosaic on a per month basis</span></span>
+<span id="cb3-186"><a href="#cb3-186" aria-hidden="true" tabindex="-1"></a><span class="vs">  steps:</span></span>
+<span id="cb3-187"><a href="#cb3-187" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 's2_search'</span></span>
+<span id="cb3-188"><a href="#cb3-188" aria-hidden="true" tabindex="-1"></a><span class="vs">    in:</span></span>
+<span id="cb3-189"><a href="#cb3-189" aria-hidden="true" tabindex="-1"></a><span class="vs">    - id: 'catalog'</span></span>
+<span id="cb3-190"><a href="#cb3-190" aria-hidden="true" tabindex="-1"></a><span class="vs">      source: 'catalog'</span></span>
+<span id="cb3-191"><a href="#cb3-191" aria-hidden="true" tabindex="-1"></a><span class="vs">    - id: 'collection'</span></span>
+<span id="cb3-192"><a href="#cb3-192" aria-hidden="true" tabindex="-1"></a><span class="vs">      source: 'collection'</span></span>
+<span id="cb3-193"><a href="#cb3-193" aria-hidden="true" tabindex="-1"></a><span class="vs">    - id: 'intersects'</span></span>
+<span id="cb3-194"><a href="#cb3-194" aria-hidden="true" tabindex="-1"></a><span class="vs">      source: 'intersects'</span></span>
+<span id="cb3-195"><a href="#cb3-195" aria-hidden="true" tabindex="-1"></a><span class="vs">    - id: 'start_datetime'</span></span>
+<span id="cb3-196"><a href="#cb3-196" aria-hidden="true" tabindex="-1"></a><span class="vs">      source: 'start_datetime'</span></span>
+<span id="cb3-197"><a href="#cb3-197" aria-hidden="true" tabindex="-1"></a><span class="vs">    - id: 'end_datetime'</span></span>
+<span id="cb3-198"><a href="#cb3-198" aria-hidden="true" tabindex="-1"></a><span class="vs">      source: 'end_datetime'</span></span>
+<span id="cb3-199"><a href="#cb3-199" aria-hidden="true" tabindex="-1"></a><span class="vs">    out:</span></span>
+<span id="cb3-200"><a href="#cb3-200" aria-hidden="true" tabindex="-1"></a><span class="vs">    - id: 'urls'</span></span>
+<span id="cb3-201"><a href="#cb3-201" aria-hidden="true" tabindex="-1"></a><span class="vs">    - id: 'months'</span></span>
+<span id="cb3-202"><a href="#cb3-202" aria-hidden="true" tabindex="-1"></a><span class="vs">    run: '#s2_search'</span></span>
+<span id="cb3-203"><a href="#cb3-203" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 's2_rm_cloud'</span></span>
+<span id="cb3-204"><a href="#cb3-204" aria-hidden="true" tabindex="-1"></a><span class="vs">    in:</span></span>
+<span id="cb3-205"><a href="#cb3-205" aria-hidden="true" tabindex="-1"></a><span class="vs">    - id: 'item_url'</span></span>
+<span id="cb3-206"><a href="#cb3-206" aria-hidden="true" tabindex="-1"></a><span class="vs">      source: 's2_search/urls'</span></span>
+<span id="cb3-207"><a href="#cb3-207" aria-hidden="true" tabindex="-1"></a><span class="vs">    out:</span></span>
+<span id="cb3-208"><a href="#cb3-208" aria-hidden="true" tabindex="-1"></a><span class="vs">    - id: 'cloud_masked'</span></span>
+<span id="cb3-209"><a href="#cb3-209" aria-hidden="true" tabindex="-1"></a><span class="vs">    run: '#s2_rm_cloud'</span></span>
+<span id="cb3-210"><a href="#cb3-210" aria-hidden="true" tabindex="-1"></a><span class="vs">    scatter:</span></span>
+<span id="cb3-211"><a href="#cb3-211" aria-hidden="true" tabindex="-1"></a><span class="vs">    - 'item_url'</span></span>
+<span id="cb3-212"><a href="#cb3-212" aria-hidden="true" tabindex="-1"></a><span class="vs">    scatterMethod: dotproduct</span></span>
+<span id="cb3-213"><a href="#cb3-213" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 's2_mosaic'</span></span>
+<span id="cb3-214"><a href="#cb3-214" aria-hidden="true" tabindex="-1"></a><span class="vs">    in:</span></span>
+<span id="cb3-215"><a href="#cb3-215" aria-hidden="true" tabindex="-1"></a><span class="vs">    - id: 'intersects'</span></span>
+<span id="cb3-216"><a href="#cb3-216" aria-hidden="true" tabindex="-1"></a><span class="vs">      source: 'intersects'</span></span>
+<span id="cb3-217"><a href="#cb3-217" aria-hidden="true" tabindex="-1"></a><span class="vs">    - id: 'month_json'</span></span>
+<span id="cb3-218"><a href="#cb3-218" aria-hidden="true" tabindex="-1"></a><span class="vs">      source: 's2_search/months'</span></span>
+<span id="cb3-219"><a href="#cb3-219" aria-hidden="true" tabindex="-1"></a><span class="vs">    - id: 'all_images'</span></span>
+<span id="cb3-220"><a href="#cb3-220" aria-hidden="true" tabindex="-1"></a><span class="vs">      source: 's2_rm_cloud/cloud_masked'</span></span>
+<span id="cb3-221"><a href="#cb3-221" aria-hidden="true" tabindex="-1"></a><span class="vs">    out:</span></span>
+<span id="cb3-222"><a href="#cb3-222" aria-hidden="true" tabindex="-1"></a><span class="vs">    - id: 'best_pixel'</span></span>
+<span id="cb3-223"><a href="#cb3-223" aria-hidden="true" tabindex="-1"></a><span class="vs">    run: '#s2_mosaic'</span></span>
+<span id="cb3-224"><a href="#cb3-224" aria-hidden="true" tabindex="-1"></a><span class="vs">    scatter:</span></span>
+<span id="cb3-225"><a href="#cb3-225" aria-hidden="true" tabindex="-1"></a><span class="vs">    - 'month_json'</span></span>
+<span id="cb3-226"><a href="#cb3-226" aria-hidden="true" tabindex="-1"></a><span class="vs">    scatterMethod: dotproduct</span></span>
+<span id="cb3-227"><a href="#cb3-227" aria-hidden="true" tabindex="-1"></a><span class="vs">  - id: 's2_make_stac'</span></span>
+<span id="cb3-228"><a href="#cb3-228" aria-hidden="true" tabindex="-1"></a><span class="vs">    in:</span></span>
+<span id="cb3-229"><a href="#cb3-229" aria-hidden="true" tabindex="-1"></a><span class="vs">    - id: 'geometry'</span></span>
+<span id="cb3-230"><a href="#cb3-230" aria-hidden="true" tabindex="-1"></a><span class="vs">      source: 'intersects'</span></span>
+<span id="cb3-231"><a href="#cb3-231" aria-hidden="true" tabindex="-1"></a><span class="vs">    - id: 'files'</span></span>
+<span id="cb3-232"><a href="#cb3-232" aria-hidden="true" tabindex="-1"></a><span class="vs">      source: 's2_mosaic/best_pixel'</span></span>
+<span id="cb3-233"><a href="#cb3-233" aria-hidden="true" tabindex="-1"></a><span class="vs">    out:</span></span>
+<span id="cb3-234"><a href="#cb3-234" aria-hidden="true" tabindex="-1"></a><span class="vs">    - id: 'stac_catalog'</span></span>
+<span id="cb3-235"><a href="#cb3-235" aria-hidden="true" tabindex="-1"></a><span class="vs">    run: '#s2_make_stac'</span></span>
+<span id="cb3-236"><a href="#cb3-236" aria-hidden="true" tabindex="-1"></a><span class="vs">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Run the following cell if deploying the workflow.</p>
+<div id="cell-5" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    ades.get_process(<span class="st">"cloud-free-best-pixel-h"</span>).delete()</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span>:</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Process not found, no need to undeploy."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>DEBUG: _request_raw received {'self': &lt;pyeodh.client.Client object at 0x7c7dceb32090&gt;, 'method': 'GET', 'url': 'https://test.eodatahub.org.uk/ades/ajgwords/ogc-api/processes/cloud-free-best-pixel-h', 'headers': None, 'params': None, 'data': None, 'encode': &lt;function _encode_json at 0x7c7dd732efc0&gt;}
+DEBUG: Making request: GET https://test.eodatahub.org.uk/ades/ajgwords/ogc-api/processes/cloud-free-best-pixel-h
+       headers: {}
+       params: None
+       body: None
+DEBUG: Received response 404
+       headers: {'Content-Type': 'application/json;charset=UTF-8', 'Content-Length': '205', 'Connection': 'keep-alive', 'Server': 'nginx/1.27.0', 'Date': 'Tue, 21 Jan 2025 14:46:20 GMT', 'Access-Control-Allow-Headers': 'Content-Type,Authorization,Prefer', 'Access-Control-Allow-Origin': '*', 'X-Cache': 'Error from cloudfront', 'Via': '1.1 717666fbcd9eb8ed70d0f46dd99d0448.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'LHR50-P1', 'X-Amz-Cf-Id': 'VS1ZfIratj85SYUlpZNjoieGK1mOaIyFZt5MSM5hky1LyqE79ycd_w=='}
+       content: {
+         "title": "NoSuchProcess",
+         "type": "http://www.opengis.net/def/rel/ogc/1.0/exception/no-such-process",
+         "detail": "Unable to parse the ZCFG file: cloud-free-best-pixel-h.zcfg (No message provided)"
+       }</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Process not found, no need to undeploy.</code></pre>
+</div>
+</div>
+<div id="cell-6" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>process <span class="op">=</span> ades.deploy_process(cwl_yaml<span class="op">=</span>cwl_yaml)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>DEBUG: _request_raw received {'self': &lt;pyeodh.client.Client object at 0x7c7dceb32090&gt;, 'method': 'POST', 'url': 'https://test.eodatahub.org.uk/ades/ajgwords/ogc-api/processes', 'headers': None, 'params': None, 'data': 'cwlVersion: v1.0\n$graph:\n- class: CommandLineTool\n  id: \'s2_make_stac\'\n  inputs:\n  - id: \'files\'\n    doc: FILES\n    type:\n      type: array\n      items: File\n  - id: \'geometry\'\n    inputBinding:\n      prefix: --geometry\n    type:\n    - \'null\'\n    - string\n  requirements:\n  - class: DockerRequirement\n    dockerPull: ghcr.io/eo-datahub/user-workflows/s2_make_stac@sha256:1c5f2166ca78c561caf2db45f7974649d3ad4423f774eda4b5d73d5c96d955ed\n  - class: InlineJavascriptRequirement\n  doc: "None\\n"\n  baseCommand:\n  - python\n  - /app/app.py\n  outputs:\n  - id: \'stac_catalog\'\n    outputBinding:\n      glob: .\n    type: Directory\n- class: CommandLineTool\n  id: \'s2_mosaic\'\n  inputs:\n  - id: \'all_images\'\n    doc: ALL_IMAGES\n    type:\n      type: array\n      items: File\n  - id: \'intersects\'\n    inputBinding:\n      prefix: --intersects\n    type:\n    - \'null\'\n    - string\n  - id: \'month_json\'\n    inputBinding:\n      prefix: --month-json\n    type: File\n  outputs:\n  - id: \'best_pixel\'\n    outputBinding:\n      glob: \'*.tif\'\n    type: File\n  requirements:\n  - class: DockerRequirement\n    dockerPull: ghcr.io/eo-datahub/user-workflows/s2_mosaic@sha256:d66c855007e6838e493d5f4273ff7867dfe17868f84a66e69728b997e0d3031d\n  - class: InlineJavascriptRequirement\n  doc: "None\\n"\n  baseCommand:\n  - /usr/local/bin/_entrypoint.sh\n  - python\n  - /app/app.py\n- class: CommandLineTool\n  id: \'s2_rm_cloud\'\n  inputs:\n  - id: \'item_url\'\n    inputBinding:\n      prefix: --item-url\n    type:\n    - \'null\'\n    - string\n  outputs:\n  - id: \'cloud_masked\'\n    outputBinding:\n      glob: \'*.tif\'\n    type: File\n  requirements:\n  - class: DockerRequirement\n    dockerPull: ghcr.io/eo-datahub/user-workflows/s2_rm_cloud@sha256:c4d602948cd0433142ac26a822f72ab23ad7195ab840d9c2acba673346e6f3d1\n  - class: InlineJavascriptRequirement\n  doc: "None\\n"\n  baseCommand:\n  - /usr/local/bin/_entrypoint.sh\n  - python\n  - /app/app.py\n- class: CommandLineTool\n  id: \'s2_search\'\n  inputs:\n  - id: \'catalog\'\n    inputBinding:\n      prefix: --catalog\n    type:\n    - \'null\'\n    - string\n  - id: \'collection\'\n    inputBinding:\n      prefix: --collection\n    type:\n    - \'null\'\n    - string\n  - id: \'end_datetime\'\n    inputBinding:\n      prefix: --end-datetime\n    type:\n    - \'null\'\n    - string\n  - id: \'intersects\'\n    inputBinding:\n      prefix: --intersects\n    type:\n    - \'null\'\n    - string\n  - id: \'start_datetime\'\n    inputBinding:\n      prefix: --start-datetime\n    type:\n    - \'null\'\n    - string\n  outputs:\n  - id: \'months\'\n    outputBinding:\n      glob: month_*.json\n    type:\n      items: File\n      type: array\n  - id: \'urls\'\n    outputBinding:\n      glob: urls.txt\n      loadContents: true\n      outputEval: $(self[0].contents.split(\'\\n\'))\n    type:\n      items: string\n      type: array\n  requirements:\n  - class: DockerRequirement\n    dockerPull: ghcr.io/eo-datahub/user-workflows/s2_search@sha256:1a56d9f39b4281a1662de450cd36414c32bc28ff3b544cbf54a84f92e7c59133\n  - class: InlineJavascriptRequirement\n  doc: "None\\n"\n  baseCommand:\n  - python\n  - /app/app.py\n- class: Workflow\n  id: \'cloud-free-best-pixel-h\'\n  inputs:\n    id: \'catalog\'\n    label: Catalog path\n    doc: Full catalog path\n    default: supported-datasets/ceda-stac-catalogue\n    type: string\n    id: \'collection\'\n    label: collection id\n    doc: collection id\n    default: sentinel2_ard\n    type: string\n    id: \'intersects\'\n    label: Intersects\n    doc: "a GeoJSON-like json string, which provides a \\"type\\" member describing\n      the type of the geometry and \\"coordinates\\"  member providing a list of coordinates.\n      Will search for images intersecting this geometry.\\n"\n    default: "{\\n  \\"type\\": \\"Polygon\\",\\n  \\"coordinates\\": [\\n    [\\n      [0.08905898091569497,\n      52.69722175598818],\\n      [0.08905898091569497, 52.15527412683906],\\n     \\\n      \\ [0.9565339502005088, 52.15527412683906],\\n      [0.9565339502005088, 52.69722175598818],\\n\\\n      \\      [0.08905898091569497, 52.69722175598818]\\n    ]\\n  ]\\n}\\n"\n    type: string\n    id: \'start_datetime\'\n    label: Start datetime\n    doc: Start datetime\n    default: \'2023-04-01\'\n    type: string\n    id: \'end_datetime\'\n    label: End datetime\n    doc: End datetime\n    default: \'2023-06-30\'\n    type: string\n  outputs:\n    id: \'stac_output\'\n    outputSource:\n      \'s2_make_stac/stac_catalog\'\n    type: Directory\n  requirements:\n    class: ResourceRequirement\n    coresMin: 3\n    ramMin: 15000\n    class: ScatterFeatureRequirement\n  label: Cloud free best pixel\n  doc: Generate cloud free best pixel mosaic on a per month basis\n  steps:\n  - id: \'s2_search\'\n    in:\n    - id: \'catalog\'\n      source: \'catalog\'\n    - id: \'collection\'\n      source: \'collection\'\n    - id: \'intersects\'\n      source: \'intersects\'\n    - id: \'start_datetime\'\n      source: \'start_datetime\'\n    - id: \'end_datetime\'\n      source: \'end_datetime\'\n    out:\n    - id: \'urls\'\n    - id: \'months\'\n    run: \'#s2_search\'\n  - id: \'s2_rm_cloud\'\n    in:\n    - id: \'item_url\'\n      source: \'s2_search/urls\'\n    out:\n    - id: \'cloud_masked\'\n    run: \'#s2_rm_cloud\'\n    scatter:\n    - \'item_url\'\n    scatterMethod: dotproduct\n  - id: \'s2_mosaic\'\n    in:\n    - id: \'intersects\'\n      source: \'intersects\'\n    - id: \'month_json\'\n      source: \'s2_search/months\'\n    - id: \'all_images\'\n      source: \'s2_rm_cloud/cloud_masked\'\n    out:\n    - id: \'best_pixel\'\n    run: \'#s2_mosaic\'\n    scatter:\n    - \'month_json\'\n    scatterMethod: dotproduct\n  - id: \'s2_make_stac\'\n    in:\n    - id: \'geometry\'\n      source: \'intersects\'\n    - id: \'files\'\n      source: \'s2_mosaic/best_pixel\'\n    out:\n    - id: \'stac_catalog\'\n    run: \'#s2_make_stac\'\n', 'encode': &lt;function Ades.deploy_process.&lt;locals&gt;.encode at 0x7c7dcd0cc400&gt;}
+DEBUG: Making request: POST https://test.eodatahub.org.uk/ades/ajgwords/ogc-api/processes
+       headers: {'Content-Type': 'application/cwl+yaml'}
+       params: None
+       body: cwlVersion: v1.0
+       $graph:
+       - class: CommandLineTool
+         id: 's2_make_stac'
+         inputs:
+         - id: 'files'
+           doc: FILES
+           type:
+             type: array
+             items: File
+         - id: 'geometry'
+           inputBinding:
+             prefix: --geometry
+           type:
+           - 'null'
+           - string
+         requirements:
+         - class: DockerRequirement
+           dockerPull: ghcr.io/eo-datahub/user-workflows/s2_make_stac@sha256:1c5f2166ca78c561caf2db45f7974649d3ad4423f774eda4b5d73d5c96d955ed
+         - class: InlineJavascriptRequirement
+         doc: "None\n"
+         baseCommand:
+         - python
+         - /app/app.py
+         outputs:
+         - id: 'stac_catalog'
+           outputBinding:
+             glob: .
+           type: Directory
+       - class: CommandLineTool
+         id: 's2_mosaic'
+         inputs:
+         - id: 'all_images'
+           doc: ALL_IMAGES
+           type:
+             type: array
+             items: File
+         - id: 'intersects'
+           inputBinding:
+             prefix: --intersects
+           type:
+           - 'null'
+           - string
+         - id: 'month_json'
+           inputBinding:
+             prefix: --month-json
+           type: File
+         outputs:
+         - id: 'best_pixel'
+           outputBinding:
+             glob: '*.tif'
+           type: File
+         requirements:
+         - class: DockerRequirement
+           dockerPull: ghcr.io/eo-datahub/user-workflows/s2_mosaic@sha256:d66c855007e6838e493d5f4273ff7867dfe17868f84a66e69728b997e0d3031d
+         - class: InlineJavascriptRequirement
+         doc: "None\n"
+         baseCommand:
+         - /usr/local/bin/_entrypoint.sh
+         - python
+         - /app/app.py
+       - class: CommandLineTool
+         id: 's2_rm_cloud'
+         inputs:
+         - id: 'item_url'
+           inputBinding:
+             prefix: --item-url
+           type:
+           - 'null'
+           - string
+         outputs:
+         - id: 'cloud_masked'
+           outputBinding:
+             glob: '*.tif'
+           type: File
+         requirements:
+         - class: DockerRequirement
+           dockerPull: ghcr.io/eo-datahub/user-workflows/s2_rm_cloud@sha256:c4d602948cd0433142ac26a822f72ab23ad7195ab840d9c2acba673346e6f3d1
+         - class: InlineJavascriptRequirement
+         doc: "None\n"
+         baseCommand:
+         - /usr/local/bin/_entrypoint.sh
+         - python
+         - /app/app.py
+       - class: CommandLineTool
+         id: 's2_search'
+         inputs:
+         - id: 'catalog'
+           inputBinding:
+             prefix: --catalog
+           type:
+           - 'null'
+           - string
+         - id: 'collection'
+           inputBinding:
+             prefix: --collection
+           type:
+           - 'null'
+           - string
+         - id: 'end_datetime'
+           inputBinding:
+             prefix: --end-datetime
+           type:
+           - 'null'
+           - string
+         - id: 'intersects'
+           inputBinding:
+             prefix: --intersects
+           type:
+           - 'null'
+           - string
+         - id: 'start_datetime'
+           inputBinding:
+             prefix: --start-datetime
+           type:
+           - 'null'
+           - string
+         outputs:
+         - id: 'months'
+           outputBinding:
+             glob: month_*.json
+           type:
+             items: File
+             type: array
+         - id: 'urls'
+           outputBinding:
+             glob: urls.txt
+             loadContents: true
+             outputEval: $(self[0].contents.split('\n'))
+           type:
+             items: string
+             type: array
+         requirements:
+         - class: DockerRequirement
+           dockerPull: ghcr.io/eo-datahub/user-workflows/s2_search@sha256:1a56d9f39b4281a1662de450cd36414c32bc28ff3b544cbf54a84f92e7c59133
+         - class: InlineJavascriptRequirement
+         doc: "None\n"
+         baseCommand:
+         - python
+         - /app/app.py
+       - class: Workflow
+         id: 'cloud-free-best-pixel-h'
+         inputs:
+           id: 'catalog'
+           label: Catalog path
+           doc: Full catalog path
+           default: supported-datasets/ceda-stac-catalogue
+           type: string
+           id: 'collection'
+           label: collection id
+           doc: collection id
+           default: sentinel2_ard
+           type: string
+           id: 'intersects'
+           label: Intersects
+           doc: "a GeoJSON-like json string, which provides a \"type\" member describing
+             the type of the geometry and \"coordinates\"  member providing a list of coordinates.
+             Will search for images intersecting this geometry.\n"
+           default: "{\n  \"type\": \"Polygon\",\n  \"coordinates\": [\n    [\n      [0.08905898091569497,
+             52.69722175598818],\n      [0.08905898091569497, 52.15527412683906],\n     \
+             \ [0.9565339502005088, 52.15527412683906],\n      [0.9565339502005088, 52.69722175598818],\n\
+             \      [0.08905898091569497, 52.69722175598818]\n    ]\n  ]\n}\n"
+           type: string
+           id: 'start_datetime'
+           label: Start datetime
+           doc: Start datetime
+           default: '2023-04-01'
+           type: string
+           id: 'end_datetime'
+           label: End datetime
+           doc: End datetime
+           default: '2023-06-30'
+           type: string
+         outputs:
+           id: 'stac_output'
+           outputSource:
+             's2_make_stac/stac_catalog'
+           type: Directory
+         requirements:
+           class: ResourceRequirement
+           coresMin: 3
+           ramMin: 15000
+           class: ScatterFeatureRequirement
+         label: Cloud free best pixel
+         doc: Generate cloud free best pixel mosaic on a per month basis
+         steps:
+         - id: 's2_search'
+           in:
+           - id: 'catalog'
+             source: 'catalog'
+           - id: 'collection'
+             source: 'collection'
+           - id: 'intersects'
+             source: 'intersects'
+           - id: 'start_datetime'
+             source: 'start_datetime'
+           - id: 'end_datetime'
+             source: 'end_datetime'
+           out:
+           - id: 'urls'
+           - id: 'months'
+           run: '#s2_search'
+         - id: 's2_rm_cloud'
+           in:
+           - id: 'item_url'
+             source: 's2_search/urls'
+           out:
+           - id: 'cloud_masked'
+           run: '#s2_rm_cloud'
+           scatter:
+           - 'item_url'
+           scatterMethod: dotproduct
+         - id: 's2_mosaic'
+           in:
+           - id: 'intersects'
+             source: 'intersects'
+           - id: 'month_json'
+             source: 's2_search/months'
+           - id: 'all_images'
+             source: 's2_rm_cloud/cloud_masked'
+           out:
+           - id: 'best_pixel'
+           run: '#s2_mosaic'
+           scatter:
+           - 'month_json'
+           scatterMethod: dotproduct
+         - id: 's2_make_stac'
+           in:
+           - id: 'geometry'
+             source: 'intersects'
+           - id: 'files'
+             source: 's2_mosaic/best_pixel'
+           out:
+           - id: 'stac_catalog'
+           run: '#s2_make_stac'
+
+DEBUG: Received response 409
+       headers: {'Content-Type': 'application/json;charset=UTF-8', 'Content-Length': '93', 'Connection': 'keep-alive', 'Server': 'nginx/1.27.0', 'Date': 'Tue, 21 Jan 2025 14:46:25 GMT', 'Access-Control-Allow-Headers': 'Content-Type,Authorization,Prefer', 'location': '', 'Access-Control-Allow-Origin': '*', 'X-Cache': 'Error from cloudfront', 'Via': '1.1 717666fbcd9eb8ed70d0f46dd99d0448.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'LHR50-P1', 'X-Amz-Cf-Id': 'hAWrQl_SL9xklp7JiYCHp9RIBBY9dMWT8U7cvZvfy-w8ydvczjybyA=='}
+       content: {
+         "title": "NoApplicableCode",
+         "type": "NoApplicableCode",
+         "detail": "file not found"
+       }</code></pre>
+</div>
+<div class="cell-output cell-output-error">
+<div class="ansi-escaped-output">
+<pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">HTTPError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[9], line 1</span>
+<span class="ansi-green-fg">----&gt; 1</span> process <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">ades</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">deploy_process</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">cwl_yaml</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">cwl_yaml</span><span class="ansi-yellow-bg">)</span>
+
+File <span class="ansi-green-fg">~/miniforge3/envs/eodh/lib/python3.12/site-packages/pyeodh/ades.py:414</span>, in <span class="ansi-cyan-fg">Ades.deploy_process</span><span class="ansi-blue-fg">(self, cwl_url, cwl_yaml)</span>
+<span class="ansi-green-fg ansi-bold">    412</span> headers <span style="color:rgb(98,98,98)">=</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>
+<span class="ansi-green-fg ansi-bold">    413</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> cwl_yaml <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>:
+<span class="ansi-green-fg">--&gt; 414</span>     headers, response <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_client</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_request_json</span><span class="ansi-yellow-bg">(</span>
+<span class="ansi-green-fg ansi-bold">    415</span> <span class="ansi-yellow-bg">        </span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">POST</span><span style="color:rgb(175,0,0)" class="ansi-yellow-bg">"</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">processes_href</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">data</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">cwl_yaml</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">encode</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">encode</span>
+<span class="ansi-green-fg ansi-bold">    416</span> <span class="ansi-yellow-bg">    </span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg ansi-bold">    418</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> cwl_url <span style="font-weight:bold;color:rgb(175,0,255)">is</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="font-weight:bold;color:rgb(0,135,0)">None</span>:
+<span class="ansi-green-fg ansi-bold">    419</span>     data <span style="color:rgb(98,98,98)">=</span> {
+<span class="ansi-green-fg ansi-bold">    420</span>         <span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">executionUnit</span><span style="color:rgb(175,0,0)">"</span>: {
+<span class="ansi-green-fg ansi-bold">    421</span>             <span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">href</span><span style="color:rgb(175,0,0)">"</span>: cwl_url,
+<span class="ansi-green-fg ansi-bold">    422</span>             <span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">type</span><span style="color:rgb(175,0,0)">"</span>: <span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">application/cwl</span><span style="color:rgb(175,0,0)">"</span>,
+<span class="ansi-green-fg ansi-bold">    423</span>         }
+<span class="ansi-green-fg ansi-bold">    424</span>     }
+
+File <span class="ansi-green-fg">~/miniforge3/envs/eodh/lib/python3.12/site-packages/pyeodh/client.py:139</span>, in <span class="ansi-cyan-fg">Client._request_json</span><span class="ansi-blue-fg">(self, method, url, headers, params, data, encode)</span>
+<span class="ansi-green-fg ansi-bold">    110</span> <span style="font-weight:bold;color:rgb(0,135,0)">def</span> <span style="color:rgb(0,0,255)">_request_json</span>(
+<span class="ansi-green-fg ansi-bold">    111</span>     <span style="color:rgb(0,135,0)">self</span>,
+<span class="ansi-green-fg ansi-bold">    112</span>     method: RequestMethod,
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-fg ansi-bold">    117</span>     encode: Callable[[Any], <span style="color:rgb(0,135,0)">tuple</span>[<span style="color:rgb(0,135,0)">str</span>, Any]] <span style="color:rgb(98,98,98)">=</span> _encode_json,
+<span class="ansi-green-fg ansi-bold">    118</span> ) <span style="color:rgb(98,98,98)">-</span><span style="color:rgb(98,98,98)">&gt;</span> <span style="color:rgb(0,135,0)">tuple</span>[Headers, Any]:
+<span class="ansi-green-fg ansi-bold">    119</span> <span style="color:rgb(188,188,188)">    </span><span style="font-style:italic;color:rgb(175,0,0)">"""Make a request and return the headers and deserialized JSON data. Input data</span>
+<span class="ansi-green-fg ansi-bold">    120</span> <span style="font-style:italic;color:rgb(175,0,0)">    can be anything, not just JSON, providing an `encode` function is supplied. Use</span>
+<span class="ansi-green-fg ansi-bold">    121</span> <span style="font-style:italic;color:rgb(175,0,0)">    when expecting JSON data in the response.</span>
+<span class="ansi-green-fg">   (...)</span>
+<span class="ansi-green-fg ansi-bold">    137</span> <span style="font-style:italic;color:rgb(175,0,0)">        tuple[Headers, Any]: Response headers and deserialized JSON data</span>
+<span class="ansi-green-fg ansi-bold">    138</span> <span style="font-style:italic;color:rgb(175,0,0)">    """</span>
+<span class="ansi-green-fg">--&gt; 139</span>     response <span style="color:rgb(98,98,98)">=</span> <span style="color:rgb(0,135,0)" class="ansi-yellow-bg">self</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">_request_raw</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">method</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">url</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">headers</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">params</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">data</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">encode</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg ansi-bold">    141</span>     <span style="font-weight:bold;color:rgb(0,135,0)">if</span> <span style="font-weight:bold;color:rgb(175,0,255)">not</span> <span style="color:rgb(0,135,0)">len</span>(response<span style="color:rgb(98,98,98)">.</span>text):
+<span class="ansi-green-fg ansi-bold">    142</span>         <span style="font-weight:bold;color:rgb(0,135,0)">return</span> response<span style="color:rgb(98,98,98)">.</span>headers, <span style="font-weight:bold;color:rgb(0,135,0)">None</span>
+
+File <span class="ansi-green-fg">~/miniforge3/envs/eodh/lib/python3.12/site-packages/pyeodh/client.py:106</span>, in <span class="ansi-cyan-fg">Client._request_raw</span><span class="ansi-blue-fg">(self, method, url, headers, params, data, encode)</span>
+<span class="ansi-green-fg ansi-bold">     99</span> logger<span style="color:rgb(98,98,98)">.</span>debug(
+<span class="ansi-green-fg ansi-bold">    100</span>     <span style="color:rgb(175,0,0)">f</span><span style="color:rgb(175,0,0)">"</span><span style="color:rgb(175,0,0)">Received response </span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>response<span style="color:rgb(98,98,98)">.</span>status_code<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="font-weight:bold;color:rgb(175,95,0)">\n</span><span style="color:rgb(175,0,0)">headers: </span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>response<span style="color:rgb(98,98,98)">.</span>headers<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="color:rgb(175,0,0)">"</span>
+<span class="ansi-green-fg ansi-bold">    101</span>     <span style="color:rgb(175,0,0)">f</span><span style="color:rgb(175,0,0)">"</span><span style="font-weight:bold;color:rgb(175,95,0)">\n</span><span style="color:rgb(175,0,0)">content: </span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>response<span style="color:rgb(98,98,98)">.</span>text<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="color:rgb(175,0,0)">"</span>
+<span class="ansi-green-fg ansi-bold">    102</span> )
+<span class="ansi-green-fg ansi-bold">    103</span> <span style="font-style:italic;color:rgb(95,135,135)"># TODO consider moving this to _requst_json() and raise own exceptions</span>
+<span class="ansi-green-fg ansi-bold">    104</span> <span style="font-style:italic;color:rgb(95,135,135)"># so that we can user _raw in e.g. delete methods where we expect a 409 and</span>
+<span class="ansi-green-fg ansi-bold">    105</span> <span style="font-style:italic;color:rgb(95,135,135)"># want to recover</span>
+<span class="ansi-green-fg">--&gt; 106</span> <span class="ansi-yellow-bg">response</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">raise_for_status</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg ansi-bold">    108</span> <span style="font-weight:bold;color:rgb(0,135,0)">return</span> response
+
+File <span class="ansi-green-fg">~/miniforge3/envs/eodh/lib/python3.12/site-packages/requests/models.py:1021</span>, in <span class="ansi-cyan-fg">Response.raise_for_status</span><span class="ansi-blue-fg">(self)</span>
+<span class="ansi-green-fg ansi-bold">   1016</span>     http_error_msg <span style="color:rgb(98,98,98)">=</span> (
+<span class="ansi-green-fg ansi-bold">   1017</span>         <span style="color:rgb(175,0,0)">f</span><span style="color:rgb(175,0,0)">"</span><span style="font-weight:bold;color:rgb(175,95,135)">{</span><span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>status_code<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="color:rgb(175,0,0)"> Server Error: </span><span style="font-weight:bold;color:rgb(175,95,135)">{</span>reason<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="color:rgb(175,0,0)"> for url: </span><span style="font-weight:bold;color:rgb(175,95,135)">{</span><span style="color:rgb(0,135,0)">self</span><span style="color:rgb(98,98,98)">.</span>url<span style="font-weight:bold;color:rgb(175,95,135)">}</span><span style="color:rgb(175,0,0)">"</span>
+<span class="ansi-green-fg ansi-bold">   1018</span>     )
+<span class="ansi-green-fg ansi-bold">   1020</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> http_error_msg:
+<span class="ansi-green-fg">-&gt; 1021</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> HTTPError(http_error_msg, response<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(0,135,0)">self</span>)
+
+<span class="ansi-red-fg">HTTPError</span>: 409 Client Error: Conflict for url: https://test.eodatahub.org.uk/ades/ajgwords/ogc-api/processes</pre>
+</div>
+</div>
+</div>
+<p>The following cell is used for execution of the workflow.</p>
+<div id="cell-8" class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>intersects <span class="op">=</span> {</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"type"</span>: <span class="st">"Polygon"</span>,</span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"coordinates"</span>: [</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        [</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>            [<span class="fl">0.08905898091569497</span>, <span class="fl">52.69722175598818</span>],</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>            [<span class="fl">0.08905898091569497</span>, <span class="fl">52.15527412683906</span>],</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>            [<span class="fl">0.9565339502005088</span>, <span class="fl">52.15527412683906</span>],</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>            [<span class="fl">0.9565339502005088</span>, <span class="fl">52.69722175598818</span>],</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>            [<span class="fl">0.08905898091569497</span>, <span class="fl">52.69722175598818</span>],</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>j <span class="op">=</span> ades.get_process(<span class="st">"cloud-free-best-pixel-h"</span>).execute(</span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"catalog"</span>: <span class="st">"supported-datasets/ceda-stac-catalogue"</span>,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"collection"</span>: <span class="st">"sentinel2_ard"</span>,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"intersects"</span>: json.dumps(intersects),</span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">"start_datetime"</span>: <span class="st">"2023-04-01"</span>,</span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"end_datetime"</span>: <span class="st">"2023-06-30"</span>,</span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(j.self_href)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/ajgwords\.github\.io\/eodh-tests\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
