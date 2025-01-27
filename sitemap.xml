@@ -1,55 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://ajgwords.github.io/eodh-tests/hello.html</loc>
-    <lastmod>2025-01-21T14:56:00.432Z</lastmod>
+    <loc>https://ajgwords.github.io/eodh-tests/code/services/services.html</loc>
+    <lastmod>2025-01-27T09:10:43.135Z</lastmod>
   </url>
   <url>
     <loc>https://ajgwords.github.io/eodh-tests/index.html</loc>
-    <lastmod>2025-01-21T14:56:00.432Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ajgwords.github.io/eodh-tests/cubes/cubes_test.html</loc>
-    <lastmod>2025-01-21T14:56:00.427Z</lastmod>
+    <lastmod>2025-01-27T09:10:43.197Z</lastmod>
   </url>
   <url>
     <loc>https://ajgwords.github.io/eodh-tests/cubes/ceda_and_odc_stac.html</loc>
-    <lastmod>2025-01-21T14:56:00.405Z</lastmod>
+    <lastmod>2025-01-27T09:10:43.169Z</lastmod>
   </url>
   <url>
     <loc>https://ajgwords.github.io/eodh-tests/cubes/ceda_and_odc_stac copy.html</loc>
-    <lastmod>2025-01-21T14:56:00.398Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ajgwords.github.io/eodh-tests/ades/ades_S1.html</loc>
-    <lastmod>2025-01-21T14:56:00.369Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ajgwords.github.io/eodh-tests/notes/CWL.html</loc>
-    <lastmod>2025-01-21T14:56:00.432Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ajgwords.github.io/eodh-tests/ades/ades_S2.html</loc>
-    <lastmod>2025-01-21T14:56:00.370Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ajgwords.github.io/eodh-tests/sar/find_sar.html</loc>
-    <lastmod>2025-01-21T14:56:00.433Z</lastmod>
+    <lastmod>2025-01-27T09:10:43.163Z</lastmod>
   </url>
   <url>
     <loc>https://ajgwords.github.io/eodh-tests/cubes/cubes.html</loc>
-    <lastmod>2025-01-21T14:56:00.415Z</lastmod>
-  </url>
-  <url>
-    <loc>https://ajgwords.github.io/eodh-tests/cubes/cubes_old.html</loc>
-    <lastmod>2025-01-21T14:56:00.427Z</lastmod>
+    <lastmod>2025-01-27T09:10:43.180Z</lastmod>
   </url>
   <url>
     <loc>https://ajgwords.github.io/eodh-tests/about.html</loc>
-    <lastmod>2025-01-21T14:56:00.369Z</lastmod>
+    <lastmod>2025-01-27T09:10:43.134Z</lastmod>
   </url>
   <url>
-    <loc>https://ajgwords.github.io/eodh-tests/code/services/services.html</loc>
-    <lastmod>2025-01-21T14:56:00.371Z</lastmod>
+    <loc>https://ajgwords.github.io/eodh-tests/ades/ades_S2.html</loc>
+    <lastmod>2025-01-27T09:10:43.134Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ajgwords.github.io/eodh-tests/jncc/2025-02-calc-coherence.html</loc>
+    <lastmod>2025-01-27T09:10:43.204Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ajgwords.github.io/eodh-tests/ades/ades_S1.html</loc>
+    <lastmod>2025-01-27T09:10:43.134Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ajgwords.github.io/eodh-tests/hello.html</loc>
+    <lastmod>2025-01-27T09:10:43.197Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ajgwords.github.io/eodh-tests/cubes/cubes_old.html</loc>
+    <lastmod>2025-01-27T09:10:43.191Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ajgwords.github.io/eodh-tests/cubes/cubes_test.html</loc>
+    <lastmod>2025-01-27T09:10:43.192Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ajgwords.github.io/eodh-tests/sar/find_sar.html</loc>
+    <lastmod>2025-01-27T09:10:43.205Z</lastmod>
+  </url>
+  <url>
+    <loc>https://ajgwords.github.io/eodh-tests/notes/CWL.html</loc>
+    <lastmod>2025-01-27T09:10:43.204Z</lastmod>
   </url>
 </urlset>

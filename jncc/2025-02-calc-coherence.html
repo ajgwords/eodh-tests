@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.6.40">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Calculating Coherence – webtesting</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg==" crossorigin="anonymous"></script><script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap-3a86aad0115fdac71b8b5cec7ac8b57c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.6/require.min.js" integrity="sha512-c3Nl8+7g4LMSTdrm621y7kf9v3SDPnhxLNhcjFJbKECVnmZHTdo+IRO05sNLTH/D3vA6u1X32ehoLC7WFVdheg==" crossorigin="anonymous"></script>
+
+<script type="application/javascript">define('jquery', [],function() {return window.jQuery;})</script>
+<script src="https://unpkg.com/@jupyter-widgets/html-manager@*/dist/embed-amd.js" crossorigin="anonymous"></script>
+
+
+<link rel="stylesheet" href="../styles.css">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../index.html">
+    <span class="navbar-title">webtesting</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../index.html"> 
+<span class="menu-text">Home</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../about.html"> 
+<span class="menu-text">Details</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../test.qmd"> 
+<span class="menu-text">Test2</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#a-presentation-to-jnccs-eo-implementation-group" id="toc-a-presentation-to-jnccs-eo-implementation-group" class="nav-link active" data-scroll-target="#a-presentation-to-jnccs-eo-implementation-group">A presentation to JNCC’s EO Implementation Group</a></li>
+  <li><a href="#outline" id="toc-outline" class="nav-link" data-scroll-target="#outline">Outline</a></li>
+  <li><a href="#the-requirement" id="toc-the-requirement" class="nav-link" data-scroll-target="#the-requirement">The requirement</a>
+  <ul class="collapse">
+  <li><a href="#what-is-coherence-and-why-is-it-useful" id="toc-what-is-coherence-and-why-is-it-useful" class="nav-link" data-scroll-target="#what-is-coherence-and-why-is-it-useful">What is coherence and why is it useful?</a>
+  <ul class="collapse">
+  <li><a href="#why-sar-coherence-is-useful-in-habitat-analysis" id="toc-why-sar-coherence-is-useful-in-habitat-analysis" class="nav-link" data-scroll-target="#why-sar-coherence-is-useful-in-habitat-analysis">Why SAR Coherence is Useful in Habitat Analysis</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#available-tools" id="toc-available-tools" class="nav-link" data-scroll-target="#available-tools">Available tools</a>
+  <ul class="collapse">
+  <li><a href="#and-more-importantly-ones-we-can-use" id="toc-and-more-importantly-ones-we-can-use" class="nav-link" data-scroll-target="#and-more-importantly-ones-we-can-use">(and more importantly, ones we can use)</a></li>
+  </ul></li>
+  <li><a href="#introduction-to-eo-tools" id="toc-introduction-to-eo-tools" class="nav-link" data-scroll-target="#introduction-to-eo-tools">Introduction to eo-tools</a>
+  <ul class="collapse">
+  <li><a href="#walk-through" id="toc-walk-through" class="nav-link" data-scroll-target="#walk-through">Walk through</a></li>
+  </ul></li>
+  <li><a href="#using-cdse" id="toc-using-cdse" class="nav-link" data-scroll-target="#using-cdse">Using CDSE</a></li>
+  <li><a href="#try-it-with-ceda-data" id="toc-try-it-with-ceda-data" class="nav-link" data-scroll-target="#try-it-with-ceda-data">Try it with CEDA data</a></li>
+  <li><a href="#outputs-and-issues" id="toc-outputs-and-issues" class="nav-link" data-scroll-target="#outputs-and-issues">Outputs and issues</a>
+  <ul class="collapse">
+  <li><a href="#get-dem" id="toc-get-dem" class="nav-link" data-scroll-target="#get-dem">Get DEM</a></li>
+  </ul></li>
+  <li><a href="#possibilities-on-eodh" id="toc-possibilities-on-eodh" class="nav-link" data-scroll-target="#possibilities-on-eodh">Possibilities on EODH</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Calculating Coherence</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="a-presentation-to-jnccs-eo-implementation-group" class="level2">
+<h2 class="anchored" data-anchor-id="a-presentation-to-jnccs-eo-implementation-group">A presentation to JNCC’s EO Implementation Group</h2>
+<p><strong>Alastair Graham</strong></p>
+<p><img src=".img/face.jpeg" alt="Me" width="150" height="150"></p>
+<p>Freelancer, currently under contract to Oxidian (https://www.oxidian.com) for delivery of tools around the EODH (https://eodatahub.org.uk/) platform.</p>
+<p>You can find me on <a href="https://www.linkedin.com/in/ajgwords/">LinkedIn</a>.</p>
+<hr>
+</section>
+<section id="outline" class="level1">
+<h1>Outline</h1>
+<ul>
+<li>Hi there</li>
+<li>Requirement to calculate coherence</li>
+<li>Available tools</li>
+<li>Intro to eo-tools
+<ul>
+<li>Using data from the CDSE</li>
+<li>Using data from CEDA</li>
+</ul></li>
+<li>Outputs and Issues</li>
+<li>Possibilities on EODH</li>
+</ul>
+<hr>
+</section>
+<section id="the-requirement" class="level1">
+<h1>The requirement</h1>
+<p>As part of the EO Data Hub (EODH) project I contacted Paula at JNCC to discuss potential needs for the platform and the tools being developed. Coherence was mentioned as a topic of interest so I spent some time looking into this.</p>
+<section id="what-is-coherence-and-why-is-it-useful" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-coherence-and-why-is-it-useful">What is coherence and why is it useful?</h2>
+<p>SAR Coherence refers to <strong>a measure of similarity between two Synthetic Aperture Radar (SAR) images acquired over the same area at different times</strong>.</p>
+<p>It is a key parameter in SAR interferometry (InSAR) and coherence analysis, providing insights into changes or stability within the observed area.</p>
+<p>SAR coherence is mathematically defined as <em>the normalized cross-correlation of the complex SAR signals from two images</em>. The coherence depends on factors such as changes in the scene between the acquisition dates (temporal decorrelation), differences in the imaging geometry and the noise inherent to the SAR system.</p>
+<section id="why-sar-coherence-is-useful-in-habitat-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="why-sar-coherence-is-useful-in-habitat-analysis">Why SAR Coherence is Useful in Habitat Analysis</h3>
+<p>SAR coherence provides valuable information for habitat monitoring and analysis. Its usefulness stems from its sensitivity to changes in the structure, moisture, and composition of vegetation, soil, and other ground surfaces. This is dependant on the imaging system collecting the data.</p>
+<ol type="1">
+<li>Detecting <strong>Change and Stability</strong>:
+<ul>
+<li>Areas with low coherence often indicate changes such as vegetation growth, deforestation, flooding, or urban development.</li>
+<li>In habitats, it can help identify seasonal changes, disturbances, or degradation over time.</li>
+<li>High coherence suggests minimal change, useful for identifying stable habitats or regions of consistent land cover .</li>
+</ul></li>
+<li>Mapping <strong>Vegetation Dynamics</strong>:
+<ul>
+<li>Linked to (1): Temporal coherence variations correlate with vegetation density and structure, providing insights into biomass estimation and forest health.</li>
+</ul></li>
+<li><strong>Differentiating Land Covers</strong>:
+<ul>
+<li>Different land cover types (e.g., forests, wetlands, grasslands) exhibit characteristic coherence signatures due to their unique scattering properties.</li>
+</ul></li>
+<li><strong>Flood and Wetland</strong> Monitoring:
+<ul>
+<li>Coherence can be used to monitor hydrological changes in wetlands and floodplains, as water surfaces cause a significant reduction in coherence.</li>
+</ul></li>
+</ol>
+<p>SAR coherence serves as a powerful tool in remote sensing for understanding and managing ecosystems.</p>
+<hr>
+</section>
+</section>
+</section>
+<section id="available-tools" class="level1">
+<h1>Available tools</h1>
+<section id="and-more-importantly-ones-we-can-use" class="level2">
+<h2 class="anchored" data-anchor-id="and-more-importantly-ones-we-can-use">(and more importantly, ones we can use)</h2>
+<p>The EODH link meant that we needed open tooling. There are commercial software packages that can calculate coherence but they are expensive and generally graphical in nature. I was also looking for CLI tools.</p>
+<ul>
+<li><strong>SNAP Graph Processing Tool (GPT)</strong>
+<ul>
+<li>GPT is the command-line powerhouse of ESA SNAP, enabling efficient, large-scale processing workflows tailored for remote sensing and SAR applications. It’s essential for automating and scaling tasks that would otherwise be tedious in the GUI.</li>
+<li>Workflows are written in XML files that describe the sequence of operations.</li>
+<li>Powerful and scalable, and suitable for HPC clusters.</li>
+</ul></li>
+<li><strong>PyGMTSAR</strong>
+<ul>
+<li>Advanced InSAR analysis for researchers, requiring technical expertise.</li>
+<li>A Python-based extension of GMTSAR (Generic Mapping Tools for SAR), focused on SAR interferometry and deformation analysis.</li>
+<li>Automates and streamlines workflows for interferogram generation, coherence analysis, and time-series analysis.</li>
+<li>Less user-friendly for beginners; requires familiarity with Linux and command-line tools.</li>
+</ul></li>
+<li><strong>eo-tools</strong>
+<ul>
+<li>Lightweight and flexible, ideal for developers working in Python with cloud or custom workflows.</li>
+<li>Designed for flexibility in handling EO data from diverse sources.</li>
+<li>Scalable for use in cloud or local environments</li>
+<li><strong>Simple and efficient for batch processing</strong> or integrating SAR data into larger workflows.</li>
+<li>Highly customizable for developers.</li>
+<li>Lacks some advanced features for SAR interferometry.</li>
+</ul></li>
+</ul>
+<hr>
+</section>
+</section>
+<section id="introduction-to-eo-tools" class="level1">
+<h1>Introduction to eo-tools</h1>
+<p>eo-tools is a relatively new Python package</p>
+<hr>
+<section id="walk-through" class="level2">
+<h2 class="anchored" data-anchor-id="walk-through">Walk through</h2>
+<p>This demo is based on the how-to on the eo-tools website. There are a couple of bits that have been reworked or added to.</p>
+<div id="cell-7" class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Setup</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>conda env reqts</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>auth reqts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-8" class="cell" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> combinations</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> eo_tools</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rioxarray <span class="im">as</span> riox</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#import shapely</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> eo_tools.S1.process <span class="im">import</span> process_insar</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> eodag <span class="im">import</span> EODataAccessGateway</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> shape</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># credentials need to be stored in the following file (see EODAG docs)</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>confpath <span class="op">=</span> <span class="st">"~/.config/eodag/eodag.yml"</span></span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>dag <span class="op">=</span> EODataAccessGateway()</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># make sure cop_dataspace will be used</span></span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>dag.set_preferred_provider(<span class="st">"cop_dataspace"</span>)</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#logging.basicConfig(level=logging.INFO)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-9" class="cell" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set download dirs</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data_dir <span class="op">=</span> <span class="st">"~/Downloads/jncc_eotools"</span> <span class="co"># set this to work for you</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># example AOI around Thetford</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>file_aoi <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">/thetfordaoi.geojson"</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>shp2 <span class="op">=</span> gpd.read_file(file_aoi).geometry[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-10" class="cell" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate bbox</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>xmin, ymin, xmax, ymax <span class="op">=</span> shp2.bounds</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>bbox <span class="op">=</span> {</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"lonmin"</span>: xmin,</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"latmin"</span>: ymin,</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"lonmax"</span>: xmax,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"latmax"</span>: ymax</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(bbox)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>{'lonmin': 0.105734423810487, 'latmin': 52.44639077957711, 'lonmax': 0.685652665706907, 'latmax': 52.55804798614935}</code></pre>
+</div>
+</div>
+<div id="cell-11" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run search</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a> </span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#bbox = {</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#    "lonmin": 0.08905898091569497,</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#    "latmin": 52.15527412683906,</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#    "lonmax": 0.9565339502005088,</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#    "latmax": 52.69722175598818,</span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#}</span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#shp = shapely.box(bbox["lonmin"], bbox["latmin"], bbox["lonmax"], bbox["latmax"])</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>search_criteria <span class="op">=</span> {</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"productType"</span>: <span class="st">"S1_SAR_SLC"</span>,</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"start"</span>: <span class="st">"2023-09-03"</span>,</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"end"</span>: <span class="st">"2023-09-17"</span>,</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"geom"</span>: bbox,</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>results, _ <span class="op">=</span> dag.search(<span class="op">**</span>search_criteria)</span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-12" class="cell" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>eo_tools.util.explore_products(results, shp2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="5">
+<div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><span style="color:#565656">Make this Notebook Trusted to load map: File -&gt; Trust Notebook</span><iframe srcdoc="<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot; />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js&quot;></script>
+    <script src=&quot;https://code.jquery.com/jquery-3.7.1.min.js&quot;></script>
+    <script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js&quot;></script>
+    <script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js&quot;></script>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css&quot;/>
+    
+            <meta name=&quot;viewport&quot; content=&quot;width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; />
+            <style>
+                #map_1d680ea63fb2c536eb7f4b11b8728911 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class=&quot;folium-map&quot; id=&quot;map_1d680ea63fb2c536eb7f4b11b8728911&quot; ></div>
+        
+</body>
+<script>
+    
+    
+            var map_1d680ea63fb2c536eb7f4b11b8728911 = L.map(
+                &quot;map_1d680ea63fb2c536eb7f4b11b8728911&quot;,
+                {
+                    center: [0.0, 0.0],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 1,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_3e751101046c71a7704c42958810e4fe = L.tileLayer(
+                &quot;https://tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
+                {&quot;attribution&quot;: &quot;\u0026copy; \u003ca href=\&quot;https://www.openstreetmap.org/copyright\&quot;\u003eOpenStreetMap\u003c/a\u003e contributors&quot;, &quot;detectRetina&quot;: false, &quot;maxNativeZoom&quot;: 19, &quot;maxZoom&quot;: 19, &quot;minZoom&quot;: 0, &quot;noWrap&quot;: false, &quot;opacity&quot;: 1, &quot;subdomains&quot;: &quot;abc&quot;, &quot;tms&quot;: false}
+            );
+        
+    
+            tile_layer_3e751101046c71a7704c42958810e4fe.addTo(map_1d680ea63fb2c536eb7f4b11b8728911);
+        
+    
+        function geo_json_41e3529470581a0fdf5e67d25b604a7d_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {&quot;color&quot;: &quot;black&quot;, &quot;fillColor&quot;: &quot;none&quot;};
+            }
+        }
+
+        function geo_json_41e3529470581a0fdf5e67d25b604a7d_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_41e3529470581a0fdf5e67d25b604a7d = L.geoJson(null, {
+                onEachFeature: geo_json_41e3529470581a0fdf5e67d25b604a7d_onEachFeature,
+            
+                style: geo_json_41e3529470581a0fdf5e67d25b604a7d_styler,
+        });
+
+        function geo_json_41e3529470581a0fdf5e67d25b604a7d_add (data) {
+            geo_json_41e3529470581a0fdf5e67d25b604a7d
+                .addData(data);
+        }
+            geo_json_41e3529470581a0fdf5e67d25b604a7d_add({&quot;features&quot;: [{&quot;geometry&quot;: {&quot;coordinates&quot;: [[[0.108530558052996, 52.548527343311214], [0.685652665706907, 52.55804798614935], [0.677823489827881, 52.45388885682422], [0.105734423810487, 52.44639077957711], [0.108530558052996, 52.548527343311214]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;0&quot;, &quot;type&quot;: &quot;Feature&quot;}], &quot;type&quot;: &quot;FeatureCollection&quot;});
+
+        
+    
+            geo_json_41e3529470581a0fdf5e67d25b604a7d.bindTooltip(
+                `<div>
+                     Area of Interest
+                 </div>`,
+                {&quot;sticky&quot;: true}
+            );
+        
+    
+            geo_json_41e3529470581a0fdf5e67d25b604a7d.addTo(map_1d680ea63fb2c536eb7f4b11b8728911);
+        
+    
+
+        function geo_json_b5c40c2ec403b3e95602f4c853230341_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_b5c40c2ec403b3e95602f4c853230341 = L.geoJson(null, {
+                onEachFeature: geo_json_b5c40c2ec403b3e95602f4c853230341_onEachFeature,
+            
+        });
+
+        function geo_json_b5c40c2ec403b3e95602f4c853230341_add (data) {
+            geo_json_b5c40c2ec403b3e95602f4c853230341
+                .addData(data);
+        }
+            geo_json_b5c40c2ec403b3e95602f4c853230341_add({&quot;coordinates&quot;: [[[3.475866, 51.159492], [4.017843, 52.777412], [0.185597, 53.187542], [0.0, 52.44009389844227], [-0.216913, 51.566528], [0.0, 51.54261879777913], [3.475866, 51.159492]]], &quot;type&quot;: &quot;Polygon&quot;});
+        geo_json_b5c40c2ec403b3e95602f4c853230341.setStyle(function(feature) {return feature.properties.style;});
+
+        
+    
+            geo_json_b5c40c2ec403b3e95602f4c853230341.bindTooltip(
+                `<div>
+                     <b>Configuration:</b><br>DESCENDING, Orbit: 8<br><b>Product list (index / date):</b><br>3 / 2023-09-13 06:06:59
+                 </div>`,
+                {&quot;sticky&quot;: true}
+            );
+        
+    
+            geo_json_b5c40c2ec403b3e95602f4c853230341.addTo(map_1d680ea63fb2c536eb7f4b11b8728911);
+        
+    
+
+        function geo_json_145990dcc8148a25e72986a149a52d05_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_145990dcc8148a25e72986a149a52d05 = L.geoJson(null, {
+                onEachFeature: geo_json_145990dcc8148a25e72986a149a52d05_onEachFeature,
+            
+        });
+
+        function geo_json_145990dcc8148a25e72986a149a52d05_add (data) {
+            geo_json_145990dcc8148a25e72986a149a52d05
+                .addData(data);
+        }
+            geo_json_145990dcc8148a25e72986a149a52d05_add({&quot;coordinates&quot;: [[[3.404867, 52.338833], [0.0, 51.96867375512488], [-0.31966, 51.933922], [-0.87165, 53.543831], [-0.8693628407905536, 53.54407244446059], [-0.869386, 53.54414], [-0.0, 53.63589557674331], [1.9816227301074734, 53.84503735782636], [2.996698, 53.952194], [2.99670414135705, 53.95216972518748], [2.998886, 53.9524], [3.406874, 52.339394], [3.4047825796451026, 52.33916668655679], [3.404867, 52.338833]]], &quot;type&quot;: &quot;Polygon&quot;});
+        geo_json_145990dcc8148a25e72986a149a52d05.setStyle(function(feature) {return feature.properties.style;});
+
+        
+    
+            geo_json_145990dcc8148a25e72986a149a52d05.bindTooltip(
+                `<div>
+                     <b>Configuration:</b><br>ASCENDING, Orbit: 59<br><b>Product list (index / date):</b><br>1 / 2023-09-04 17:42:09<br>4 / 2023-09-16 17:42:09
+                 </div>`,
+                {&quot;sticky&quot;: true}
+            );
+        
+    
+            geo_json_145990dcc8148a25e72986a149a52d05.addTo(map_1d680ea63fb2c536eb7f4b11b8728911);
+        
+    
+
+        function geo_json_1418dc7e53890a0e48beb54c3ed2e0d4_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_1418dc7e53890a0e48beb54c3ed2e0d4 = L.geoJson(null, {
+                onEachFeature: geo_json_1418dc7e53890a0e48beb54c3ed2e0d4_onEachFeature,
+            
+        });
+
+        function geo_json_1418dc7e53890a0e48beb54c3ed2e0d4_add (data) {
+            geo_json_1418dc7e53890a0e48beb54c3ed2e0d4
+                .addData(data);
+        }
+            geo_json_1418dc7e53890a0e48beb54c3ed2e0d4_add({&quot;coordinates&quot;: [[[1.456613, 51.28133], [2.000225, 52.898014], [0.0, 53.11161240558363], [-1.842043, 53.308319], [-2.245346, 51.688484], [0.0, 51.44153323547668], [1.456613, 51.28133]]], &quot;type&quot;: &quot;Polygon&quot;});
+        geo_json_1418dc7e53890a0e48beb54c3ed2e0d4.setStyle(function(feature) {return feature.properties.style;});
+
+        
+    
+            geo_json_1418dc7e53890a0e48beb54c3ed2e0d4.bindTooltip(
+                `<div>
+                     <b>Configuration:</b><br>DESCENDING, Orbit: 81<br><b>Product list (index / date):</b><br>0 / 2023-09-06 06:15:10
+                 </div>`,
+                {&quot;sticky&quot;: true}
+            );
+        
+    
+            geo_json_1418dc7e53890a0e48beb54c3ed2e0d4.addTo(map_1d680ea63fb2c536eb7f4b11b8728911);
+        
+    
+
+        function geo_json_0bd17a6c7198132498990e83c36639b6_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_0bd17a6c7198132498990e83c36639b6 = L.geoJson(null, {
+                onEachFeature: geo_json_0bd17a6c7198132498990e83c36639b6_onEachFeature,
+            
+        });
+
+        function geo_json_0bd17a6c7198132498990e83c36639b6_add (data) {
+            geo_json_0bd17a6c7198132498990e83c36639b6
+                .addData(data);
+        }
+            geo_json_0bd17a6c7198132498990e83c36639b6_add({&quot;coordinates&quot;: [[[-2.161909, 51.320732], [0.0, 51.55829738530797], [1.500185, 51.723148], [1.097608, 53.336254], [-0.0, 53.21913496812211], [-2.702863, 52.930729], [-2.161909, 51.320732]]], &quot;type&quot;: &quot;Polygon&quot;});
+        geo_json_0bd17a6c7198132498990e83c36639b6.setStyle(function(feature) {return feature.properties.style;});
+
+        
+    
+            geo_json_0bd17a6c7198132498990e83c36639b6.bindTooltip(
+                `<div>
+                     <b>Configuration:</b><br>ASCENDING, Orbit: 132<br><b>Product list (index / date):</b><br>2 / 2023-09-09 17:50:13
+                 </div>`,
+                {&quot;sticky&quot;: true}
+            );
+        
+    
+            geo_json_0bd17a6c7198132498990e83c36639b6.addTo(map_1d680ea63fb2c536eb7f4b11b8728911);
+        
+    
+            var layer_control_ed0c2beeda38ac89f0f3bdebac2fda0e_layers = {
+                base_layers : {
+                    &quot;openstreetmap&quot; : tile_layer_3e751101046c71a7704c42958810e4fe,
+                },
+                overlays :  {
+                    &quot;Area of Interest&quot; : geo_json_41e3529470581a0fdf5e67d25b604a7d,
+                    &quot;Orbit 8, group 1&quot; : geo_json_b5c40c2ec403b3e95602f4c853230341,
+                    &quot;Orbit 59, group 1&quot; : geo_json_145990dcc8148a25e72986a149a52d05,
+                    &quot;Orbit 81, group 1&quot; : geo_json_1418dc7e53890a0e48beb54c3ed2e0d4,
+                    &quot;Orbit 132, group 1&quot; : geo_json_0bd17a6c7198132498990e83c36639b6,
+                },
+            };
+            let layer_control_ed0c2beeda38ac89f0f3bdebac2fda0e = L.control.layers(
+                layer_control_ed0c2beeda38ac89f0f3bdebac2fda0e_layers.base_layers,
+                layer_control_ed0c2beeda38ac89f0f3bdebac2fda0e_layers.overlays,
+                {&quot;autoZIndex&quot;: true, &quot;collapsed&quot;: true, &quot;position&quot;: &quot;topright&quot;}
+            ).addTo(map_1d680ea63fb2c536eb7f4b11b8728911);
+
+        
+    
+            map_1d680ea63fb2c536eb7f4b11b8728911.fitBounds(
+                [[51.159492, -2.702863], [53.9524, 4.017843]],
+                {}
+            );
+        
+</script>
+</html>" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen=""></iframe></div></div>
+</div>
+</div>
+<div id="cell-13" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find overlaps</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> []</span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> results:</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">id</span> <span class="op">=</span> item.properties[<span class="st">"id"</span>]</span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    geom <span class="op">=</span> shape(item.geometry)</span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    data.append({<span class="st">"id"</span>: <span class="bu">id</span>, <span class="st">"geometry"</span>: geom})</span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> gpd.GeoDataFrame(data, crs<span class="op">=</span><span class="st">"EPSG:4326"</span>)  <span class="co"># Assuming WGS84</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 98% overlap</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>threshold <span class="op">=</span> <span class="fl">0.98</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>overlaps <span class="op">=</span> []</span>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (idx1, row1), (idx2, row2) <span class="kw">in</span> combinations(gdf.iterrows(), <span class="dv">2</span>):</span>
+<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    intersection <span class="op">=</span> row1[<span class="st">"geometry"</span>].intersection(row2[<span class="st">"geometry"</span>])</span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> intersection.is_empty:</span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculate overlap ratio as the area of intersection divided by the area of the smaller polygon</span></span>
+<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        overlap_ratio <span class="op">=</span> intersection.area <span class="op">/</span> <span class="bu">min</span>(</span>
+<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>            row1[<span class="st">"geometry"</span>].area, row2[<span class="st">"geometry"</span>].area</span>
+<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> overlap_ratio <span class="op">&gt;=</span> threshold:</span>
+<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>            overlaps.append((row1[<span class="st">"id"</span>], row2[<span class="st">"id"</span>], overlap_ratio))</span>
+<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>overlap_ids <span class="op">=</span> [entry[:<span class="op">-</span><span class="dv">1</span>] <span class="cf">for</span> entry <span class="kw">in</span> overlaps]</span>
+<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>overlap_ids</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="6">
+<pre><code>[('S1A_IW_SLC__1SDV_20230904T174209_20230904T174236_050181_060A2D_E88F',
+  'S1A_IW_SLC__1SDV_20230916T174209_20230916T174236_050356_061016_8033')]</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="using-cdse" class="level1">
+<h1>Using CDSE</h1>
+<div id="cell-15" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data from CDSE</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>ids <span class="op">=</span> [<span class="st">"S1A_IW_SLC__1SDV_20230904T174209_20230904T174236_050181_060A2D_E88F"</span>,</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">"S1A_IW_SLC__1SDV_20230916T174209_20230916T174236_050356_061016_8033"</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>      ]</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>primary_dir <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>ids[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">.zip"</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>secondary_dir <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>ids[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">.zip"</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>outputs_prefix <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">/res/test-full-processor"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-16" class="cell" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download overlapping products</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Only run if you need the data. Files are 8GB and downloading is usually throttled.</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>to_dl <span class="op">=</span> [it <span class="cf">for</span> it <span class="kw">in</span> results <span class="cf">if</span> it.properties[<span class="st">"id"</span>] <span class="kw">in</span> ids]</span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="bu">len</span>(to_dl)<span class="sc">}</span><span class="ss"> products to download"</span>)</span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>dag.download_all(to_dl, outputs_prefix<span class="op">=</span>data_dir, extract<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2 products to download</code></pre>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"a333774241a046338ad6b5ee226a5558","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"f67a8cb97403473188e1887c6433bbe8","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display">
+<script type="application/vnd.jupyter.widget-view+json">
+{"model_id":"5fbd32998e7c42f88a70ad56ebe75f2c","version_major":2,"version_minor":0,"quarto_mimetype":"application/vnd.jupyter.widget-view+json"}
+</script>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>['/home/al/Documents/EODH/Code/eodh-tests/jncc/~/Downloads/jncc_eotools/S1A_IW_SLC__1SDV_20230904T174209_20230904T174236_050181_060A2D_E88F.zip',
+ '/home/al/Documents/EODH/Code/eodh-tests/jncc/~/Downloads/jncc_eotools/S1A_IW_SLC__1SDV_20230916T174209_20230916T174236_050356_061016_8033.zip']</code></pre>
+</div>
+</div>
+<div id="cell-17" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>out_dir <span class="op">=</span> process_insar(</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    dir_prm<span class="op">=</span>primary_dir,</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    dir_sec<span class="op">=</span>secondary_dir,</span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    outputs_prefix<span class="op">=</span>outputs_prefix,</span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    aoi_name<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    shp<span class="op">=</span>shp2,</span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    pol<span class="op">=</span><span class="st">"vv"</span>,</span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    subswaths<span class="op">=</span>[<span class="st">"IW1"</span>, <span class="st">"IW2"</span>, <span class="st">"IW3"</span>],</span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    write_coherence<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    write_interferogram<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    write_primary_amplitude<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    write_secondary_amplitude<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    apply_fast_esd<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    dem_upsampling<span class="op">=</span><span class="fl">1.8</span>,</span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    dem_force_download<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    dem_buffer_arc_sec<span class="op">=</span><span class="dv">40</span>,</span>
+<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    boxcar_coherence<span class="op">=</span>[<span class="dv">3</span>, <span class="dv">3</span>],</span>
+<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    filter_ifg<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    multilook<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">4</span>],</span>
+<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    warp_kernel<span class="op">=</span><span class="st">"bicubic"</span>,</span>
+<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    clip_to_shape<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>INFO:eo_tools.S1.process:---- Processing subswath IW1 in VV polarization
+INFO:eo_tools.S1.core:S1IWSwath Initialization:
+INFO:eo_tools.S1.core:- Read metadata file /home/al/Downloads/eotools/S1A_IW_SLC__1SDV_20241016T174206_20241016T174233_056131_06DE72_1B0C.zip/S1A_IW_SLC__1SDV_20241016T174206_20241016T174233_056131_06DE72_1B0C.SAFE/annotation/s1a-iw1-slc-vv-20241016t174207-20241016t174232-056131-06de72-004.xml
+INFO:eo_tools.S1.core:- Read calibration file /home/al/Downloads/eotools/S1A_IW_SLC__1SDV_20241016T174206_20241016T174233_056131_06DE72_1B0C.zip/S1A_IW_SLC__1SDV_20241016T174206_20241016T174233_056131_06DE72_1B0C.SAFE/annotation/calibration/calibration-s1a-iw1-slc-vv-20241016t174207-20241016t174232-056131-06de72-004.xml
+INFO:eo_tools.S1.core:- Set up raster path zip:///home/al/Downloads/eotools/S1A_IW_SLC__1SDV_20241016T174206_20241016T174233_056131_06DE72_1B0C.zip/S1A_IW_SLC__1SDV_20241016T174206_20241016T174233_056131_06DE72_1B0C.SAFE/measurement/s1a-iw1-slc-vv-20241016t174207-20241016t174232-056131-06de72-004.tiff
+INFO:eo_tools.S1.core:- Look for available OSV (Orbit State Vectors)
+INFO:pyroSAR.S1.auxil:searching for new POE files
+INFO:pyroSAR.S1.auxil:https://step.esa.int/auxdata/orbits/Sentinel-1/POEORB/S1A/2024/09/
+INFO:pyroSAR.S1.auxil:https://step.esa.int/auxdata/orbits/Sentinel-1/POEORB/S1A/2024/10/
+INFO:pyroSAR.S1.auxil:found 1 results
+INFO:pyroSAR.S1.auxil:downloading 1 file
+INFO:pyroSAR.S1.auxil:deleting 0 RES files
+INFO:eo_tools.S1.core:-- Precise orbit found
+INFO:eo_tools.S1.core:S1IWSwath Initialization:
+INFO:eo_tools.S1.core:- Read metadata file /home/al/Downloads/eotools/S1A_IW_SLC__1SDV_20241028T174206_20241028T174233_056306_06E564_F046.zip/S1A_IW_SLC__1SDV_20241028T174206_20241028T174233_056306_06E564_F046.SAFE/annotation/s1a-iw1-slc-vv-20241028t174207-20241028t174232-056306-06e564-004.xml
+INFO:eo_tools.S1.core:- Read calibration file /home/al/Downloads/eotools/S1A_IW_SLC__1SDV_20241028T174206_20241028T174233_056306_06E564_F046.zip/S1A_IW_SLC__1SDV_20241028T174206_20241028T174233_056306_06E564_F046.SAFE/annotation/calibration/calibration-s1a-iw1-slc-vv-20241028t174207-20241028t174232-056306-06e564-004.xml
+INFO:eo_tools.S1.core:- Set up raster path zip:///home/al/Downloads/eotools/S1A_IW_SLC__1SDV_20241028T174206_20241028T174233_056306_06E564_F046.zip/S1A_IW_SLC__1SDV_20241028T174206_20241028T174233_056306_06E564_F046.SAFE/measurement/s1a-iw1-slc-vv-20241028t174207-20241028t174232-056306-06e564-004.tiff
+INFO:eo_tools.S1.core:- Look for available OSV (Orbit State Vectors)
+INFO:pyroSAR.S1.auxil:searching for new POE files
+INFO:pyroSAR.S1.auxil:https://step.esa.int/auxdata/orbits/Sentinel-1/POEORB/S1A/2024/09/
+INFO:pyroSAR.S1.auxil:https://step.esa.int/auxdata/orbits/Sentinel-1/POEORB/S1A/2024/10/
+INFO:pyroSAR.S1.auxil:found 1 results
+INFO:pyroSAR.S1.auxil:downloading 1 file
+INFO:pyroSAR.S1.auxil:deleting 0 RES files
+INFO:eo_tools.S1.core:-- Precise orbit found
+INFO:eo_tools.dem:Retrieve DEM
+INFO:eo_tools.dem:Resample DEM
+INFO:eo_tools.S1.process:---- Processing burst 3 ----
+INFO:eo_tools.S1.core:Extract DEM coordinates
+INFO:eo_tools.S1.core:Convert latitude, longitude &amp; altitude to ECEF x, y &amp; z
+INFO:eo_tools.S1.core:Interpolate orbit
+INFO:eo_tools.S1.core:Range-Doppler terrain correction (LUT computation)
+INFO:eo_tools.S1.core:Extract DEM coordinates
+INFO:eo_tools.S1.core:Convert latitude, longitude &amp; altitude to ECEF x, y &amp; z
+INFO:eo_tools.S1.core:Interpolate orbit
+INFO:eo_tools.S1.core:Range-Doppler terrain correction (LUT computation)
+INFO:eo_tools.S1.core:Compute beta nought calibration factor.
+INFO:eo_tools.S1.core:Compute beta nought calibration factor.
+INFO:eo_tools.S1.process:Apply calibration factor
+INFO:eo_tools.S1.core:Compute TOPS deramping phase
+INFO:eo_tools.S1.process:Apply phase deramping
+INFO:eo_tools.S1.core:Project secondary coordinates to primary grid.
+INFO:eo_tools.S1.core:Warp secondary to primary geometry.
+INFO:eo_tools.S1.core:Warp secondary to primary geometry.
+INFO:eo_tools.S1.process:Apply phase reramping
+INFO:eo_tools.S1.core:Compute topographic phase
+INFO:eo_tools.S1.core:Compute topographic phase
+INFO:eo_tools.S1.process:Apply topographic phase removal
+INFO:eo_tools.auxils:Removing /home/al/Downloads/eotools/res/test-full-processor/S1_InSAR_2024-10-16-174206__2024-10-28-174206/sar/dem_burst.vrt
+INFO:eo_tools.S1.process:Cleaning temporary files
+INFO:eo_tools.S1.process:---- Interferometric outputs for VV IW1
+INFO:eo_tools.S1.process:Compute coherence &amp; interferogram
+INFO:eo_tools.S1.process:---- Interferometric outputs for VV IW2
+INFO:eo_tools.S1.process:Compute coherence &amp; interferogram
+INFO:eo_tools.S1.process:Geocode file coh_vv_iw1.tif.
+INFO:eo_tools.S1.process:Project image with the lookup table.
+INFO:eo_tools.S1.process:Geocode file coh_vv_iw2.tif.
+INFO:eo_tools.S1.process:Project image with the lookup table.
+INFO:eo_tools.S1.process:Merge file coh_vv.tif
+INFO:eo_tools.auxils:Removing /home/al/Downloads/eotools/res/test-full-processor/S1_InSAR_2024-10-16-174206__2024-10-28-174206/sar/coh_vv_iw1_geo.tif
+INFO:eo_tools.auxils:Removing /home/al/Downloads/eotools/res/test-full-processor/S1_InSAR_2024-10-16-174206__2024-10-28-174206/sar/coh_vv_iw2_geo.tif
+INFO:eo_tools.S1.process:Geocode file ifg_vv_iw1.tif.
+INFO:eo_tools.S1.process:Project image with the lookup table.
+INFO:eo_tools.S1.process:Geocode file ifg_vv_iw2.tif.
+INFO:eo_tools.S1.process:Project image with the lookup table.
+INFO:eo_tools.S1.process:Merge file phi_vv.tif
+INFO:eo_tools.auxils:Removing /home/al/Downloads/eotools/res/test-full-processor/S1_InSAR_2024-10-16-174206__2024-10-28-174206/sar/phi_vv_iw1_geo.tif
+INFO:eo_tools.auxils:Removing /home/al/Downloads/eotools/res/test-full-processor/S1_InSAR_2024-10-16-174206__2024-10-28-174206/sar/phi_vv_iw2_geo.tif</code></pre>
+</div>
+</div>
+</section>
+<section id="try-it-with-ceda-data" class="level1">
+<h1>Try it with CEDA data</h1>
+</section>
+<section id="outputs-and-issues" class="level1">
+<h1>Outputs and issues</h1>
+<div id="cell-21" class="cell" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualise coherence</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>arr_coh <span class="op">=</span> riox.open_rasterio(<span class="ss">f"</span><span class="sc">{</span>out_dir<span class="sc">}</span><span class="ss">/coh_vv.tif"</span>, masked<span class="op">=</span><span class="va">True</span>)[<span class="dv">0</span>]</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>arr_coh.plot.imshow(vmin<span class="op">=</span><span class="dv">0</span>,vmax<span class="op">=</span><span class="dv">1</span>, cmap<span class="op">=</span><span class="st">"gray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2025-02-calc-coherence_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-22" class="cell" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualise interferrogram</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>arr_phi <span class="op">=</span> riox.open_rasterio(<span class="ss">f"</span><span class="sc">{</span>out_dir<span class="sc">}</span><span class="ss">/phi_vv.tif"</span>, masked<span class="op">=</span><span class="va">True</span>)[<span class="dv">0</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>arr_phi.plot.imshow(vmin<span class="op">=-</span><span class="fl">3.14</span>,vmax<span class="op">=</span><span class="fl">3.14</span>, cmap<span class="op">=</span><span class="st">"twilight"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2025-02-calc-coherence_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<section id="get-dem" class="level2">
+<h2 class="anchored" data-anchor-id="get-dem">Get DEM</h2>
+<p>Doesn’t need to be in workflow</p>
+<div id="cell-24" class="cell" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> eo_tools.dem <span class="im">import</span> retrieve_dem</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-25" class="cell" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load a geometry</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>aoi_name <span class="op">=</span> <span class="st">"thetford2aoi"</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>file_aoi <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>aoi_name<span class="sc">}</span><span class="ss">.geojson"</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>shp <span class="op">=</span> gpd.read_file(file_aoi).geometry[<span class="dv">0</span>]</span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># change to your custom location</span></span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>dem_file <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">/res/cop-dem-glo-30_</span><span class="sc">{</span>aoi_name<span class="sc">}</span><span class="ss">.tif"</span></span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>retrieve_dem(shp, dem_file)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>INFO:eo_tools.dem:Retrieve DEM</code></pre>
+</div>
+</div>
+</section>
+</section>
+<section id="possibilities-on-eodh" class="level1">
+<h1>Possibilities on EODH</h1>
+<p>The EODH platform</p>
+<ul>
+<li>AppHub</li>
+<li>CWL</li>
+</ul>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const onCopySuccess = function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
+  });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/ajgwords\.github\.io\/eodh-tests\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

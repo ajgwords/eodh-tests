@@ -72,7 +72,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="../site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../site_libs/bootstrap/bootstrap-08b45f57ad681ffc1d83d6fe5486bc05.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-3a86aad0115fdac71b8b5cec7ac8b57c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -158,7 +158,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>Credentials: create a <code>.env</code> file in the root of this repository with the following content:</p>
 <pre><code>ADES_USER="username"
 ADES_TOKEN="token"</code></pre>
-<div id="cell-1" class="cell" data-execution_count="6">
+<div id="cell-1" class="cell" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> json</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
@@ -178,7 +178,7 @@ ADES_TOKEN="token"</code></pre>
 <span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>ades <span class="op">=</span> client.get_ades()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Run the following cell if deploying the workflow.</p>
-<div id="cell-3" class="cell" data-execution_count="7">
+<div id="cell-3" class="cell" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>cwl_yaml <span class="op">=</span> <span class="vs">r"""cwlVersion: v1.0</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="vs">$graph:</span></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="vs">- class: CommandLineTool</span></span>
@@ -322,41 +322,41 @@ ADES_TOKEN="token"</code></pre>
 <span id="cb3-141"><a href="#cb3-141" aria-hidden="true" tabindex="-1"></a><span class="vs">- class: Workflow</span></span>
 <span id="cb3-142"><a href="#cb3-142" aria-hidden="true" tabindex="-1"></a><span class="vs">  id: 'cloud-free-best-pixel-h'</span></span>
 <span id="cb3-143"><a href="#cb3-143" aria-hidden="true" tabindex="-1"></a><span class="vs">  inputs:</span></span>
-<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a><span class="vs">    id: 'catalog'</span></span>
-<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a><span class="vs">    label: Catalog path</span></span>
-<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a><span class="vs">    doc: Full catalog path</span></span>
-<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a><span class="vs">    default: supported-datasets/ceda-stac-catalogue</span></span>
-<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a><span class="vs">    type: string</span></span>
-<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a><span class="vs">    id: 'collection'</span></span>
-<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a><span class="vs">    label: collection id</span></span>
-<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a><span class="vs">    doc: collection id</span></span>
-<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a><span class="vs">    default: sentinel2_ard</span></span>
-<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a><span class="vs">    type: string</span></span>
-<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a><span class="vs">    id: 'intersects'</span></span>
-<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a><span class="vs">    label: Intersects</span></span>
-<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a><span class="vs">    doc: "a GeoJSON-like json string, which provides a \"type\" member describing</span></span>
+<span id="cb3-144"><a href="#cb3-144" aria-hidden="true" tabindex="-1"></a><span class="vs">    catalog</span></span>
+<span id="cb3-145"><a href="#cb3-145" aria-hidden="true" tabindex="-1"></a><span class="vs">      label: Catalog path</span></span>
+<span id="cb3-146"><a href="#cb3-146" aria-hidden="true" tabindex="-1"></a><span class="vs">      doc: Full catalog path</span></span>
+<span id="cb3-147"><a href="#cb3-147" aria-hidden="true" tabindex="-1"></a><span class="vs">      default: supported-datasets/ceda-stac-catalogue</span></span>
+<span id="cb3-148"><a href="#cb3-148" aria-hidden="true" tabindex="-1"></a><span class="vs">      type: string</span></span>
+<span id="cb3-149"><a href="#cb3-149" aria-hidden="true" tabindex="-1"></a><span class="vs">    collection</span></span>
+<span id="cb3-150"><a href="#cb3-150" aria-hidden="true" tabindex="-1"></a><span class="vs">      label: collection id</span></span>
+<span id="cb3-151"><a href="#cb3-151" aria-hidden="true" tabindex="-1"></a><span class="vs">      doc: collection id</span></span>
+<span id="cb3-152"><a href="#cb3-152" aria-hidden="true" tabindex="-1"></a><span class="vs">      default: sentinel2_ard</span></span>
+<span id="cb3-153"><a href="#cb3-153" aria-hidden="true" tabindex="-1"></a><span class="vs">      type: string</span></span>
+<span id="cb3-154"><a href="#cb3-154" aria-hidden="true" tabindex="-1"></a><span class="vs">    intersects</span></span>
+<span id="cb3-155"><a href="#cb3-155" aria-hidden="true" tabindex="-1"></a><span class="vs">      label: Intersects</span></span>
+<span id="cb3-156"><a href="#cb3-156" aria-hidden="true" tabindex="-1"></a><span class="vs">      doc: "a GeoJSON-like json string, which provides a \"type\" member describing</span></span>
 <span id="cb3-157"><a href="#cb3-157" aria-hidden="true" tabindex="-1"></a><span class="vs">      the type of the geometry and \"coordinates\"  member providing a list of coordinates.</span></span>
 <span id="cb3-158"><a href="#cb3-158" aria-hidden="true" tabindex="-1"></a><span class="vs">      Will search for images intersecting this geometry.\n"</span></span>
-<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a><span class="vs">    default: "{\n  \"type\": \"Polygon\",\n  \"coordinates\": [\n    [\n      [0.08905898091569497,</span></span>
+<span id="cb3-159"><a href="#cb3-159" aria-hidden="true" tabindex="-1"></a><span class="vs">      default: "{\n  \"type\": \"Polygon\",\n  \"coordinates\": [\n    [\n      [0.08905898091569497,</span></span>
 <span id="cb3-160"><a href="#cb3-160" aria-hidden="true" tabindex="-1"></a><span class="vs">      52.69722175598818],\n      [0.08905898091569497, 52.15527412683906],\n     \</span></span>
 <span id="cb3-161"><a href="#cb3-161" aria-hidden="true" tabindex="-1"></a><span class="vs">      \ [0.9565339502005088, 52.15527412683906],\n      [0.9565339502005088, 52.69722175598818],\n\</span></span>
 <span id="cb3-162"><a href="#cb3-162" aria-hidden="true" tabindex="-1"></a><span class="vs">      \      [0.08905898091569497, 52.69722175598818]\n    ]\n  ]\n}\n"</span></span>
-<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a><span class="vs">    type: string</span></span>
-<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a><span class="vs">    id: 'start_datetime'</span></span>
-<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a><span class="vs">    label: Start datetime</span></span>
-<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a><span class="vs">    doc: Start datetime</span></span>
-<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a><span class="vs">    default: '2023-04-01'</span></span>
-<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a><span class="vs">    type: string</span></span>
-<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a><span class="vs">    id: 'end_datetime'</span></span>
-<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a><span class="vs">    label: End datetime</span></span>
-<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a><span class="vs">    doc: End datetime</span></span>
-<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a><span class="vs">    default: '2023-06-30'</span></span>
-<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a><span class="vs">    type: string</span></span>
+<span id="cb3-163"><a href="#cb3-163" aria-hidden="true" tabindex="-1"></a><span class="vs">      type: string</span></span>
+<span id="cb3-164"><a href="#cb3-164" aria-hidden="true" tabindex="-1"></a><span class="vs">    start_datetime</span></span>
+<span id="cb3-165"><a href="#cb3-165" aria-hidden="true" tabindex="-1"></a><span class="vs">      label: Start datetime</span></span>
+<span id="cb3-166"><a href="#cb3-166" aria-hidden="true" tabindex="-1"></a><span class="vs">      doc: Start datetime</span></span>
+<span id="cb3-167"><a href="#cb3-167" aria-hidden="true" tabindex="-1"></a><span class="vs">      default: '2023-04-01'</span></span>
+<span id="cb3-168"><a href="#cb3-168" aria-hidden="true" tabindex="-1"></a><span class="vs">      type: string</span></span>
+<span id="cb3-169"><a href="#cb3-169" aria-hidden="true" tabindex="-1"></a><span class="vs">    end_datetime</span></span>
+<span id="cb3-170"><a href="#cb3-170" aria-hidden="true" tabindex="-1"></a><span class="vs">      label: End datetime</span></span>
+<span id="cb3-171"><a href="#cb3-171" aria-hidden="true" tabindex="-1"></a><span class="vs">      doc: End datetime</span></span>
+<span id="cb3-172"><a href="#cb3-172" aria-hidden="true" tabindex="-1"></a><span class="vs">      default: '2023-06-30'</span></span>
+<span id="cb3-173"><a href="#cb3-173" aria-hidden="true" tabindex="-1"></a><span class="vs">      type: string</span></span>
 <span id="cb3-174"><a href="#cb3-174" aria-hidden="true" tabindex="-1"></a><span class="vs">  outputs:</span></span>
-<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a><span class="vs">    id: 'stac_output'</span></span>
-<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a><span class="vs">    outputSource:</span></span>
-<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a><span class="vs">      's2_make_stac/stac_catalog'</span></span>
-<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a><span class="vs">    type: Directory</span></span>
+<span id="cb3-175"><a href="#cb3-175" aria-hidden="true" tabindex="-1"></a><span class="vs">    stac_output</span></span>
+<span id="cb3-176"><a href="#cb3-176" aria-hidden="true" tabindex="-1"></a><span class="vs">      outputSource:</span></span>
+<span id="cb3-177"><a href="#cb3-177" aria-hidden="true" tabindex="-1"></a><span class="vs">        's2_make_stac/stac_catalog'</span></span>
+<span id="cb3-178"><a href="#cb3-178" aria-hidden="true" tabindex="-1"></a><span class="vs">      type: Directory</span></span>
 <span id="cb3-179"><a href="#cb3-179" aria-hidden="true" tabindex="-1"></a><span class="vs">  requirements:</span></span>
 <span id="cb3-180"><a href="#cb3-180" aria-hidden="true" tabindex="-1"></a><span class="vs">    class: ResourceRequirement</span></span>
 <span id="cb3-181"><a href="#cb3-181" aria-hidden="true" tabindex="-1"></a><span class="vs">    coresMin: 3</span></span>
@@ -417,285 +417,22 @@ ADES_TOKEN="token"</code></pre>
 <span id="cb3-236"><a href="#cb3-236" aria-hidden="true" tabindex="-1"></a><span class="vs">"""</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Run the following cell if deploying the workflow.</p>
-<div id="cell-5" class="cell" data-execution_count="8">
+<div id="cell-5" class="cell" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>    ades.get_process(<span class="st">"cloud-free-best-pixel-h"</span>).delete()</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">Exception</span>:</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"Process not found, no need to undeploy."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>DEBUG: _request_raw received {'self': &lt;pyeodh.client.Client object at 0x7c7dceb32090&gt;, 'method': 'GET', 'url': 'https://test.eodatahub.org.uk/ades/ajgwords/ogc-api/processes/cloud-free-best-pixel-h', 'headers': None, 'params': None, 'data': None, 'encode': &lt;function _encode_json at 0x7c7dd732efc0&gt;}
-DEBUG: Making request: GET https://test.eodatahub.org.uk/ades/ajgwords/ogc-api/processes/cloud-free-best-pixel-h
-       headers: {}
-       params: None
-       body: None
-DEBUG: Received response 404
-       headers: {'Content-Type': 'application/json;charset=UTF-8', 'Content-Length': '205', 'Connection': 'keep-alive', 'Server': 'nginx/1.27.0', 'Date': 'Tue, 21 Jan 2025 14:46:20 GMT', 'Access-Control-Allow-Headers': 'Content-Type,Authorization,Prefer', 'Access-Control-Allow-Origin': '*', 'X-Cache': 'Error from cloudfront', 'Via': '1.1 717666fbcd9eb8ed70d0f46dd99d0448.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'LHR50-P1', 'X-Amz-Cf-Id': 'VS1ZfIratj85SYUlpZNjoieGK1mOaIyFZt5MSM5hky1LyqE79ycd_w=='}
-       content: {
-         "title": "NoSuchProcess",
-         "type": "http://www.opengis.net/def/rel/ogc/1.0/exception/no-such-process",
-         "detail": "Unable to parse the ZCFG file: cloud-free-best-pixel-h.zcfg (No message provided)"
-       }</code></pre>
-</div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Process not found, no need to undeploy.</code></pre>
 </div>
 </div>
-<div id="cell-6" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>process <span class="op">=</span> ades.deploy_process(cwl_yaml<span class="op">=</span>cwl_yaml)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>DEBUG: _request_raw received {'self': &lt;pyeodh.client.Client object at 0x7c7dceb32090&gt;, 'method': 'POST', 'url': 'https://test.eodatahub.org.uk/ades/ajgwords/ogc-api/processes', 'headers': None, 'params': None, 'data': 'cwlVersion: v1.0\n$graph:\n- class: CommandLineTool\n  id: \'s2_make_stac\'\n  inputs:\n  - id: \'files\'\n    doc: FILES\n    type:\n      type: array\n      items: File\n  - id: \'geometry\'\n    inputBinding:\n      prefix: --geometry\n    type:\n    - \'null\'\n    - string\n  requirements:\n  - class: DockerRequirement\n    dockerPull: ghcr.io/eo-datahub/user-workflows/s2_make_stac@sha256:1c5f2166ca78c561caf2db45f7974649d3ad4423f774eda4b5d73d5c96d955ed\n  - class: InlineJavascriptRequirement\n  doc: "None\\n"\n  baseCommand:\n  - python\n  - /app/app.py\n  outputs:\n  - id: \'stac_catalog\'\n    outputBinding:\n      glob: .\n    type: Directory\n- class: CommandLineTool\n  id: \'s2_mosaic\'\n  inputs:\n  - id: \'all_images\'\n    doc: ALL_IMAGES\n    type:\n      type: array\n      items: File\n  - id: \'intersects\'\n    inputBinding:\n      prefix: --intersects\n    type:\n    - \'null\'\n    - string\n  - id: \'month_json\'\n    inputBinding:\n      prefix: --month-json\n    type: File\n  outputs:\n  - id: \'best_pixel\'\n    outputBinding:\n      glob: \'*.tif\'\n    type: File\n  requirements:\n  - class: DockerRequirement\n    dockerPull: ghcr.io/eo-datahub/user-workflows/s2_mosaic@sha256:d66c855007e6838e493d5f4273ff7867dfe17868f84a66e69728b997e0d3031d\n  - class: InlineJavascriptRequirement\n  doc: "None\\n"\n  baseCommand:\n  - /usr/local/bin/_entrypoint.sh\n  - python\n  - /app/app.py\n- class: CommandLineTool\n  id: \'s2_rm_cloud\'\n  inputs:\n  - id: \'item_url\'\n    inputBinding:\n      prefix: --item-url\n    type:\n    - \'null\'\n    - string\n  outputs:\n  - id: \'cloud_masked\'\n    outputBinding:\n      glob: \'*.tif\'\n    type: File\n  requirements:\n  - class: DockerRequirement\n    dockerPull: ghcr.io/eo-datahub/user-workflows/s2_rm_cloud@sha256:c4d602948cd0433142ac26a822f72ab23ad7195ab840d9c2acba673346e6f3d1\n  - class: InlineJavascriptRequirement\n  doc: "None\\n"\n  baseCommand:\n  - /usr/local/bin/_entrypoint.sh\n  - python\n  - /app/app.py\n- class: CommandLineTool\n  id: \'s2_search\'\n  inputs:\n  - id: \'catalog\'\n    inputBinding:\n      prefix: --catalog\n    type:\n    - \'null\'\n    - string\n  - id: \'collection\'\n    inputBinding:\n      prefix: --collection\n    type:\n    - \'null\'\n    - string\n  - id: \'end_datetime\'\n    inputBinding:\n      prefix: --end-datetime\n    type:\n    - \'null\'\n    - string\n  - id: \'intersects\'\n    inputBinding:\n      prefix: --intersects\n    type:\n    - \'null\'\n    - string\n  - id: \'start_datetime\'\n    inputBinding:\n      prefix: --start-datetime\n    type:\n    - \'null\'\n    - string\n  outputs:\n  - id: \'months\'\n    outputBinding:\n      glob: month_*.json\n    type:\n      items: File\n      type: array\n  - id: \'urls\'\n    outputBinding:\n      glob: urls.txt\n      loadContents: true\n      outputEval: $(self[0].contents.split(\'\\n\'))\n    type:\n      items: string\n      type: array\n  requirements:\n  - class: DockerRequirement\n    dockerPull: ghcr.io/eo-datahub/user-workflows/s2_search@sha256:1a56d9f39b4281a1662de450cd36414c32bc28ff3b544cbf54a84f92e7c59133\n  - class: InlineJavascriptRequirement\n  doc: "None\\n"\n  baseCommand:\n  - python\n  - /app/app.py\n- class: Workflow\n  id: \'cloud-free-best-pixel-h\'\n  inputs:\n    id: \'catalog\'\n    label: Catalog path\n    doc: Full catalog path\n    default: supported-datasets/ceda-stac-catalogue\n    type: string\n    id: \'collection\'\n    label: collection id\n    doc: collection id\n    default: sentinel2_ard\n    type: string\n    id: \'intersects\'\n    label: Intersects\n    doc: "a GeoJSON-like json string, which provides a \\"type\\" member describing\n      the type of the geometry and \\"coordinates\\"  member providing a list of coordinates.\n      Will search for images intersecting this geometry.\\n"\n    default: "{\\n  \\"type\\": \\"Polygon\\",\\n  \\"coordinates\\": [\\n    [\\n      [0.08905898091569497,\n      52.69722175598818],\\n      [0.08905898091569497, 52.15527412683906],\\n     \\\n      \\ [0.9565339502005088, 52.15527412683906],\\n      [0.9565339502005088, 52.69722175598818],\\n\\\n      \\      [0.08905898091569497, 52.69722175598818]\\n    ]\\n  ]\\n}\\n"\n    type: string\n    id: \'start_datetime\'\n    label: Start datetime\n    doc: Start datetime\n    default: \'2023-04-01\'\n    type: string\n    id: \'end_datetime\'\n    label: End datetime\n    doc: End datetime\n    default: \'2023-06-30\'\n    type: string\n  outputs:\n    id: \'stac_output\'\n    outputSource:\n      \'s2_make_stac/stac_catalog\'\n    type: Directory\n  requirements:\n    class: ResourceRequirement\n    coresMin: 3\n    ramMin: 15000\n    class: ScatterFeatureRequirement\n  label: Cloud free best pixel\n  doc: Generate cloud free best pixel mosaic on a per month basis\n  steps:\n  - id: \'s2_search\'\n    in:\n    - id: \'catalog\'\n      source: \'catalog\'\n    - id: \'collection\'\n      source: \'collection\'\n    - id: \'intersects\'\n      source: \'intersects\'\n    - id: \'start_datetime\'\n      source: \'start_datetime\'\n    - id: \'end_datetime\'\n      source: \'end_datetime\'\n    out:\n    - id: \'urls\'\n    - id: \'months\'\n    run: \'#s2_search\'\n  - id: \'s2_rm_cloud\'\n    in:\n    - id: \'item_url\'\n      source: \'s2_search/urls\'\n    out:\n    - id: \'cloud_masked\'\n    run: \'#s2_rm_cloud\'\n    scatter:\n    - \'item_url\'\n    scatterMethod: dotproduct\n  - id: \'s2_mosaic\'\n    in:\n    - id: \'intersects\'\n      source: \'intersects\'\n    - id: \'month_json\'\n      source: \'s2_search/months\'\n    - id: \'all_images\'\n      source: \'s2_rm_cloud/cloud_masked\'\n    out:\n    - id: \'best_pixel\'\n    run: \'#s2_mosaic\'\n    scatter:\n    - \'month_json\'\n    scatterMethod: dotproduct\n  - id: \'s2_make_stac\'\n    in:\n    - id: \'geometry\'\n      source: \'intersects\'\n    - id: \'files\'\n      source: \'s2_mosaic/best_pixel\'\n    out:\n    - id: \'stac_catalog\'\n    run: \'#s2_make_stac\'\n', 'encode': &lt;function Ades.deploy_process.&lt;locals&gt;.encode at 0x7c7dcd0cc400&gt;}
-DEBUG: Making request: POST https://test.eodatahub.org.uk/ades/ajgwords/ogc-api/processes
-       headers: {'Content-Type': 'application/cwl+yaml'}
-       params: None
-       body: cwlVersion: v1.0
-       $graph:
-       - class: CommandLineTool
-         id: 's2_make_stac'
-         inputs:
-         - id: 'files'
-           doc: FILES
-           type:
-             type: array
-             items: File
-         - id: 'geometry'
-           inputBinding:
-             prefix: --geometry
-           type:
-           - 'null'
-           - string
-         requirements:
-         - class: DockerRequirement
-           dockerPull: ghcr.io/eo-datahub/user-workflows/s2_make_stac@sha256:1c5f2166ca78c561caf2db45f7974649d3ad4423f774eda4b5d73d5c96d955ed
-         - class: InlineJavascriptRequirement
-         doc: "None\n"
-         baseCommand:
-         - python
-         - /app/app.py
-         outputs:
-         - id: 'stac_catalog'
-           outputBinding:
-             glob: .
-           type: Directory
-       - class: CommandLineTool
-         id: 's2_mosaic'
-         inputs:
-         - id: 'all_images'
-           doc: ALL_IMAGES
-           type:
-             type: array
-             items: File
-         - id: 'intersects'
-           inputBinding:
-             prefix: --intersects
-           type:
-           - 'null'
-           - string
-         - id: 'month_json'
-           inputBinding:
-             prefix: --month-json
-           type: File
-         outputs:
-         - id: 'best_pixel'
-           outputBinding:
-             glob: '*.tif'
-           type: File
-         requirements:
-         - class: DockerRequirement
-           dockerPull: ghcr.io/eo-datahub/user-workflows/s2_mosaic@sha256:d66c855007e6838e493d5f4273ff7867dfe17868f84a66e69728b997e0d3031d
-         - class: InlineJavascriptRequirement
-         doc: "None\n"
-         baseCommand:
-         - /usr/local/bin/_entrypoint.sh
-         - python
-         - /app/app.py
-       - class: CommandLineTool
-         id: 's2_rm_cloud'
-         inputs:
-         - id: 'item_url'
-           inputBinding:
-             prefix: --item-url
-           type:
-           - 'null'
-           - string
-         outputs:
-         - id: 'cloud_masked'
-           outputBinding:
-             glob: '*.tif'
-           type: File
-         requirements:
-         - class: DockerRequirement
-           dockerPull: ghcr.io/eo-datahub/user-workflows/s2_rm_cloud@sha256:c4d602948cd0433142ac26a822f72ab23ad7195ab840d9c2acba673346e6f3d1
-         - class: InlineJavascriptRequirement
-         doc: "None\n"
-         baseCommand:
-         - /usr/local/bin/_entrypoint.sh
-         - python
-         - /app/app.py
-       - class: CommandLineTool
-         id: 's2_search'
-         inputs:
-         - id: 'catalog'
-           inputBinding:
-             prefix: --catalog
-           type:
-           - 'null'
-           - string
-         - id: 'collection'
-           inputBinding:
-             prefix: --collection
-           type:
-           - 'null'
-           - string
-         - id: 'end_datetime'
-           inputBinding:
-             prefix: --end-datetime
-           type:
-           - 'null'
-           - string
-         - id: 'intersects'
-           inputBinding:
-             prefix: --intersects
-           type:
-           - 'null'
-           - string
-         - id: 'start_datetime'
-           inputBinding:
-             prefix: --start-datetime
-           type:
-           - 'null'
-           - string
-         outputs:
-         - id: 'months'
-           outputBinding:
-             glob: month_*.json
-           type:
-             items: File
-             type: array
-         - id: 'urls'
-           outputBinding:
-             glob: urls.txt
-             loadContents: true
-             outputEval: $(self[0].contents.split('\n'))
-           type:
-             items: string
-             type: array
-         requirements:
-         - class: DockerRequirement
-           dockerPull: ghcr.io/eo-datahub/user-workflows/s2_search@sha256:1a56d9f39b4281a1662de450cd36414c32bc28ff3b544cbf54a84f92e7c59133
-         - class: InlineJavascriptRequirement
-         doc: "None\n"
-         baseCommand:
-         - python
-         - /app/app.py
-       - class: Workflow
-         id: 'cloud-free-best-pixel-h'
-         inputs:
-           id: 'catalog'
-           label: Catalog path
-           doc: Full catalog path
-           default: supported-datasets/ceda-stac-catalogue
-           type: string
-           id: 'collection'
-           label: collection id
-           doc: collection id
-           default: sentinel2_ard
-           type: string
-           id: 'intersects'
-           label: Intersects
-           doc: "a GeoJSON-like json string, which provides a \"type\" member describing
-             the type of the geometry and \"coordinates\"  member providing a list of coordinates.
-             Will search for images intersecting this geometry.\n"
-           default: "{\n  \"type\": \"Polygon\",\n  \"coordinates\": [\n    [\n      [0.08905898091569497,
-             52.69722175598818],\n      [0.08905898091569497, 52.15527412683906],\n     \
-             \ [0.9565339502005088, 52.15527412683906],\n      [0.9565339502005088, 52.69722175598818],\n\
-             \      [0.08905898091569497, 52.69722175598818]\n    ]\n  ]\n}\n"
-           type: string
-           id: 'start_datetime'
-           label: Start datetime
-           doc: Start datetime
-           default: '2023-04-01'
-           type: string
-           id: 'end_datetime'
-           label: End datetime
-           doc: End datetime
-           default: '2023-06-30'
-           type: string
-         outputs:
-           id: 'stac_output'
-           outputSource:
-             's2_make_stac/stac_catalog'
-           type: Directory
-         requirements:
-           class: ResourceRequirement
-           coresMin: 3
-           ramMin: 15000
-           class: ScatterFeatureRequirement
-         label: Cloud free best pixel
-         doc: Generate cloud free best pixel mosaic on a per month basis
-         steps:
-         - id: 's2_search'
-           in:
-           - id: 'catalog'
-             source: 'catalog'
-           - id: 'collection'
-             source: 'collection'
-           - id: 'intersects'
-             source: 'intersects'
-           - id: 'start_datetime'
-             source: 'start_datetime'
-           - id: 'end_datetime'
-             source: 'end_datetime'
-           out:
-           - id: 'urls'
-           - id: 'months'
-           run: '#s2_search'
-         - id: 's2_rm_cloud'
-           in:
-           - id: 'item_url'
-             source: 's2_search/urls'
-           out:
-           - id: 'cloud_masked'
-           run: '#s2_rm_cloud'
-           scatter:
-           - 'item_url'
-           scatterMethod: dotproduct
-         - id: 's2_mosaic'
-           in:
-           - id: 'intersects'
-             source: 'intersects'
-           - id: 'month_json'
-             source: 's2_search/months'
-           - id: 'all_images'
-             source: 's2_rm_cloud/cloud_masked'
-           out:
-           - id: 'best_pixel'
-           run: '#s2_mosaic'
-           scatter:
-           - 'month_json'
-           scatterMethod: dotproduct
-         - id: 's2_make_stac'
-           in:
-           - id: 'geometry'
-             source: 'intersects'
-           - id: 'files'
-             source: 's2_mosaic/best_pixel'
-           out:
-           - id: 'stac_catalog'
-           run: '#s2_make_stac'
-
-DEBUG: Received response 409
-       headers: {'Content-Type': 'application/json;charset=UTF-8', 'Content-Length': '93', 'Connection': 'keep-alive', 'Server': 'nginx/1.27.0', 'Date': 'Tue, 21 Jan 2025 14:46:25 GMT', 'Access-Control-Allow-Headers': 'Content-Type,Authorization,Prefer', 'location': '', 'Access-Control-Allow-Origin': '*', 'X-Cache': 'Error from cloudfront', 'Via': '1.1 717666fbcd9eb8ed70d0f46dd99d0448.cloudfront.net (CloudFront)', 'X-Amz-Cf-Pop': 'LHR50-P1', 'X-Amz-Cf-Id': 'hAWrQl_SL9xklp7JiYCHp9RIBBY9dMWT8U7cvZvfy-w8ydvczjybyA=='}
-       content: {
-         "title": "NoApplicableCode",
-         "type": "NoApplicableCode",
-         "detail": "file not found"
-       }</code></pre>
-</div>
+<div id="cell-6" class="cell" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>process <span class="op">=</span> ades.deploy_process(cwl_yaml<span class="op">=</span>cwl_yaml)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-error">
 <div class="ansi-escaped-output">
 <pre><span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">HTTPError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[9], line 1</span>
+Cell <span class="ansi-green-fg">In[4], line 1</span>
 <span class="ansi-green-fg">----&gt; 1</span> process <span style="color:rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">ades</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">.</span><span class="ansi-yellow-bg">deploy_process</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">cwl_yaml</span><span style="color:rgb(98,98,98)" class="ansi-yellow-bg">=</span><span class="ansi-yellow-bg">cwl_yaml</span><span class="ansi-yellow-bg">)</span>
 
 File <span class="ansi-green-fg">~/miniforge3/envs/eodh/lib/python3.12/site-packages/pyeodh/ades.py:414</span>, in <span class="ansi-cyan-fg">Ades.deploy_process</span><span class="ansi-blue-fg">(self, cwl_url, cwl_yaml)</span>
@@ -747,35 +484,35 @@ File <span class="ansi-green-fg">~/miniforge3/envs/eodh/lib/python3.12/site-pack
 <span class="ansi-green-fg ansi-bold">   1020</span> <span style="font-weight:bold;color:rgb(0,135,0)">if</span> http_error_msg:
 <span class="ansi-green-fg">-&gt; 1021</span>     <span style="font-weight:bold;color:rgb(0,135,0)">raise</span> HTTPError(http_error_msg, response<span style="color:rgb(98,98,98)">=</span><span style="color:rgb(0,135,0)">self</span>)
 
-<span class="ansi-red-fg">HTTPError</span>: 409 Client Error: Conflict for url: https://test.eodatahub.org.uk/ades/ajgwords/ogc-api/processes</pre>
+<span class="ansi-red-fg">HTTPError</span>: 400 Client Error: Bad Request for url: https://test.eodatahub.org.uk/ades/ajgwords/ogc-api/processes</pre>
 </div>
 </div>
 </div>
 <p>The following cell is used for execution of the workflow.</p>
 <div id="cell-8" class="cell">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>intersects <span class="op">=</span> {</span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"type"</span>: <span class="st">"Polygon"</span>,</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"coordinates"</span>: [</span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>        [</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>            [<span class="fl">0.08905898091569497</span>, <span class="fl">52.69722175598818</span>],</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>            [<span class="fl">0.08905898091569497</span>, <span class="fl">52.15527412683906</span>],</span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>            [<span class="fl">0.9565339502005088</span>, <span class="fl">52.15527412683906</span>],</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>            [<span class="fl">0.9565339502005088</span>, <span class="fl">52.69722175598818</span>],</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>            [<span class="fl">0.08905898091569497</span>, <span class="fl">52.69722175598818</span>],</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>        ]</span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    ],</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>j <span class="op">=</span> ades.get_process(<span class="st">"cloud-free-best-pixel-h"</span>).execute(</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    {</span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"catalog"</span>: <span class="st">"supported-datasets/ceda-stac-catalogue"</span>,</span>
-<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"collection"</span>: <span class="st">"sentinel2_ard"</span>,</span>
-<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"intersects"</span>: json.dumps(intersects),</span>
-<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">"start_datetime"</span>: <span class="st">"2023-04-01"</span>,</span>
-<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"end_datetime"</span>: <span class="st">"2023-06-30"</span>,</span>
-<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>    }</span>
-<span id="cb9-22"><a href="#cb9-22" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb9-23"><a href="#cb9-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(j.self_href)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>intersects <span class="op">=</span> {</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="st">"type"</span>: <span class="st">"Polygon"</span>,</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="st">"coordinates"</span>: [</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        [</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>            [<span class="fl">0.08905898091569497</span>, <span class="fl">52.69722175598818</span>],</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>            [<span class="fl">0.08905898091569497</span>, <span class="fl">52.15527412683906</span>],</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>            [<span class="fl">0.9565339502005088</span>, <span class="fl">52.15527412683906</span>],</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>            [<span class="fl">0.9565339502005088</span>, <span class="fl">52.69722175598818</span>],</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>            [<span class="fl">0.08905898091569497</span>, <span class="fl">52.69722175598818</span>],</span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>        ]</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>    ],</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>j <span class="op">=</span> ades.get_process(<span class="st">"cloud-free-best-pixel-h"</span>).execute(</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    {</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>        <span class="st">"catalog"</span>: <span class="st">"supported-datasets/ceda-stac-catalogue"</span>,</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="st">"collection"</span>: <span class="st">"sentinel2_ard"</span>,</span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        <span class="st">"intersects"</span>: json.dumps(intersects),</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>        <span class="st">"start_datetime"</span>: <span class="st">"2023-04-01"</span>,</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        <span class="st">"end_datetime"</span>: <span class="st">"2023-06-30"</span>,</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>    }</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(j.self_href)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 
