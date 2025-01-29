@@ -170,14 +170,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#introduction-to-eo-tools" id="toc-introduction-to-eo-tools" class="nav-link" data-scroll-target="#introduction-to-eo-tools">Introduction to eo-tools</a>
   <ul class="collapse">
   <li><a href="#walk-through" id="toc-walk-through" class="nav-link" data-scroll-target="#walk-through">Walk through</a></li>
+  <li><a href="#setup" id="toc-setup" class="nav-link" data-scroll-target="#setup">Setup</a>
+  <ul class="collapse">
+  <li><a href="#conda-environment-reqts" id="toc-conda-environment-reqts" class="nav-link" data-scroll-target="#conda-environment-reqts">conda environment reqts</a></li>
+  <li><a href="#auth-reqts" id="toc-auth-reqts" class="nav-link" data-scroll-target="#auth-reqts">auth reqts</a></li>
+  </ul></li>
   </ul></li>
   <li><a href="#using-cdse" id="toc-using-cdse" class="nav-link" data-scroll-target="#using-cdse">Using CDSE</a></li>
-  <li><a href="#try-it-with-ceda-data" id="toc-try-it-with-ceda-data" class="nav-link" data-scroll-target="#try-it-with-ceda-data">Try it with CEDA data</a></li>
-  <li><a href="#outputs-and-issues" id="toc-outputs-and-issues" class="nav-link" data-scroll-target="#outputs-and-issues">Outputs and issues</a>
-  <ul class="collapse">
-  <li><a href="#get-dem" id="toc-get-dem" class="nav-link" data-scroll-target="#get-dem">Get DEM</a></li>
-  </ul></li>
-  <li><a href="#possibilities-on-eodh" id="toc-possibilities-on-eodh" class="nav-link" data-scroll-target="#possibilities-on-eodh">Possibilities on EODH</a></li>
+  <li><a href="#outputs" id="toc-outputs" class="nav-link" data-scroll-target="#outputs">Outputs</a></li>
+  <li><a href="#possibilities-on-the-eodh" id="toc-possibilities-on-the-eodh" class="nav-link" data-scroll-target="#possibilities-on-the-eodh">Possibilities on the EODH</a></li>
   </ul>
 </nav>
     </div>
@@ -297,83 +298,88 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="introduction-to-eo-tools" class="level1">
 <h1>Introduction to eo-tools</h1>
-<p>eo-tools is a relatively new Python package</p>
-<hr>
+<p>EO-Tools is a relatively new Python toolbox for processing EO data, specifically designed for Sentinel-1 and -2 images, as well as Digital Elevation Models (DEMs). It provides tools for searching, downloading, and processing satellite data, enabling users to perform interferometric processing, terrain correction, and visualisation. The toolbox supports: * Sentinel-1 Synthetic Aperture Radar (SAR) processing: including InSAR analysis, and * Sentinel-2 optical data processing, such as tile merging and exporting color composites.</p>
+<p>Additionally, EO-Tools offers utilities for DEM acquisition, catalog searches, and interactive map visualisations.</p>
+<p>The software is available in two installation versions: via Conda package and via Docker (which adds advanced interactive visualisation capabilities via TiTiler). The Conda package is recommended for most users and can be installed within a virtual environment using Conda or Mamba. The Docker version is better suited for advanced users who require extended functionalities, including the legacy SNAP-based processor.</p>
+<p>EO-Tools integrates well with Jupyter notebooks which helps with interactive analysis. It provides Cloud Optimized GeoTIFF (COG) outputs and supports interactive mapping through Folium. The documentation offers detailed tutorials and API references for both beginners and experienced users. EO-Tools simplifies certain aspects of satellite data processing, making it an accessible solution for a variety of users. ***</p>
 <section id="walk-through" class="level2">
 <h2 class="anchored" data-anchor-id="walk-through">Walk through</h2>
 <p>This demo is based on the how-to on the eo-tools website. There are a couple of bits that have been reworked or added to.</p>
-<div id="cell-7" class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Setup</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>conda env reqts</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>auth reqts</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</section>
+<section id="setup" class="level2">
+<h2 class="anchored" data-anchor-id="setup">Setup</h2>
+<section id="conda-environment-reqts" class="level3">
+<h3 class="anchored" data-anchor-id="conda-environment-reqts">conda environment reqts</h3>
+<p>It is recommended to first create a conda environment to avoid package conflicts. You need to have one of conda / mamba / micromamba installed.</p>
+<p>Then the package can be installed with these commands (replace conda by mamba or micromamba if needed):</p>
+<p><code>conda env create -n eo_tools</code> - replace <code>conda</code> with the correct command if using one of the other two installers</p>
+<p><code>conda activate eo_tools</code></p>
+<p><code>conda install conda-forge::eo-tools</code></p>
+<p>If using the EODH AppHub then these instructions help explain how to create a cond environment: https://help.jasmin.ac.uk/docs/interactive-computing/creating-a-virtual-environment-in-the-notebooks-service/</p>
+</section>
+<section id="auth-reqts" class="level3">
+<h3 class="anchored" data-anchor-id="auth-reqts">auth reqts</h3>
+<p>If using the Copernicus Data Space Ecosystem a free account needs to be created at https://dataspace.copernicus.eu/ The credentials need to be configured as explained here https://eodag.readthedocs.io/en/stable/getting_started_guide/configure.html</p>
+<p>If using EODH then data can be downloaded from the CEDA catalogue without an account. To use the AppHub or workflow runner you would require an account from https://test.eodatahub.org.uk/contact/</p>
+<div id="cell-8" class="cell" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> combinations</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> eo_tools</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rioxarray <span class="im">as</span> riox</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#import shapely</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> eo_tools.S1.process <span class="im">import</span> process_insar</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> eodag <span class="im">import</span> EODataAccessGateway</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> shape</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># credentials need to be stored in the following file (see EODAG docs)</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>confpath <span class="op">=</span> <span class="st">"~/.config/eodag/eodag.yml"</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>dag <span class="op">=</span> EODataAccessGateway()</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># make sure cop_dataspace will be used</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>dag.set_preferred_provider(<span class="st">"cop_dataspace"</span>)</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#logging.basicConfig(level=logging.INFO)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-8" class="cell" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> combinations</span>
+<div id="cell-9" class="cell" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set download dirs</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data_dir <span class="op">=</span> <span class="st">"/home/al/Downloads/jncc_eotools"</span> <span class="co"># set this to work for you</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> eo_tools</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rioxarray <span class="im">as</span> riox</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="co">#import shapely</span></span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> eo_tools.S1.process <span class="im">import</span> process_insar</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> eodag <span class="im">import</span> EODataAccessGateway</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> shape</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="co"># credentials need to be stored in the following file (see EODAG docs)</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>confpath <span class="op">=</span> <span class="st">"~/.config/eodag/eodag.yml"</span></span>
-<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>dag <span class="op">=</span> EODataAccessGateway()</span>
-<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a><span class="co"># make sure cop_dataspace will be used</span></span>
-<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>dag.set_preferred_provider(<span class="st">"cop_dataspace"</span>)</span>
-<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="co">#logging.basicConfig(level=logging.INFO)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># example AOI around Thetford</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>file_aoi <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">/thetfordaoi.geojson"</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>shp2 <span class="op">=</span> gpd.read_file(file_aoi).geometry[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-9" class="cell" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set download dirs</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>data_dir <span class="op">=</span> <span class="st">"~/Downloads/jncc_eotools"</span> <span class="co"># set this to work for you</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="co"># example AOI around Thetford</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>file_aoi <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">/thetfordaoi.geojson"</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>shp2 <span class="op">=</span> gpd.read_file(file_aoi).geometry[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="cell-10" class="cell" data-execution_count="3">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate bbox</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>xmin, ymin, xmax, ymax <span class="op">=</span> shp2.bounds</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>bbox <span class="op">=</span> {</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"lonmin"</span>: xmin,</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"latmin"</span>: ymin,</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"lonmax"</span>: xmax,</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"latmax"</span>: ymax</span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(bbox)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-10" class="cell" data-execution_count="12">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Calculate bbox</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>xmin, ymin, xmax, ymax <span class="op">=</span> shp2.bounds</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>bbox <span class="op">=</span> {</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"lonmin"</span>: xmin,</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"latmin"</span>: ymin,</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"lonmax"</span>: xmax,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"latmax"</span>: ymax</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(bbox)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>{'lonmin': 0.105734423810487, 'latmin': 52.44639077957711, 'lonmax': 0.685652665706907, 'latmax': 52.55804798614935}</code></pre>
 </div>
 </div>
-<div id="cell-11" class="cell" data-execution_count="4">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run search</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="co">#bbox = {</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="co">#    "lonmin": 0.08905898091569497,</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co">#    "latmin": 52.15527412683906,</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co">#    "lonmax": 0.9565339502005088,</span></span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="co">#    "latmax": 52.69722175598818,</span></span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="co">#}</span></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="co">#shp = shapely.box(bbox["lonmin"], bbox["latmin"], bbox["lonmax"], bbox["latmax"])</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>search_criteria <span class="op">=</span> {</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="st">"productType"</span>: <span class="st">"S1_SAR_SLC"</span>,</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>    <span class="st">"start"</span>: <span class="st">"2023-09-03"</span>,</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    <span class="st">"end"</span>: <span class="st">"2023-09-17"</span>,</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="st">"geom"</span>: bbox,</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>results, _ <span class="op">=</span> dag.search(<span class="op">**</span>search_criteria)</span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-11" class="cell" data-execution_count="13">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Run search</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>search_criteria <span class="op">=</span> {</span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="st">"productType"</span>: <span class="st">"S1_SAR_SLC"</span>,</span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>    <span class="st">"start"</span>: <span class="st">"2023-09-03"</span>,</span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>    <span class="st">"end"</span>: <span class="st">"2023-09-17"</span>,</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"geom"</span>: bbox,</span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>results, _ <span class="op">=</span> dag.search(<span class="op">**</span>search_criteria)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-12" class="cell" data-execution_count="5">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>eo_tools.util.explore_products(results, shp2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="5">
+<div id="cell-12" class="cell" data-execution_count="14">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>eo_tools.util.explore_products(results, shp2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="14">
 <div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><span style="color:#565656">Make this Notebook Trusted to load map: File -&gt; Trust Notebook</span><iframe srcdoc="<!DOCTYPE html>
 <html>
 <head>
@@ -401,7 +407,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <meta name=&quot;viewport&quot; content=&quot;width=device-width,
                 initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; />
             <style>
-                #map_1d680ea63fb2c536eb7f4b11b8728911 {
+                #map_1e9fd2036ebcaadd809c4b851193b17b {
                     position: relative;
                     width: 100.0%;
                     height: 100.0%;
@@ -415,14 +421,14 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <body>
     
     
-            <div class=&quot;folium-map&quot; id=&quot;map_1d680ea63fb2c536eb7f4b11b8728911&quot; ></div>
+            <div class=&quot;folium-map&quot; id=&quot;map_1e9fd2036ebcaadd809c4b851193b17b&quot; ></div>
         
 </body>
 <script>
     
     
-            var map_1d680ea63fb2c536eb7f4b11b8728911 = L.map(
-                &quot;map_1d680ea63fb2c536eb7f4b11b8728911&quot;,
+            var map_1e9fd2036ebcaadd809c4b851193b17b = L.map(
+                &quot;map_1e9fd2036ebcaadd809c4b851193b17b&quot;,
                 {
                     center: [0.0, 0.0],
                     crs: L.CRS.EPSG3857,
@@ -436,41 +442,41 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
         
     
-            var tile_layer_3e751101046c71a7704c42958810e4fe = L.tileLayer(
+            var tile_layer_285debc804a95915f1fec81fb0b2d25b = L.tileLayer(
                 &quot;https://tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
                 {&quot;attribution&quot;: &quot;\u0026copy; \u003ca href=\&quot;https://www.openstreetmap.org/copyright\&quot;\u003eOpenStreetMap\u003c/a\u003e contributors&quot;, &quot;detectRetina&quot;: false, &quot;maxNativeZoom&quot;: 19, &quot;maxZoom&quot;: 19, &quot;minZoom&quot;: 0, &quot;noWrap&quot;: false, &quot;opacity&quot;: 1, &quot;subdomains&quot;: &quot;abc&quot;, &quot;tms&quot;: false}
             );
         
     
-            tile_layer_3e751101046c71a7704c42958810e4fe.addTo(map_1d680ea63fb2c536eb7f4b11b8728911);
+            tile_layer_285debc804a95915f1fec81fb0b2d25b.addTo(map_1e9fd2036ebcaadd809c4b851193b17b);
         
     
-        function geo_json_41e3529470581a0fdf5e67d25b604a7d_styler(feature) {
+        function geo_json_f8b3cd9ae9cf29fa398730686e3baea3_styler(feature) {
             switch(feature.id) {
                 default:
                     return {&quot;color&quot;: &quot;black&quot;, &quot;fillColor&quot;: &quot;none&quot;};
             }
         }
 
-        function geo_json_41e3529470581a0fdf5e67d25b604a7d_onEachFeature(feature, layer) {
+        function geo_json_f8b3cd9ae9cf29fa398730686e3baea3_onEachFeature(feature, layer) {
             layer.on({
             });
         };
-        var geo_json_41e3529470581a0fdf5e67d25b604a7d = L.geoJson(null, {
-                onEachFeature: geo_json_41e3529470581a0fdf5e67d25b604a7d_onEachFeature,
+        var geo_json_f8b3cd9ae9cf29fa398730686e3baea3 = L.geoJson(null, {
+                onEachFeature: geo_json_f8b3cd9ae9cf29fa398730686e3baea3_onEachFeature,
             
-                style: geo_json_41e3529470581a0fdf5e67d25b604a7d_styler,
+                style: geo_json_f8b3cd9ae9cf29fa398730686e3baea3_styler,
         });
 
-        function geo_json_41e3529470581a0fdf5e67d25b604a7d_add (data) {
-            geo_json_41e3529470581a0fdf5e67d25b604a7d
+        function geo_json_f8b3cd9ae9cf29fa398730686e3baea3_add (data) {
+            geo_json_f8b3cd9ae9cf29fa398730686e3baea3
                 .addData(data);
         }
-            geo_json_41e3529470581a0fdf5e67d25b604a7d_add({&quot;features&quot;: [{&quot;geometry&quot;: {&quot;coordinates&quot;: [[[0.108530558052996, 52.548527343311214], [0.685652665706907, 52.55804798614935], [0.677823489827881, 52.45388885682422], [0.105734423810487, 52.44639077957711], [0.108530558052996, 52.548527343311214]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;0&quot;, &quot;type&quot;: &quot;Feature&quot;}], &quot;type&quot;: &quot;FeatureCollection&quot;});
+            geo_json_f8b3cd9ae9cf29fa398730686e3baea3_add({&quot;features&quot;: [{&quot;geometry&quot;: {&quot;coordinates&quot;: [[[0.108530558052996, 52.548527343311214], [0.685652665706907, 52.55804798614935], [0.677823489827881, 52.45388885682422], [0.105734423810487, 52.44639077957711], [0.108530558052996, 52.548527343311214]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;0&quot;, &quot;type&quot;: &quot;Feature&quot;}], &quot;type&quot;: &quot;FeatureCollection&quot;});
 
         
     
-            geo_json_41e3529470581a0fdf5e67d25b604a7d.bindTooltip(
+            geo_json_f8b3cd9ae9cf29fa398730686e3baea3.bindTooltip(
                 `<div>
                      Area of Interest
                  </div>`,
@@ -478,150 +484,150 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             );
         
     
-            geo_json_41e3529470581a0fdf5e67d25b604a7d.addTo(map_1d680ea63fb2c536eb7f4b11b8728911);
+            geo_json_f8b3cd9ae9cf29fa398730686e3baea3.addTo(map_1e9fd2036ebcaadd809c4b851193b17b);
         
     
 
-        function geo_json_b5c40c2ec403b3e95602f4c853230341_onEachFeature(feature, layer) {
+        function geo_json_e0d3ff749ebfee691d753a6e46aa47f1_onEachFeature(feature, layer) {
             layer.on({
             });
         };
-        var geo_json_b5c40c2ec403b3e95602f4c853230341 = L.geoJson(null, {
-                onEachFeature: geo_json_b5c40c2ec403b3e95602f4c853230341_onEachFeature,
+        var geo_json_e0d3ff749ebfee691d753a6e46aa47f1 = L.geoJson(null, {
+                onEachFeature: geo_json_e0d3ff749ebfee691d753a6e46aa47f1_onEachFeature,
             
         });
 
-        function geo_json_b5c40c2ec403b3e95602f4c853230341_add (data) {
-            geo_json_b5c40c2ec403b3e95602f4c853230341
+        function geo_json_e0d3ff749ebfee691d753a6e46aa47f1_add (data) {
+            geo_json_e0d3ff749ebfee691d753a6e46aa47f1
                 .addData(data);
         }
-            geo_json_b5c40c2ec403b3e95602f4c853230341_add({&quot;coordinates&quot;: [[[3.475866, 51.159492], [4.017843, 52.777412], [0.185597, 53.187542], [0.0, 52.44009389844227], [-0.216913, 51.566528], [0.0, 51.54261879777913], [3.475866, 51.159492]]], &quot;type&quot;: &quot;Polygon&quot;});
-        geo_json_b5c40c2ec403b3e95602f4c853230341.setStyle(function(feature) {return feature.properties.style;});
+            geo_json_e0d3ff749ebfee691d753a6e46aa47f1_add({&quot;coordinates&quot;: [[[3.475866, 51.159492], [4.017843, 52.777412], [0.185597, 53.187542], [0.0, 52.44009389844227], [-0.216913, 51.566528], [0.0, 51.54261879777913], [3.475866, 51.159492]]], &quot;type&quot;: &quot;Polygon&quot;});
+        geo_json_e0d3ff749ebfee691d753a6e46aa47f1.setStyle(function(feature) {return feature.properties.style;});
 
         
     
-            geo_json_b5c40c2ec403b3e95602f4c853230341.bindTooltip(
+            geo_json_e0d3ff749ebfee691d753a6e46aa47f1.bindTooltip(
                 `<div>
-                     <b>Configuration:</b><br>DESCENDING, Orbit: 8<br><b>Product list (index / date):</b><br>3 / 2023-09-13 06:06:59
+                     <b>Configuration:</b><br>DESCENDING, Orbit: 8<br><b>Product list (index / date):</b><br>2 / 2023-09-13 06:06:59
                  </div>`,
                 {&quot;sticky&quot;: true}
             );
         
     
-            geo_json_b5c40c2ec403b3e95602f4c853230341.addTo(map_1d680ea63fb2c536eb7f4b11b8728911);
+            geo_json_e0d3ff749ebfee691d753a6e46aa47f1.addTo(map_1e9fd2036ebcaadd809c4b851193b17b);
         
     
 
-        function geo_json_145990dcc8148a25e72986a149a52d05_onEachFeature(feature, layer) {
+        function geo_json_a2e3682f8ce7a4e01c36a6df3408f09d_onEachFeature(feature, layer) {
             layer.on({
             });
         };
-        var geo_json_145990dcc8148a25e72986a149a52d05 = L.geoJson(null, {
-                onEachFeature: geo_json_145990dcc8148a25e72986a149a52d05_onEachFeature,
+        var geo_json_a2e3682f8ce7a4e01c36a6df3408f09d = L.geoJson(null, {
+                onEachFeature: geo_json_a2e3682f8ce7a4e01c36a6df3408f09d_onEachFeature,
             
         });
 
-        function geo_json_145990dcc8148a25e72986a149a52d05_add (data) {
-            geo_json_145990dcc8148a25e72986a149a52d05
+        function geo_json_a2e3682f8ce7a4e01c36a6df3408f09d_add (data) {
+            geo_json_a2e3682f8ce7a4e01c36a6df3408f09d
                 .addData(data);
         }
-            geo_json_145990dcc8148a25e72986a149a52d05_add({&quot;coordinates&quot;: [[[3.404867, 52.338833], [0.0, 51.96867375512488], [-0.31966, 51.933922], [-0.87165, 53.543831], [-0.8693628407905536, 53.54407244446059], [-0.869386, 53.54414], [-0.0, 53.63589557674331], [1.9816227301074734, 53.84503735782636], [2.996698, 53.952194], [2.99670414135705, 53.95216972518748], [2.998886, 53.9524], [3.406874, 52.339394], [3.4047825796451026, 52.33916668655679], [3.404867, 52.338833]]], &quot;type&quot;: &quot;Polygon&quot;});
-        geo_json_145990dcc8148a25e72986a149a52d05.setStyle(function(feature) {return feature.properties.style;});
+            geo_json_a2e3682f8ce7a4e01c36a6df3408f09d_add({&quot;coordinates&quot;: [[[3.404867, 52.338833], [0.0, 51.96867375512488], [-0.31966, 51.933922], [-0.87165, 53.543831], [-0.8693628407905536, 53.54407244446059], [-0.869386, 53.54414], [-0.0, 53.63589557674331], [1.9816227301074734, 53.84503735782636], [2.996698, 53.952194], [2.99670414135705, 53.95216972518748], [2.998886, 53.9524], [3.406874, 52.339394], [3.4047825796451026, 52.33916668655679], [3.404867, 52.338833]]], &quot;type&quot;: &quot;Polygon&quot;});
+        geo_json_a2e3682f8ce7a4e01c36a6df3408f09d.setStyle(function(feature) {return feature.properties.style;});
 
         
     
-            geo_json_145990dcc8148a25e72986a149a52d05.bindTooltip(
+            geo_json_a2e3682f8ce7a4e01c36a6df3408f09d.bindTooltip(
                 `<div>
-                     <b>Configuration:</b><br>ASCENDING, Orbit: 59<br><b>Product list (index / date):</b><br>1 / 2023-09-04 17:42:09<br>4 / 2023-09-16 17:42:09
+                     <b>Configuration:</b><br>ASCENDING, Orbit: 59<br><b>Product list (index / date):</b><br>0 / 2023-09-04 17:42:09<br>4 / 2023-09-16 17:42:09
                  </div>`,
                 {&quot;sticky&quot;: true}
             );
         
     
-            geo_json_145990dcc8148a25e72986a149a52d05.addTo(map_1d680ea63fb2c536eb7f4b11b8728911);
+            geo_json_a2e3682f8ce7a4e01c36a6df3408f09d.addTo(map_1e9fd2036ebcaadd809c4b851193b17b);
         
     
 
-        function geo_json_1418dc7e53890a0e48beb54c3ed2e0d4_onEachFeature(feature, layer) {
+        function geo_json_df408c3898b957eebc1b6659eac4f0c2_onEachFeature(feature, layer) {
             layer.on({
             });
         };
-        var geo_json_1418dc7e53890a0e48beb54c3ed2e0d4 = L.geoJson(null, {
-                onEachFeature: geo_json_1418dc7e53890a0e48beb54c3ed2e0d4_onEachFeature,
+        var geo_json_df408c3898b957eebc1b6659eac4f0c2 = L.geoJson(null, {
+                onEachFeature: geo_json_df408c3898b957eebc1b6659eac4f0c2_onEachFeature,
             
         });
 
-        function geo_json_1418dc7e53890a0e48beb54c3ed2e0d4_add (data) {
-            geo_json_1418dc7e53890a0e48beb54c3ed2e0d4
+        function geo_json_df408c3898b957eebc1b6659eac4f0c2_add (data) {
+            geo_json_df408c3898b957eebc1b6659eac4f0c2
                 .addData(data);
         }
-            geo_json_1418dc7e53890a0e48beb54c3ed2e0d4_add({&quot;coordinates&quot;: [[[1.456613, 51.28133], [2.000225, 52.898014], [0.0, 53.11161240558363], [-1.842043, 53.308319], [-2.245346, 51.688484], [0.0, 51.44153323547668], [1.456613, 51.28133]]], &quot;type&quot;: &quot;Polygon&quot;});
-        geo_json_1418dc7e53890a0e48beb54c3ed2e0d4.setStyle(function(feature) {return feature.properties.style;});
+            geo_json_df408c3898b957eebc1b6659eac4f0c2_add({&quot;coordinates&quot;: [[[1.456613, 51.28133], [2.000225, 52.898014], [0.0, 53.11161240558363], [-1.842043, 53.308319], [-2.245346, 51.688484], [0.0, 51.44153323547668], [1.456613, 51.28133]]], &quot;type&quot;: &quot;Polygon&quot;});
+        geo_json_df408c3898b957eebc1b6659eac4f0c2.setStyle(function(feature) {return feature.properties.style;});
 
         
     
-            geo_json_1418dc7e53890a0e48beb54c3ed2e0d4.bindTooltip(
+            geo_json_df408c3898b957eebc1b6659eac4f0c2.bindTooltip(
                 `<div>
-                     <b>Configuration:</b><br>DESCENDING, Orbit: 81<br><b>Product list (index / date):</b><br>0 / 2023-09-06 06:15:10
+                     <b>Configuration:</b><br>DESCENDING, Orbit: 81<br><b>Product list (index / date):</b><br>1 / 2023-09-06 06:15:10
                  </div>`,
                 {&quot;sticky&quot;: true}
             );
         
     
-            geo_json_1418dc7e53890a0e48beb54c3ed2e0d4.addTo(map_1d680ea63fb2c536eb7f4b11b8728911);
+            geo_json_df408c3898b957eebc1b6659eac4f0c2.addTo(map_1e9fd2036ebcaadd809c4b851193b17b);
         
     
 
-        function geo_json_0bd17a6c7198132498990e83c36639b6_onEachFeature(feature, layer) {
+        function geo_json_9a37bcadf7969fd89129e8e8e884f857_onEachFeature(feature, layer) {
             layer.on({
             });
         };
-        var geo_json_0bd17a6c7198132498990e83c36639b6 = L.geoJson(null, {
-                onEachFeature: geo_json_0bd17a6c7198132498990e83c36639b6_onEachFeature,
+        var geo_json_9a37bcadf7969fd89129e8e8e884f857 = L.geoJson(null, {
+                onEachFeature: geo_json_9a37bcadf7969fd89129e8e8e884f857_onEachFeature,
             
         });
 
-        function geo_json_0bd17a6c7198132498990e83c36639b6_add (data) {
-            geo_json_0bd17a6c7198132498990e83c36639b6
+        function geo_json_9a37bcadf7969fd89129e8e8e884f857_add (data) {
+            geo_json_9a37bcadf7969fd89129e8e8e884f857
                 .addData(data);
         }
-            geo_json_0bd17a6c7198132498990e83c36639b6_add({&quot;coordinates&quot;: [[[-2.161909, 51.320732], [0.0, 51.55829738530797], [1.500185, 51.723148], [1.097608, 53.336254], [-0.0, 53.21913496812211], [-2.702863, 52.930729], [-2.161909, 51.320732]]], &quot;type&quot;: &quot;Polygon&quot;});
-        geo_json_0bd17a6c7198132498990e83c36639b6.setStyle(function(feature) {return feature.properties.style;});
+            geo_json_9a37bcadf7969fd89129e8e8e884f857_add({&quot;coordinates&quot;: [[[-2.161909, 51.320732], [0.0, 51.55829738530797], [1.500185, 51.723148], [1.097608, 53.336254], [-0.0, 53.21913496812211], [-2.702863, 52.930729], [-2.161909, 51.320732]]], &quot;type&quot;: &quot;Polygon&quot;});
+        geo_json_9a37bcadf7969fd89129e8e8e884f857.setStyle(function(feature) {return feature.properties.style;});
 
         
     
-            geo_json_0bd17a6c7198132498990e83c36639b6.bindTooltip(
+            geo_json_9a37bcadf7969fd89129e8e8e884f857.bindTooltip(
                 `<div>
-                     <b>Configuration:</b><br>ASCENDING, Orbit: 132<br><b>Product list (index / date):</b><br>2 / 2023-09-09 17:50:13
+                     <b>Configuration:</b><br>ASCENDING, Orbit: 132<br><b>Product list (index / date):</b><br>3 / 2023-09-09 17:50:13
                  </div>`,
                 {&quot;sticky&quot;: true}
             );
         
     
-            geo_json_0bd17a6c7198132498990e83c36639b6.addTo(map_1d680ea63fb2c536eb7f4b11b8728911);
+            geo_json_9a37bcadf7969fd89129e8e8e884f857.addTo(map_1e9fd2036ebcaadd809c4b851193b17b);
         
     
-            var layer_control_ed0c2beeda38ac89f0f3bdebac2fda0e_layers = {
+            var layer_control_69d832af776eba88d27d4993007e0aca_layers = {
                 base_layers : {
-                    &quot;openstreetmap&quot; : tile_layer_3e751101046c71a7704c42958810e4fe,
+                    &quot;openstreetmap&quot; : tile_layer_285debc804a95915f1fec81fb0b2d25b,
                 },
                 overlays :  {
-                    &quot;Area of Interest&quot; : geo_json_41e3529470581a0fdf5e67d25b604a7d,
-                    &quot;Orbit 8, group 1&quot; : geo_json_b5c40c2ec403b3e95602f4c853230341,
-                    &quot;Orbit 59, group 1&quot; : geo_json_145990dcc8148a25e72986a149a52d05,
-                    &quot;Orbit 81, group 1&quot; : geo_json_1418dc7e53890a0e48beb54c3ed2e0d4,
-                    &quot;Orbit 132, group 1&quot; : geo_json_0bd17a6c7198132498990e83c36639b6,
+                    &quot;Area of Interest&quot; : geo_json_f8b3cd9ae9cf29fa398730686e3baea3,
+                    &quot;Orbit 8, group 1&quot; : geo_json_e0d3ff749ebfee691d753a6e46aa47f1,
+                    &quot;Orbit 59, group 1&quot; : geo_json_a2e3682f8ce7a4e01c36a6df3408f09d,
+                    &quot;Orbit 81, group 1&quot; : geo_json_df408c3898b957eebc1b6659eac4f0c2,
+                    &quot;Orbit 132, group 1&quot; : geo_json_9a37bcadf7969fd89129e8e8e884f857,
                 },
             };
-            let layer_control_ed0c2beeda38ac89f0f3bdebac2fda0e = L.control.layers(
-                layer_control_ed0c2beeda38ac89f0f3bdebac2fda0e_layers.base_layers,
-                layer_control_ed0c2beeda38ac89f0f3bdebac2fda0e_layers.overlays,
+            let layer_control_69d832af776eba88d27d4993007e0aca = L.control.layers(
+                layer_control_69d832af776eba88d27d4993007e0aca_layers.base_layers,
+                layer_control_69d832af776eba88d27d4993007e0aca_layers.overlays,
                 {&quot;autoZIndex&quot;: true, &quot;collapsed&quot;: true, &quot;position&quot;: &quot;topright&quot;}
-            ).addTo(map_1d680ea63fb2c536eb7f4b11b8728911);
+            ).addTo(map_1e9fd2036ebcaadd809c4b851193b17b);
 
         
     
-            map_1d680ea63fb2c536eb7f4b11b8728911.fitBounds(
+            map_1e9fd2036ebcaadd809c4b851193b17b.fitBounds(
                 [[51.159492, -2.702863], [53.9524, 4.017843]],
                 {}
             );
@@ -630,59 +636,61 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </html>" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen=""></iframe></div></div>
 </div>
 </div>
-<div id="cell-13" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find overlaps</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> []</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> results:</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">id</span> <span class="op">=</span> item.properties[<span class="st">"id"</span>]</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>    geom <span class="op">=</span> shape(item.geometry)</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    data.append({<span class="st">"id"</span>: <span class="bu">id</span>, <span class="st">"geometry"</span>: geom})</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> gpd.GeoDataFrame(data, crs<span class="op">=</span><span class="st">"EPSG:4326"</span>)  <span class="co"># Assuming WGS84</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 98% overlap</span></span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>threshold <span class="op">=</span> <span class="fl">0.98</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>overlaps <span class="op">=</span> []</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (idx1, row1), (idx2, row2) <span class="kw">in</span> combinations(gdf.iterrows(), <span class="dv">2</span>):</span>
-<span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>    intersection <span class="op">=</span> row1[<span class="st">"geometry"</span>].intersection(row2[<span class="st">"geometry"</span>])</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> intersection.is_empty:</span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculate overlap ratio as the area of intersection divided by the area of the smaller polygon</span></span>
-<span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a>        overlap_ratio <span class="op">=</span> intersection.area <span class="op">/</span> <span class="bu">min</span>(</span>
-<span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>            row1[<span class="st">"geometry"</span>].area, row2[<span class="st">"geometry"</span>].area</span>
-<span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>        )</span>
-<span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> overlap_ratio <span class="op">&gt;=</span> threshold:</span>
-<span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>            overlaps.append((row1[<span class="st">"id"</span>], row2[<span class="st">"id"</span>], overlap_ratio))</span>
-<span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>overlap_ids <span class="op">=</span> [entry[:<span class="op">-</span><span class="dv">1</span>] <span class="cf">for</span> entry <span class="kw">in</span> overlaps]</span>
-<span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>overlap_ids</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="6">
+<div id="cell-13" class="cell" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Find overlaps</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>data <span class="op">=</span> []</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> item <span class="kw">in</span> results:</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">id</span> <span class="op">=</span> item.properties[<span class="st">"id"</span>]</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>    geom <span class="op">=</span> shape(item.geometry)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>    data.append({<span class="st">"id"</span>: <span class="bu">id</span>, <span class="st">"geometry"</span>: geom})</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>gdf <span class="op">=</span> gpd.GeoDataFrame(data, crs<span class="op">=</span><span class="st">"EPSG:4326"</span>)  <span class="co"># Assuming WGS84</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="co"># 98% overlap</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>threshold <span class="op">=</span> <span class="fl">0.98</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>overlaps <span class="op">=</span> []</span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (idx1, row1), (idx2, row2) <span class="kw">in</span> combinations(gdf.iterrows(), <span class="dv">2</span>):</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    intersection <span class="op">=</span> row1[<span class="st">"geometry"</span>].intersection(row2[<span class="st">"geometry"</span>])</span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> <span class="kw">not</span> intersection.is_empty:</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculate overlap ratio as the area of intersection divided by the area of the smaller polygon</span></span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>        overlap_ratio <span class="op">=</span> intersection.area <span class="op">/</span> <span class="bu">min</span>(</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a>            row1[<span class="st">"geometry"</span>].area, row2[<span class="st">"geometry"</span>].area</span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>        )</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">if</span> overlap_ratio <span class="op">&gt;=</span> threshold:</span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>            overlaps.append((row1[<span class="st">"id"</span>], row2[<span class="st">"id"</span>], overlap_ratio))</span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>overlap_ids <span class="op">=</span> [entry[:<span class="op">-</span><span class="dv">1</span>] <span class="cf">for</span> entry <span class="kw">in</span> overlaps]</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a>overlap_ids</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="15">
 <pre><code>[('S1A_IW_SLC__1SDV_20230904T174209_20230904T174236_050181_060A2D_E88F',
   'S1A_IW_SLC__1SDV_20230916T174209_20230916T174236_050356_061016_8033')]</code></pre>
 </div>
 </div>
 </section>
 </section>
+</section>
 <section id="using-cdse" class="level1">
 <h1>Using CDSE</h1>
-<div id="cell-15" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data from CDSE</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>ids <span class="op">=</span> [<span class="st">"S1A_IW_SLC__1SDV_20230904T174209_20230904T174236_050181_060A2D_E88F"</span>,</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">"S1A_IW_SLC__1SDV_20230916T174209_20230916T174236_050356_061016_8033"</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>      ]</span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>primary_dir <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>ids[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">.zip"</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>secondary_dir <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>ids[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">.zip"</span></span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>outputs_prefix <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">/res/test-full-processor"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div id="cell-15" class="cell" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Data from CDSE</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>ids <span class="op">=</span> [<span class="st">"S1A_IW_SLC__1SDV_20230904T174209_20230904T174236_050181_060A2D_E88F"</span>,</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>      <span class="st">"S1A_IW_SLC__1SDV_20230916T174209_20230916T174236_050356_061016_8033"</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>      ]</span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Set directories</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>primary_dir <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">/cdse/</span><span class="sc">{</span>ids[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">.zip"</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>secondary_dir <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">/cdse/</span><span class="sc">{</span>ids[<span class="dv">1</span>]<span class="sc">}</span><span class="ss">.zip"</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>outputs_prefix <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">/cdse/res/test-full-processor"</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div id="cell-16" class="cell" data-execution_count="9">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download overlapping products</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Only run if you need the data. Files are 8GB and downloading is usually throttled.</span></span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>to_dl <span class="op">=</span> [it <span class="cf">for</span> it <span class="kw">in</span> results <span class="cf">if</span> it.properties[<span class="st">"id"</span>] <span class="kw">in</span> ids]</span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="bu">len</span>(to_dl)<span class="sc">}</span><span class="ss"> products to download"</span>)</span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>dag.download_all(to_dl, outputs_prefix<span class="op">=</span>data_dir, extract<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Download overlapping products</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Only run if you need the data. Files are 8GB and downloading is usually throttled.</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>to_dl <span class="op">=</span> [it <span class="cf">for</span> it <span class="kw">in</span> results <span class="cf">if</span> it.properties[<span class="st">"id"</span>] <span class="kw">in</span> ids]</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="sc">{</span><span class="bu">len</span>(to_dl)<span class="sc">}</span><span class="ss"> products to download"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>dag.download_all(to_dl, outputs_prefix<span class="op">=</span>data_dir, extract<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>2 products to download</code></pre>
 </div>
@@ -706,110 +714,76 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
  '/home/al/Documents/EODH/Code/eodh-tests/jncc/~/Downloads/jncc_eotools/S1A_IW_SLC__1SDV_20230916T174209_20230916T174236_050356_061016_8033.zip']</code></pre>
 </div>
 </div>
-<div id="cell-17" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>out_dir <span class="op">=</span> process_insar(</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>    dir_prm<span class="op">=</span>primary_dir,</span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>    dir_sec<span class="op">=</span>secondary_dir,</span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>    outputs_prefix<span class="op">=</span>outputs_prefix,</span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>    aoi_name<span class="op">=</span><span class="va">None</span>,</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    shp<span class="op">=</span>shp2,</span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    pol<span class="op">=</span><span class="st">"vv"</span>,</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    subswaths<span class="op">=</span>[<span class="st">"IW1"</span>, <span class="st">"IW2"</span>, <span class="st">"IW3"</span>],</span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>    write_coherence<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>    write_interferogram<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    write_primary_amplitude<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    write_secondary_amplitude<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    apply_fast_esd<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>    dem_upsampling<span class="op">=</span><span class="fl">1.8</span>,</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    dem_force_download<span class="op">=</span><span class="va">False</span>,</span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>    dem_buffer_arc_sec<span class="op">=</span><span class="dv">40</span>,</span>
-<span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a>    boxcar_coherence<span class="op">=</span>[<span class="dv">3</span>, <span class="dv">3</span>],</span>
-<span id="cb14-18"><a href="#cb14-18" aria-hidden="true" tabindex="-1"></a>    filter_ifg<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb14-19"><a href="#cb14-19" aria-hidden="true" tabindex="-1"></a>    multilook<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">4</span>],</span>
-<span id="cb14-20"><a href="#cb14-20" aria-hidden="true" tabindex="-1"></a>    warp_kernel<span class="op">=</span><span class="st">"bicubic"</span>,</span>
-<span id="cb14-21"><a href="#cb14-21" aria-hidden="true" tabindex="-1"></a>    clip_to_shape<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb14-22"><a href="#cb14-22" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:eo_tools.S1.process:---- Processing subswath IW1 in VV polarization
-INFO:eo_tools.S1.core:S1IWSwath Initialization:
-INFO:eo_tools.S1.core:- Read metadata file /home/al/Downloads/eotools/S1A_IW_SLC__1SDV_20241016T174206_20241016T174233_056131_06DE72_1B0C.zip/S1A_IW_SLC__1SDV_20241016T174206_20241016T174233_056131_06DE72_1B0C.SAFE/annotation/s1a-iw1-slc-vv-20241016t174207-20241016t174232-056131-06de72-004.xml
-INFO:eo_tools.S1.core:- Read calibration file /home/al/Downloads/eotools/S1A_IW_SLC__1SDV_20241016T174206_20241016T174233_056131_06DE72_1B0C.zip/S1A_IW_SLC__1SDV_20241016T174206_20241016T174233_056131_06DE72_1B0C.SAFE/annotation/calibration/calibration-s1a-iw1-slc-vv-20241016t174207-20241016t174232-056131-06de72-004.xml
-INFO:eo_tools.S1.core:- Set up raster path zip:///home/al/Downloads/eotools/S1A_IW_SLC__1SDV_20241016T174206_20241016T174233_056131_06DE72_1B0C.zip/S1A_IW_SLC__1SDV_20241016T174206_20241016T174233_056131_06DE72_1B0C.SAFE/measurement/s1a-iw1-slc-vv-20241016t174207-20241016t174232-056131-06de72-004.tiff
-INFO:eo_tools.S1.core:- Look for available OSV (Orbit State Vectors)
-INFO:pyroSAR.S1.auxil:searching for new POE files
-INFO:pyroSAR.S1.auxil:https://step.esa.int/auxdata/orbits/Sentinel-1/POEORB/S1A/2024/09/
-INFO:pyroSAR.S1.auxil:https://step.esa.int/auxdata/orbits/Sentinel-1/POEORB/S1A/2024/10/
-INFO:pyroSAR.S1.auxil:found 1 results
-INFO:pyroSAR.S1.auxil:downloading 1 file
-INFO:pyroSAR.S1.auxil:deleting 0 RES files
-INFO:eo_tools.S1.core:-- Precise orbit found
-INFO:eo_tools.S1.core:S1IWSwath Initialization:
-INFO:eo_tools.S1.core:- Read metadata file /home/al/Downloads/eotools/S1A_IW_SLC__1SDV_20241028T174206_20241028T174233_056306_06E564_F046.zip/S1A_IW_SLC__1SDV_20241028T174206_20241028T174233_056306_06E564_F046.SAFE/annotation/s1a-iw1-slc-vv-20241028t174207-20241028t174232-056306-06e564-004.xml
-INFO:eo_tools.S1.core:- Read calibration file /home/al/Downloads/eotools/S1A_IW_SLC__1SDV_20241028T174206_20241028T174233_056306_06E564_F046.zip/S1A_IW_SLC__1SDV_20241028T174206_20241028T174233_056306_06E564_F046.SAFE/annotation/calibration/calibration-s1a-iw1-slc-vv-20241028t174207-20241028t174232-056306-06e564-004.xml
-INFO:eo_tools.S1.core:- Set up raster path zip:///home/al/Downloads/eotools/S1A_IW_SLC__1SDV_20241028T174206_20241028T174233_056306_06E564_F046.zip/S1A_IW_SLC__1SDV_20241028T174206_20241028T174233_056306_06E564_F046.SAFE/measurement/s1a-iw1-slc-vv-20241028t174207-20241028t174232-056306-06e564-004.tiff
-INFO:eo_tools.S1.core:- Look for available OSV (Orbit State Vectors)
-INFO:pyroSAR.S1.auxil:searching for new POE files
-INFO:pyroSAR.S1.auxil:https://step.esa.int/auxdata/orbits/Sentinel-1/POEORB/S1A/2024/09/
-INFO:pyroSAR.S1.auxil:https://step.esa.int/auxdata/orbits/Sentinel-1/POEORB/S1A/2024/10/
-INFO:pyroSAR.S1.auxil:found 1 results
-INFO:pyroSAR.S1.auxil:downloading 1 file
-INFO:pyroSAR.S1.auxil:deleting 0 RES files
-INFO:eo_tools.S1.core:-- Precise orbit found
-INFO:eo_tools.dem:Retrieve DEM
-INFO:eo_tools.dem:Resample DEM
-INFO:eo_tools.S1.process:---- Processing burst 3 ----
-INFO:eo_tools.S1.core:Extract DEM coordinates
-INFO:eo_tools.S1.core:Convert latitude, longitude &amp; altitude to ECEF x, y &amp; z
-INFO:eo_tools.S1.core:Interpolate orbit
-INFO:eo_tools.S1.core:Range-Doppler terrain correction (LUT computation)
-INFO:eo_tools.S1.core:Extract DEM coordinates
-INFO:eo_tools.S1.core:Convert latitude, longitude &amp; altitude to ECEF x, y &amp; z
-INFO:eo_tools.S1.core:Interpolate orbit
-INFO:eo_tools.S1.core:Range-Doppler terrain correction (LUT computation)
-INFO:eo_tools.S1.core:Compute beta nought calibration factor.
-INFO:eo_tools.S1.core:Compute beta nought calibration factor.
-INFO:eo_tools.S1.process:Apply calibration factor
-INFO:eo_tools.S1.core:Compute TOPS deramping phase
-INFO:eo_tools.S1.process:Apply phase deramping
-INFO:eo_tools.S1.core:Project secondary coordinates to primary grid.
-INFO:eo_tools.S1.core:Warp secondary to primary geometry.
-INFO:eo_tools.S1.core:Warp secondary to primary geometry.
-INFO:eo_tools.S1.process:Apply phase reramping
-INFO:eo_tools.S1.core:Compute topographic phase
-INFO:eo_tools.S1.core:Compute topographic phase
-INFO:eo_tools.S1.process:Apply topographic phase removal
-INFO:eo_tools.auxils:Removing /home/al/Downloads/eotools/res/test-full-processor/S1_InSAR_2024-10-16-174206__2024-10-28-174206/sar/dem_burst.vrt
-INFO:eo_tools.S1.process:Cleaning temporary files
-INFO:eo_tools.S1.process:---- Interferometric outputs for VV IW1
-INFO:eo_tools.S1.process:Compute coherence &amp; interferogram
-INFO:eo_tools.S1.process:---- Interferometric outputs for VV IW2
-INFO:eo_tools.S1.process:Compute coherence &amp; interferogram
-INFO:eo_tools.S1.process:Geocode file coh_vv_iw1.tif.
-INFO:eo_tools.S1.process:Project image with the lookup table.
-INFO:eo_tools.S1.process:Geocode file coh_vv_iw2.tif.
-INFO:eo_tools.S1.process:Project image with the lookup table.
-INFO:eo_tools.S1.process:Merge file coh_vv.tif
-INFO:eo_tools.auxils:Removing /home/al/Downloads/eotools/res/test-full-processor/S1_InSAR_2024-10-16-174206__2024-10-28-174206/sar/coh_vv_iw1_geo.tif
-INFO:eo_tools.auxils:Removing /home/al/Downloads/eotools/res/test-full-processor/S1_InSAR_2024-10-16-174206__2024-10-28-174206/sar/coh_vv_iw2_geo.tif
-INFO:eo_tools.S1.process:Geocode file ifg_vv_iw1.tif.
-INFO:eo_tools.S1.process:Project image with the lookup table.
-INFO:eo_tools.S1.process:Geocode file ifg_vv_iw2.tif.
-INFO:eo_tools.S1.process:Project image with the lookup table.
-INFO:eo_tools.S1.process:Merge file phi_vv.tif
-INFO:eo_tools.auxils:Removing /home/al/Downloads/eotools/res/test-full-processor/S1_InSAR_2024-10-16-174206__2024-10-28-174206/sar/phi_vv_iw1_geo.tif
-INFO:eo_tools.auxils:Removing /home/al/Downloads/eotools/res/test-full-processor/S1_InSAR_2024-10-16-174206__2024-10-28-174206/sar/phi_vv_iw2_geo.tif</code></pre>
+<div id="cell-17" class="cell" data-execution_count="18">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Check data files</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> list_files_recursive(directory<span class="op">=</span>data_dir):</span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>    file_list <span class="op">=</span> []</span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> root, _, files <span class="kw">in</span> os.walk(directory):</span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files:</span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>            file_list.append(os.path.relpath(os.path.join(root, <span class="bu">file</span>), directory))</span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> file_list</span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Example usage</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>files <span class="op">=</span> list_files_recursive()</span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Files in directory and subdirectories:"</span>)</span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> <span class="bu">file</span> <span class="kw">in</span> files:</span>
+<span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="bu">file</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Files in directory and subdirectories:
+thetfordaoi.geojson
+thetford2aoi.geojson
+cdse/S1A_IW_SLC__1SDV_20230916T174209_20230916T174236_050356_061016_8033.zip
+cdse/S1A_IW_SLC__1SDV_20230904T174209_20230904T174236_050181_060A2D_E88F.zip</code></pre>
 </div>
 </div>
+<div id="cell-18" class="cell" data-execution_count="22">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>out_dir <span class="op">=</span> process_insar(</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    dir_prm<span class="op">=</span>primary_dir,</span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    dir_sec<span class="op">=</span>secondary_dir,</span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>    outputs_prefix<span class="op">=</span>outputs_prefix,</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>    aoi_name<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>    shp<span class="op">=</span>shp2,</span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>    pol<span class="op">=</span><span class="st">"vv"</span>,</span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>    subswaths<span class="op">=</span>[<span class="st">"IW1"</span>, <span class="st">"IW2"</span>, <span class="st">"IW3"</span>],</span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>    write_coherence<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>    write_interferogram<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>    write_primary_amplitude<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>    write_secondary_amplitude<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>    apply_fast_esd<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    dem_upsampling<span class="op">=</span><span class="fl">1.8</span>,</span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>    dem_force_download<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a>    dem_buffer_arc_sec<span class="op">=</span><span class="dv">40</span>,</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>    boxcar_coherence<span class="op">=</span>[<span class="dv">3</span>, <span class="dv">3</span>],</span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>    filter_ifg<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    multilook<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">4</span>],</span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    warp_kernel<span class="op">=</span><span class="st">"bicubic"</span>,</span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    clip_to_shape<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
-<section id="try-it-with-ceda-data" class="level1">
-<h1>Try it with CEDA data</h1>
-</section>
-<section id="outputs-and-issues" class="level1">
-<h1>Outputs and issues</h1>
-<div id="cell-21" class="cell" data-execution_count="7">
+<section id="outputs" class="level1">
+<h1>Outputs</h1>
+<div id="cell-20" class="cell" data-execution_count="33">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualise coherence</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>arr_coh <span class="op">=</span> riox.open_rasterio(<span class="ss">f"</span><span class="sc">{</span>out_dir<span class="sc">}</span><span class="ss">/coh_vv.tif"</span>, masked<span class="op">=</span><span class="va">True</span>)[<span class="dv">0</span>]</span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>arr_coh.plot.imshow(vmin<span class="op">=</span><span class="dv">0</span>,vmax<span class="op">=</span><span class="dv">1</span>, cmap<span class="op">=</span><span class="st">"gray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>arr_coh.plot.imshow(aspect<span class="op">=</span><span class="dv">3</span>, size<span class="op">=</span><span class="dv">5</span>, vmin<span class="op">=</span><span class="dv">0</span>,vmax<span class="op">=</span><span class="dv">1</span>, cmap<span class="op">=</span><span class="st">"gray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2025-02-calc-coherence_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+<div id="cell-21" class="cell" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualise interferrogram</span></span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>arr_phi <span class="op">=</span> riox.open_rasterio(<span class="ss">f"</span><span class="sc">{</span>out_dir<span class="sc">}</span><span class="ss">/phi_vv.tif"</span>, masked<span class="op">=</span><span class="va">True</span>)[<span class="dv">0</span>]</span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>arr_phi.plot.imshow(aspect<span class="op">=</span><span class="dv">3</span>, size<span class="op">=</span><span class="dv">5</span>, vmin<span class="op">=-</span><span class="fl">3.14</span>,vmax<span class="op">=</span><span class="fl">3.14</span>, cmap<span class="op">=</span><span class="st">"twilight"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div>
 <figure class="figure">
@@ -818,45 +792,15 @@ INFO:eo_tools.auxils:Removing /home/al/Downloads/eotools/res/test-full-processor
 </div>
 </div>
 </div>
-<div id="cell-22" class="cell" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualise interferrogram</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>arr_phi <span class="op">=</span> riox.open_rasterio(<span class="ss">f"</span><span class="sc">{</span>out_dir<span class="sc">}</span><span class="ss">/phi_vv.tif"</span>, masked<span class="op">=</span><span class="va">True</span>)[<span class="dv">0</span>]</span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>arr_phi.plot.imshow(vmin<span class="op">=-</span><span class="fl">3.14</span>,vmax<span class="op">=</span><span class="fl">3.14</span>, cmap<span class="op">=</span><span class="st">"twilight"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display">
-<div>
-<figure class="figure">
-<p><img src="2025-02-calc-coherence_files/figure-html/cell-14-output-1.png" class="img-fluid figure-img"></p>
-</figure>
-</div>
-</div>
-</div>
-<section id="get-dem" class="level2">
-<h2 class="anchored" data-anchor-id="get-dem">Get DEM</h2>
-<p>Doesn’t need to be in workflow</p>
-<div id="cell-24" class="cell" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> eo_tools.dem <span class="im">import</span> retrieve_dem</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-</div>
-<div id="cell-25" class="cell" data-execution_count="17">
-<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load a geometry</span></span>
-<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>aoi_name <span class="op">=</span> <span class="st">"thetford2aoi"</span></span>
-<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>file_aoi <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">/</span><span class="sc">{</span>aoi_name<span class="sc">}</span><span class="ss">.geojson"</span></span>
-<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>shp <span class="op">=</span> gpd.read_file(file_aoi).geometry[<span class="dv">0</span>]</span>
-<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a><span class="co"># change to your custom location</span></span>
-<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>dem_file <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">/res/cop-dem-glo-30_</span><span class="sc">{</span>aoi_name<span class="sc">}</span><span class="ss">.tif"</span></span>
-<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>retrieve_dem(shp, dem_file)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-stderr">
-<pre><code>INFO:eo_tools.dem:Retrieve DEM</code></pre>
-</div>
-</div>
 </section>
-</section>
-<section id="possibilities-on-eodh" class="level1">
-<h1>Possibilities on EODH</h1>
-<p>The EODH platform</p>
+<section id="possibilities-on-the-eodh" class="level1">
+<h1>Possibilities on the EODH</h1>
+<p>The EODH platform is being designed to allow external connections, to run Python code through the Jupyter-based AppHub and to enable developers to run EO Application Packages.</p>
 <ul>
-<li>AppHub</li>
-<li>CWL</li>
+<li>AppHub - the AppHub is a JupyterHub installation that allows registered users to run Python code (most often via Jupyter Notebooks).</li>
+<li>EOAP - requires ‘packages’ created in Common Workflow Language (CWL) and are then run via APIs or a QGIS plugin.</li>
 </ul>
+<p>We have proven that it is possible to process coherence using CWL but it is more intuitive to use Python.</p>
 
 
 </section>
