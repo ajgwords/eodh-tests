@@ -178,6 +178,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   <li><a href="#using-cdse" id="toc-using-cdse" class="nav-link" data-scroll-target="#using-cdse">Using CDSE</a></li>
   <li><a href="#outputs" id="toc-outputs" class="nav-link" data-scroll-target="#outputs">Outputs</a></li>
+  <li><a href="#but-what-if-we-use-a-larger-aoi" id="toc-but-what-if-we-use-a-larger-aoi" class="nav-link" data-scroll-target="#but-what-if-we-use-a-larger-aoi">But what if we use a larger AOI?</a></li>
   <li><a href="#possibilities-on-the-eodh" id="toc-possibilities-on-the-eodh" class="nav-link" data-scroll-target="#possibilities-on-the-eodh">Possibilities on the EODH</a></li>
   </ul>
 </nav>
@@ -321,7 +322,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <h3 class="anchored" data-anchor-id="auth-reqts">auth reqts</h3>
 <p>If using the Copernicus Data Space Ecosystem a free account needs to be created at https://dataspace.copernicus.eu/ The credentials need to be configured as explained here https://eodag.readthedocs.io/en/stable/getting_started_guide/configure.html</p>
 <p>If using EODH then data can be downloaded from the CEDA catalogue without an account. To use the AppHub or workflow runner you would require an account from https://test.eodatahub.org.uk/contact/</p>
-<div id="cell-8" class="cell" data-execution_count="10">
+<div id="cell-8" class="cell" data-execution_count="36">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> itertools <span class="im">import</span> combinations</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -330,19 +331,20 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> geopandas <span class="im">as</span> gpd</span>
 <span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
 <span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> rioxarray <span class="im">as</span> riox</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="co">#import shapely</span></span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> eo_tools.S1.process <span class="im">import</span> process_insar</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> eodag <span class="im">import</span> EODataAccessGateway</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> shape</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a><span class="co"># credentials need to be stored in the following file (see EODAG docs)</span></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>confpath <span class="op">=</span> <span class="st">"~/.config/eodag/eodag.yml"</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>dag <span class="op">=</span> EODataAccessGateway()</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a><span class="co"># make sure cop_dataspace will be used</span></span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>dag.set_preferred_provider(<span class="st">"cop_dataspace"</span>)</span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="co">#logging.basicConfig(level=logging.INFO)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> folium <span class="im">as</span> f</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="co">#import shapely</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> eo_tools.S1.process <span class="im">import</span> process_insar</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> eodag <span class="im">import</span> EODataAccessGateway</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> shapely.geometry <span class="im">import</span> shape</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co"># credentials need to be stored in the following file (see EODAG docs)</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>confpath <span class="op">=</span> <span class="st">"~/.config/eodag/eodag.yml"</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>dag <span class="op">=</span> EODataAccessGateway()</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># make sure cop_dataspace will be used</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>dag.set_preferred_provider(<span class="st">"cop_dataspace"</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="co">#logging.basicConfig(level=logging.INFO)</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<div id="cell-9" class="cell" data-execution_count="11">
+<div id="cell-9" class="cell" data-execution_count="44">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set download dirs</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>data_dir <span class="op">=</span> <span class="st">"/home/al/Downloads/jncc_eotools"</span> <span class="co"># set this to work for you</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -788,6 +790,223 @@ cdse/S1A_IW_SLC__1SDV_20230904T174209_20230904T174236_050181_060A2D_E88F.zip</co
 <div>
 <figure class="figure">
 <p><img src="2025-02-calc-coherence_files/figure-html/cell-13-output-1.png" class="img-fluid figure-img"></p>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="but-what-if-we-use-a-larger-aoi" class="level1">
+<h1>But what if we use a larger AOI?</h1>
+<div id="cell-23" class="cell" data-execution_count="43">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="co"># example AOI around Thetford</span></span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a>file_aoi_b <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">/thetford2aoi.geojson"</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>shp3 <span class="op">=</span> gpd.read_file(file_aoi_b).geometry[<span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-24" class="cell">
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="co">#import folium</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_geojson(geojson1, geojson2, map_center, zoom):</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Create a folium map</span></span>
+<span id="cb19-5"><a href="#cb19-5" aria-hidden="true" tabindex="-1"></a>    m <span class="op">=</span> f.Map(location<span class="op">=</span>map_center, zoom_start<span class="op">=</span>zoom, tiles<span class="op">=</span><span class="st">"OpenStreetMap"</span>)</span>
+<span id="cb19-6"><a href="#cb19-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-7"><a href="#cb19-7" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add GeoJSON layers</span></span>
+<span id="cb19-8"><a href="#cb19-8" aria-hidden="true" tabindex="-1"></a>    f.GeoJson(geojson1, name<span class="op">=</span><span class="st">"Larger AOI"</span>, style_function<span class="op">=</span><span class="kw">lambda</span> x: {<span class="st">"color"</span>: <span class="st">"blue"</span>}).add_to(m)</span>
+<span id="cb19-9"><a href="#cb19-9" aria-hidden="true" tabindex="-1"></a>    f.GeoJson(geojson2, name<span class="op">=</span><span class="st">"Original AOI"</span>, style_function<span class="op">=</span><span class="kw">lambda</span> x: {<span class="st">"color"</span>: <span class="st">"red"</span>}).add_to(m)</span>
+<span id="cb19-10"><a href="#cb19-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-11"><a href="#cb19-11" aria-hidden="true" tabindex="-1"></a>    <span class="co"># Add layer control</span></span>
+<span id="cb19-12"><a href="#cb19-12" aria-hidden="true" tabindex="-1"></a>    f.LayerControl().add_to(m)</span>
+<span id="cb19-13"><a href="#cb19-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb19-14"><a href="#cb19-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> m</span>
+<span id="cb19-15"><a href="#cb19-15" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-16"><a href="#cb19-16" aria-hidden="true" tabindex="-1"></a>map_center <span class="op">=</span> (<span class="dv">52</span>, <span class="dv">1</span>)  </span>
+<span id="cb19-17"><a href="#cb19-17" aria-hidden="true" tabindex="-1"></a>zoom_level <span class="op">=</span> <span class="dv">8</span></span>
+<span id="cb19-18"><a href="#cb19-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb19-19"><a href="#cb19-19" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate map</span></span>
+<span id="cb19-20"><a href="#cb19-20" aria-hidden="true" tabindex="-1"></a>map_object <span class="op">=</span> plot_geojson(file_aoi_b, file_aoi, map_center, zoom <span class="op">=</span> zoom_level)</span>
+<span id="cb19-21"><a href="#cb19-21" aria-hidden="true" tabindex="-1"></a>map_object</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="50">
+<div style="width:100%;"><div style="position:relative;width:100%;height:0;padding-bottom:60%;"><span style="color:#565656">Make this Notebook Trusted to load map: File -&gt; Trust Notebook</span><iframe srcdoc="<!DOCTYPE html>
+<html>
+<head>
+    
+    <meta http-equiv=&quot;content-type&quot; content=&quot;text/html; charset=UTF-8&quot; />
+    
+        <script>
+            L_NO_TOUCH = false;
+            L_DISABLE_3D = false;
+        </script>
+    
+    <style>html, body {width: 100%;height: 100%;margin: 0;padding: 0;}</style>
+    <style>#map {position:absolute;top:0;bottom:0;right:0;left:0;}</style>
+    <script src=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.js&quot;></script>
+    <script src=&quot;https://code.jquery.com/jquery-3.7.1.min.js&quot;></script>
+    <script src=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/js/bootstrap.bundle.min.js&quot;></script>
+    <script src=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.js&quot;></script>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/leaflet@1.9.3/dist/leaflet.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/bootstrap@5.2.2/dist/css/bootstrap.min.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@6.2.0/css/all.min.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdnjs.cloudflare.com/ajax/libs/Leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.css&quot;/>
+    <link rel=&quot;stylesheet&quot; href=&quot;https://cdn.jsdelivr.net/gh/python-visualization/folium/folium/templates/leaflet.awesome.rotate.min.css&quot;/>
+    
+            <meta name=&quot;viewport&quot; content=&quot;width=device-width,
+                initial-scale=1.0, maximum-scale=1.0, user-scalable=no&quot; />
+            <style>
+                #map_a5e8778be31007506eda400911a3c443 {
+                    position: relative;
+                    width: 100.0%;
+                    height: 100.0%;
+                    left: 0.0%;
+                    top: 0.0%;
+                }
+                .leaflet-container { font-size: 1rem; }
+            </style>
+        
+</head>
+<body>
+    
+    
+            <div class=&quot;folium-map&quot; id=&quot;map_a5e8778be31007506eda400911a3c443&quot; ></div>
+        
+</body>
+<script>
+    
+    
+            var map_a5e8778be31007506eda400911a3c443 = L.map(
+                &quot;map_a5e8778be31007506eda400911a3c443&quot;,
+                {
+                    center: [52.0, 1.0],
+                    crs: L.CRS.EPSG3857,
+                    zoom: 8,
+                    zoomControl: true,
+                    preferCanvas: false,
+                }
+            );
+
+            
+
+        
+    
+            var tile_layer_135abaa5f171301e634d36937507b0ae = L.tileLayer(
+                &quot;https://tile.openstreetmap.org/{z}/{x}/{y}.png&quot;,
+                {&quot;attribution&quot;: &quot;\u0026copy; \u003ca href=\&quot;https://www.openstreetmap.org/copyright\&quot;\u003eOpenStreetMap\u003c/a\u003e contributors&quot;, &quot;detectRetina&quot;: false, &quot;maxNativeZoom&quot;: 19, &quot;maxZoom&quot;: 19, &quot;minZoom&quot;: 0, &quot;noWrap&quot;: false, &quot;opacity&quot;: 1, &quot;subdomains&quot;: &quot;abc&quot;, &quot;tms&quot;: false}
+            );
+        
+    
+            tile_layer_135abaa5f171301e634d36937507b0ae.addTo(map_a5e8778be31007506eda400911a3c443);
+        
+    
+        function geo_json_76307344def271b07696f0a30011fa47_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {&quot;color&quot;: &quot;blue&quot;};
+            }
+        }
+
+        function geo_json_76307344def271b07696f0a30011fa47_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_76307344def271b07696f0a30011fa47 = L.geoJson(null, {
+                onEachFeature: geo_json_76307344def271b07696f0a30011fa47_onEachFeature,
+            
+                style: geo_json_76307344def271b07696f0a30011fa47_styler,
+        });
+
+        function geo_json_76307344def271b07696f0a30011fa47_add (data) {
+            geo_json_76307344def271b07696f0a30011fa47
+                .addData(data);
+        }
+            geo_json_76307344def271b07696f0a30011fa47_add({&quot;crs&quot;: {&quot;properties&quot;: {&quot;name&quot;: &quot;urn:ogc:def:crs:OGC:1.3:CRS84&quot;}, &quot;type&quot;: &quot;name&quot;}, &quot;features&quot;: [{&quot;geometry&quot;: {&quot;coordinates&quot;: [[[0.007316032985481, 52.78378862484455], [-0.012355219806319, 52.1703566797923], [1.443317486786861, 52.1703566797923], [1.47479149125374, 52.78378862484455], [0.007316032985481, 52.78378862484455]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;0&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}], &quot;name&quot;: &quot;thetford2aoi&quot;, &quot;type&quot;: &quot;FeatureCollection&quot;});
+
+        
+    
+            geo_json_76307344def271b07696f0a30011fa47.addTo(map_a5e8778be31007506eda400911a3c443);
+        
+    
+        function geo_json_b944eed5fc849af9165f37c59f4a9125_styler(feature) {
+            switch(feature.id) {
+                default:
+                    return {&quot;color&quot;: &quot;red&quot;};
+            }
+        }
+
+        function geo_json_b944eed5fc849af9165f37c59f4a9125_onEachFeature(feature, layer) {
+            layer.on({
+            });
+        };
+        var geo_json_b944eed5fc849af9165f37c59f4a9125 = L.geoJson(null, {
+                onEachFeature: geo_json_b944eed5fc849af9165f37c59f4a9125_onEachFeature,
+            
+                style: geo_json_b944eed5fc849af9165f37c59f4a9125_styler,
+        });
+
+        function geo_json_b944eed5fc849af9165f37c59f4a9125_add (data) {
+            geo_json_b944eed5fc849af9165f37c59f4a9125
+                .addData(data);
+        }
+            geo_json_b944eed5fc849af9165f37c59f4a9125_add({&quot;crs&quot;: {&quot;properties&quot;: {&quot;name&quot;: &quot;urn:ogc:def:crs:OGC:1.3:CRS84&quot;}, &quot;type&quot;: &quot;name&quot;}, &quot;features&quot;: [{&quot;geometry&quot;: {&quot;coordinates&quot;: [[[0.108530558052996, 52.548527343311214], [0.685652665706907, 52.55804798614935], [0.677823489827881, 52.45388885682422], [0.105734423810487, 52.44639077957711], [0.108530558052996, 52.548527343311214]]], &quot;type&quot;: &quot;Polygon&quot;}, &quot;id&quot;: &quot;0&quot;, &quot;properties&quot;: {}, &quot;type&quot;: &quot;Feature&quot;}], &quot;name&quot;: &quot;thetfordaoi&quot;, &quot;type&quot;: &quot;FeatureCollection&quot;});
+
+        
+    
+            geo_json_b944eed5fc849af9165f37c59f4a9125.addTo(map_a5e8778be31007506eda400911a3c443);
+        
+    
+            var layer_control_317c9ec509ac1e565355dc95e9c13c3d_layers = {
+                base_layers : {
+                    &quot;openstreetmap&quot; : tile_layer_135abaa5f171301e634d36937507b0ae,
+                },
+                overlays :  {
+                    &quot;Larger AOI&quot; : geo_json_76307344def271b07696f0a30011fa47,
+                    &quot;Original AOI&quot; : geo_json_b944eed5fc849af9165f37c59f4a9125,
+                },
+            };
+            let layer_control_317c9ec509ac1e565355dc95e9c13c3d = L.control.layers(
+                layer_control_317c9ec509ac1e565355dc95e9c13c3d_layers.base_layers,
+                layer_control_317c9ec509ac1e565355dc95e9c13c3d_layers.overlays,
+                {&quot;autoZIndex&quot;: true, &quot;collapsed&quot;: true, &quot;position&quot;: &quot;topright&quot;}
+            ).addTo(map_a5e8778be31007506eda400911a3c443);
+
+        
+</script>
+</html>" style="position:absolute;width:100%;height:100%;left:0;top:0;border:none !important;" allowfullscreen="" webkitallowfullscreen="" mozallowfullscreen=""></iframe></div></div>
+</div>
+</div>
+<div id="cell-25" class="cell" data-execution_count="55">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Set output and rerun</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>outputs_prefix2 <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">/cdse/res/larger_aoi"</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true" tabindex="-1"></a>out_dir2 <span class="op">=</span> process_insar(</span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true" tabindex="-1"></a>    dir_prm<span class="op">=</span>primary_dir,</span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true" tabindex="-1"></a>    dir_sec<span class="op">=</span>secondary_dir,</span>
+<span id="cb20-7"><a href="#cb20-7" aria-hidden="true" tabindex="-1"></a>    outputs_prefix<span class="op">=</span>outputs_prefix2,</span>
+<span id="cb20-8"><a href="#cb20-8" aria-hidden="true" tabindex="-1"></a>    aoi_name<span class="op">=</span><span class="va">None</span>,</span>
+<span id="cb20-9"><a href="#cb20-9" aria-hidden="true" tabindex="-1"></a>    shp<span class="op">=</span>shp3,</span>
+<span id="cb20-10"><a href="#cb20-10" aria-hidden="true" tabindex="-1"></a>    pol<span class="op">=</span><span class="st">"vv"</span>,</span>
+<span id="cb20-11"><a href="#cb20-11" aria-hidden="true" tabindex="-1"></a>    subswaths<span class="op">=</span>[<span class="st">"IW1"</span>, <span class="st">"IW2"</span>, <span class="st">"IW3"</span>],</span>
+<span id="cb20-12"><a href="#cb20-12" aria-hidden="true" tabindex="-1"></a>    write_coherence<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb20-13"><a href="#cb20-13" aria-hidden="true" tabindex="-1"></a>    write_interferogram<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb20-14"><a href="#cb20-14" aria-hidden="true" tabindex="-1"></a>    write_primary_amplitude<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb20-15"><a href="#cb20-15" aria-hidden="true" tabindex="-1"></a>    write_secondary_amplitude<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb20-16"><a href="#cb20-16" aria-hidden="true" tabindex="-1"></a>    apply_fast_esd<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb20-17"><a href="#cb20-17" aria-hidden="true" tabindex="-1"></a>    dem_upsampling<span class="op">=</span><span class="fl">1.8</span>,</span>
+<span id="cb20-18"><a href="#cb20-18" aria-hidden="true" tabindex="-1"></a>    dem_force_download<span class="op">=</span><span class="va">False</span>,</span>
+<span id="cb20-19"><a href="#cb20-19" aria-hidden="true" tabindex="-1"></a>    dem_buffer_arc_sec<span class="op">=</span><span class="dv">40</span>,</span>
+<span id="cb20-20"><a href="#cb20-20" aria-hidden="true" tabindex="-1"></a>    boxcar_coherence<span class="op">=</span>[<span class="dv">3</span>, <span class="dv">3</span>],</span>
+<span id="cb20-21"><a href="#cb20-21" aria-hidden="true" tabindex="-1"></a>    filter_ifg<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb20-22"><a href="#cb20-22" aria-hidden="true" tabindex="-1"></a>    multilook<span class="op">=</span>[<span class="dv">1</span>, <span class="dv">4</span>],</span>
+<span id="cb20-23"><a href="#cb20-23" aria-hidden="true" tabindex="-1"></a>    warp_kernel<span class="op">=</span><span class="st">"bicubic"</span>,</span>
+<span id="cb20-24"><a href="#cb20-24" aria-hidden="true" tabindex="-1"></a>    clip_to_shape<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb20-25"><a href="#cb20-25" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div id="cell-26" class="cell" data-execution_count="56">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Visualise coherence</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>arr_cohb <span class="op">=</span> riox.open_rasterio(<span class="ss">f"</span><span class="sc">{</span>out_dir2<span class="sc">}</span><span class="ss">/coh_vv.tif"</span>, masked<span class="op">=</span><span class="va">True</span>)[<span class="dv">0</span>]</span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>arr_cohb.plot.imshow(aspect<span class="op">=</span><span class="dv">3</span>, size<span class="op">=</span><span class="dv">5</span>, vmin<span class="op">=</span><span class="dv">0</span>,vmax<span class="op">=</span><span class="dv">1</span>, cmap<span class="op">=</span><span class="st">"gray"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="2025-02-calc-coherence_files/figure-html/cell-17-output-1.png" class="img-fluid figure-img"></p>
 </figure>
 </div>
 </div>
