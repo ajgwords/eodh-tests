@@ -176,8 +176,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   </ul></li>
   </ul></li>
   <li><a href="#using-cdse" id="toc-using-cdse" class="nav-link" data-scroll-target="#using-cdse">Using CDSE</a></li>
-  <li><a href="#outputs" id="toc-outputs" class="nav-link" data-scroll-target="#outputs">Outputs</a></li>
+  <li><a href="#outputs" id="toc-outputs" class="nav-link" data-scroll-target="#outputs">Outputs</a>
+  <ul class="collapse">
   <li><a href="#but-what-if-we-use-a-larger-aoi" id="toc-but-what-if-we-use-a-larger-aoi" class="nav-link" data-scroll-target="#but-what-if-we-use-a-larger-aoi">But what if we use a larger AOI?</a></li>
+  </ul></li>
   <li><a href="#possibilities-on-the-eodh" id="toc-possibilities-on-the-eodh" class="nav-link" data-scroll-target="#possibilities-on-the-eodh">Possibilities on the EODH</a></li>
   </ul>
 </nav>
@@ -218,12 +220,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <li>Hi there</li>
 <li>Requirement to calculate coherence</li>
 <li>Available tools</li>
-<li>Intro to eo-tools
-<ul>
-<li>Using data from the CDSE</li>
-<li>Using data from CEDA</li>
-</ul></li>
-<li>Outputs and Issues</li>
+<li>Intro to eo-tools</li>
+<li>Walkthrough</li>
+<li>Outputs</li>
 <li>Possibilities on EODH</li>
 </ul>
 <hr>
@@ -771,9 +770,8 @@ cdse/S1A_IW_SLC__1SDV_20230904T174209_20230904T174236_050181_060A2D_E88F.zip</co
 </div>
 </div>
 </div>
-</section>
-<section id="but-what-if-we-use-a-larger-aoi" class="level1">
-<h1>But what if we use a larger AOI?</h1>
+<section id="but-what-if-we-use-a-larger-aoi" class="level2">
+<h2 class="anchored" data-anchor-id="but-what-if-we-use-a-larger-aoi">But what if we use a larger AOI?</h2>
 <div id="cell-23" class="cell" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># example AOI around Thetford</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>file_aoi_b <span class="op">=</span> <span class="ss">f"</span><span class="sc">{</span>data_dir<span class="sc">}</span><span class="ss">/thetford2aoi.geojson"</span></span>
@@ -989,6 +987,7 @@ cdse/S1A_IW_SLC__1SDV_20230904T174209_20230904T174236_050181_060A2D_E88F.zip</co
 <p>The reasons for this are not known at present (suggestions welcome!).</p>
 <p>There are a few things that should be first on the list to check: * Check Input Data: Ensure both SAR images are well-coregistered and free from gaps. * Initial checks suggest the data are suitable for processing. * Checks on other image pairs in other locations should be undertaken too. * Modify Coherence Threshold: Adjust parameters in eo-tools to allow lower-coherence areas to be retained. * Inspect DEM Processing: If using a DEM, ensure it is correctly aligned and not introducing artifacts.</p>
 <p>If taking this further then I think that the DEM would be the first thing to check.</p>
+</section>
 </section>
 <section id="possibilities-on-the-eodh" class="level1">
 <h1>Possibilities on the EODH</h1>
